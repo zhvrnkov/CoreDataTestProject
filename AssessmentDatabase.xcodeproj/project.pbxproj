@@ -8,8 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		CA749E7822E5B2370011D406 /* AssessmentDatabase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA749E6E22E5B2370011D406 /* AssessmentDatabase.framework */; };
-		CA749E7D22E5B2370011D406 /* AssessmentDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E7C22E5B2370011D406 /* AssessmentDatabaseTests.swift */; };
+		CA749E7D22E5B2370011D406 /* DatabaseManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E7C22E5B2370011D406 /* DatabaseManagerTest.swift */; };
 		CA749E7F22E5B2370011D406 /* AssessmentDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = CA749E7122E5B2370011D406 /* AssessmentDatabase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CA749E8A22E5B24A0011D406 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CA749E8822E5B24A0011D406 /* DataModel.xcdatamodeld */; };
+		CA749E8C22E5B87F0011D406 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E8B22E5B87F0011D406 /* DatabaseManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,8 +29,10 @@
 		CA749E7122E5B2370011D406 /* AssessmentDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssessmentDatabase.h; sourceTree = "<group>"; };
 		CA749E7222E5B2370011D406 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA749E7722E5B2370011D406 /* AssessmentDatabaseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AssessmentDatabaseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CA749E7C22E5B2370011D406 /* AssessmentDatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssessmentDatabaseTests.swift; sourceTree = "<group>"; };
+		CA749E7C22E5B2370011D406 /* DatabaseManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManagerTest.swift; sourceTree = "<group>"; };
 		CA749E7E22E5B2370011D406 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CA749E8922E5B24A0011D406 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		CA749E8B22E5B87F0011D406 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +77,8 @@
 			children = (
 				CA749E7122E5B2370011D406 /* AssessmentDatabase.h */,
 				CA749E7222E5B2370011D406 /* Info.plist */,
+				CA749E8822E5B24A0011D406 /* DataModel.xcdatamodeld */,
+				CA749E8B22E5B87F0011D406 /* DatabaseManager.swift */,
 			);
 			path = AssessmentDatabase;
 			sourceTree = "<group>";
@@ -80,7 +86,7 @@
 		CA749E7B22E5B2370011D406 /* AssessmentDatabaseTests */ = {
 			isa = PBXGroup;
 			children = (
-				CA749E7C22E5B2370011D406 /* AssessmentDatabaseTests.swift */,
+				CA749E7C22E5B2370011D406 /* DatabaseManagerTest.swift */,
 				CA749E7E22E5B2370011D406 /* Info.plist */,
 			);
 			path = AssessmentDatabaseTests;
@@ -148,6 +154,7 @@
 				TargetAttributes = {
 					CA749E6D22E5B2370011D406 = {
 						CreatedOnToolsVersion = 10.2;
+						LastSwiftMigration = 1020;
 					};
 					CA749E7622E5B2370011D406 = {
 						CreatedOnToolsVersion = 10.2;
@@ -194,6 +201,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA749E8C22E5B87F0011D406 /* DatabaseManager.swift in Sources */,
+				CA749E8A22E5B24A0011D406 /* DataModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,7 +210,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CA749E7D22E5B2370011D406 /* AssessmentDatabaseTests.swift in Sources */,
+				CA749E7D22E5B2370011D406 /* DatabaseManagerTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +350,7 @@
 		CA749E8322E5B2370011D406 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -357,6 +367,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bytepace.AssessmentDatabase;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -365,6 +376,7 @@
 		CA749E8422E5B2370011D406 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -389,6 +401,7 @@
 		CA749E8622E5B2370011D406 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = AssessmentDatabaseTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -406,6 +419,7 @@
 		CA749E8722E5B2370011D406 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = AssessmentDatabaseTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -451,6 +465,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		CA749E8822E5B24A0011D406 /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				CA749E8922E5B24A0011D406 /* DataModel.xcdatamodel */,
+			);
+			currentVersion = CA749E8922E5B24A0011D406 /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = CA749E6522E5B2370011D406 /* Project object */;
 }
