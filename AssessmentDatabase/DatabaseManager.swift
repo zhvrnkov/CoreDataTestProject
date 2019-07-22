@@ -34,4 +34,13 @@ final public class DatabaseManager {
             return container
         }
     }
+    
+    public let assessments = AssessmentsUtils()
+    public let grades = GradesUtils()
+    public let instructors = InstructorsUtils()
+    public let microtasks = MicrotasksUtils()
+    public let rubrics = RubricsUtils()
+    public let skillSets = SkillSetsUtils()
+    public let students = StudentsUtils()
+    public let studentMicrotaskGrades = StudentMicrotaskGradesUtils()
 }

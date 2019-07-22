@@ -12,6 +12,14 @@
 		CA749E7F22E5B2370011D406 /* AssessmentDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = CA749E7122E5B2370011D406 /* AssessmentDatabase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CA749E8A22E5B24A0011D406 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CA749E8822E5B24A0011D406 /* DataModel.xcdatamodeld */; };
 		CA749E8C22E5B87F0011D406 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E8B22E5B87F0011D406 /* DatabaseManager.swift */; };
+		CA749E9622E5CC440011D406 /* RubricsUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E8E22E5CC430011D406 /* RubricsUtils.swift */; };
+		CA749E9722E5CC440011D406 /* SkillSetsUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E8F22E5CC430011D406 /* SkillSetsUtils.swift */; };
+		CA749E9822E5CC440011D406 /* InstructorsUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E9022E5CC430011D406 /* InstructorsUtils.swift */; };
+		CA749E9922E5CC440011D406 /* MicrotasksUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E9122E5CC430011D406 /* MicrotasksUtils.swift */; };
+		CA749E9A22E5CC440011D406 /* StudentMicrotaskGradesUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E9222E5CC430011D406 /* StudentMicrotaskGradesUtils.swift */; };
+		CA749E9B22E5CC440011D406 /* GradesUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E9322E5CC430011D406 /* GradesUtils.swift */; };
+		CA749E9C22E5CC440011D406 /* StudentsUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E9422E5CC430011D406 /* StudentsUtils.swift */; };
+		CA749E9D22E5CC440011D406 /* AssessmentsUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E9522E5CC430011D406 /* AssessmentsUtils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +41,14 @@
 		CA749E7E22E5B2370011D406 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA749E8922E5B24A0011D406 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		CA749E8B22E5B87F0011D406 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		CA749E8E22E5CC430011D406 /* RubricsUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RubricsUtils.swift; sourceTree = "<group>"; };
+		CA749E8F22E5CC430011D406 /* SkillSetsUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillSetsUtils.swift; sourceTree = "<group>"; };
+		CA749E9022E5CC430011D406 /* InstructorsUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructorsUtils.swift; sourceTree = "<group>"; };
+		CA749E9122E5CC430011D406 /* MicrotasksUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MicrotasksUtils.swift; sourceTree = "<group>"; };
+		CA749E9222E5CC430011D406 /* StudentMicrotaskGradesUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentMicrotaskGradesUtils.swift; sourceTree = "<group>"; };
+		CA749E9322E5CC430011D406 /* GradesUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradesUtils.swift; sourceTree = "<group>"; };
+		CA749E9422E5CC430011D406 /* StudentsUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentsUtils.swift; sourceTree = "<group>"; };
+		CA749E9522E5CC430011D406 /* AssessmentsUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssessmentsUtils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +91,7 @@
 		CA749E7022E5B2370011D406 /* AssessmentDatabase */ = {
 			isa = PBXGroup;
 			children = (
+				CA749E8D22E5C9210011D406 /* Utils */,
 				CA749E7122E5B2370011D406 /* AssessmentDatabase.h */,
 				CA749E7222E5B2370011D406 /* Info.plist */,
 				CA749E8822E5B24A0011D406 /* DataModel.xcdatamodeld */,
@@ -90,6 +107,21 @@
 				CA749E7E22E5B2370011D406 /* Info.plist */,
 			);
 			path = AssessmentDatabaseTests;
+			sourceTree = "<group>";
+		};
+		CA749E8D22E5C9210011D406 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				CA749E9522E5CC430011D406 /* AssessmentsUtils.swift */,
+				CA749E9322E5CC430011D406 /* GradesUtils.swift */,
+				CA749E9022E5CC430011D406 /* InstructorsUtils.swift */,
+				CA749E9122E5CC430011D406 /* MicrotasksUtils.swift */,
+				CA749E8E22E5CC430011D406 /* RubricsUtils.swift */,
+				CA749E8F22E5CC430011D406 /* SkillSetsUtils.swift */,
+				CA749E9222E5CC430011D406 /* StudentMicrotaskGradesUtils.swift */,
+				CA749E9422E5CC430011D406 /* StudentsUtils.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -201,7 +233,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA749E9622E5CC440011D406 /* RubricsUtils.swift in Sources */,
+				CA749E9C22E5CC440011D406 /* StudentsUtils.swift in Sources */,
+				CA749E9922E5CC440011D406 /* MicrotasksUtils.swift in Sources */,
+				CA749E9D22E5CC440011D406 /* AssessmentsUtils.swift in Sources */,
+				CA749E9822E5CC440011D406 /* InstructorsUtils.swift in Sources */,
+				CA749E9B22E5CC440011D406 /* GradesUtils.swift in Sources */,
+				CA749E9A22E5CC440011D406 /* StudentMicrotaskGradesUtils.swift in Sources */,
 				CA749E8C22E5B87F0011D406 /* DatabaseManager.swift in Sources */,
+				CA749E9722E5CC440011D406 /* SkillSetsUtils.swift in Sources */,
 				CA749E8A22E5B24A0011D406 /* DataModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
