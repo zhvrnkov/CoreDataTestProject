@@ -20,6 +20,7 @@
 		CA749E9B22E5CC440011D406 /* GradesUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E9322E5CC430011D406 /* GradesUtils.swift */; };
 		CA749E9C22E5CC440011D406 /* StudentsUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E9422E5CC430011D406 /* StudentsUtils.swift */; };
 		CA749E9D22E5CC440011D406 /* AssessmentsUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E9522E5CC430011D406 /* AssessmentsUtils.swift */; };
+		CA749E9F22E5CE2D0011D406 /* EntityUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E9E22E5CE2D0011D406 /* EntityUtils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		CA749E9322E5CC430011D406 /* GradesUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradesUtils.swift; sourceTree = "<group>"; };
 		CA749E9422E5CC430011D406 /* StudentsUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentsUtils.swift; sourceTree = "<group>"; };
 		CA749E9522E5CC430011D406 /* AssessmentsUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssessmentsUtils.swift; sourceTree = "<group>"; };
+		CA749E9E22E5CE2D0011D406 /* EntityUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityUtils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 				CA749E8F22E5CC430011D406 /* SkillSetsUtils.swift */,
 				CA749E9222E5CC430011D406 /* StudentMicrotaskGradesUtils.swift */,
 				CA749E9422E5CC430011D406 /* StudentsUtils.swift */,
+				CA749E9E22E5CE2D0011D406 /* EntityUtils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -239,6 +242,7 @@
 				CA749E9D22E5CC440011D406 /* AssessmentsUtils.swift in Sources */,
 				CA749E9822E5CC440011D406 /* InstructorsUtils.swift in Sources */,
 				CA749E9B22E5CC440011D406 /* GradesUtils.swift in Sources */,
+				CA749E9F22E5CE2D0011D406 /* EntityUtils.swift in Sources */,
 				CA749E9A22E5CC440011D406 /* StudentMicrotaskGradesUtils.swift in Sources */,
 				CA749E8C22E5B87F0011D406 /* DatabaseManager.swift in Sources */,
 				CA749E9722E5CC440011D406 /* SkillSetsUtils.swift in Sources */,
