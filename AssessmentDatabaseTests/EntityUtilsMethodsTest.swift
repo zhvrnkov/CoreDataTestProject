@@ -12,7 +12,7 @@ import CoreData
 class EntityUtilsMethodsTest: XCTestCase {
     typealias This = EntityUtilsMethodsTest
     static var utils: GradesUtils = .init(with: getMockPersistentContainer())
-    static var context = This.utils.persistentContainer.viewContext
+    static let context = This.utils.container.viewContext
     let numberOfItems = 10
     
     override func setUp() {

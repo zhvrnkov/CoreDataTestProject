@@ -22,12 +22,12 @@ final public class DatabaseManager {
     
     public lazy var assessments = AssessmentsUtils(with: self.persistentContainer)
     public lazy var grades = GradesUtils(with: self.persistentContainer)
-    public lazy var instructors = InstructorsUtils()
-    public lazy var microtasks = MicrotasksUtils()
-    public lazy var rubrics = RubricsUtils()
-    public lazy var skillSets = SkillSetsUtils()
-    public lazy var students = StudentsUtils()
-    public lazy var studentMicrotaskGrades = StudentMicrotaskGradesUtils()
+    public lazy var instructors = InstructorsUtils(with: self.persistentContainer)
+    public lazy var microtasks = MicrotasksUtils(with: self.persistentContainer)
+    public lazy var rubrics = RubricsUtils(with: self.persistentContainer)
+    public lazy var skillSets = SkillSetsUtils(with: self.persistentContainer)
+    public lazy var students = StudentsUtils(with: self.persistentContainer)
+    public lazy var studentMicrotaskGrades = StudentMicrotaskGradesUtils(with: self.persistentContainer)
     
     private init() {}
     
