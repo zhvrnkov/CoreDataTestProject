@@ -11,7 +11,7 @@ import CoreData
 
 class EntityUtilsMethodsTest: XCTestCase {
     typealias This = EntityUtilsMethodsTest
-    static var utils: AssessmentsUtils = .init(with: getMockPersistentContainer())
+    static var utils: GradesUtils = .init(with: getMockPersistentContainer())
     static var context = This.utils.persistentContainer.viewContext
     let numberOfItems = 10
     
@@ -21,27 +21,16 @@ class EntityUtilsMethodsTest: XCTestCase {
     }
     
     func createItems(number: Int) {
-        print(#function)
         let context = This.context
         for _ in 0..<number {
-            Assessment(context: context)
+            Grade(context: context)
         }
         try! context.save()
     }
     
     override func tearDown() {
         super.tearDown()
-        clearItems()
-    }
-    
-    func clearItems() {
-        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest<NSFetchRequestResult>(entityName: "Assessment")
-        let objs = try! This.context.fetch(fetchRequest)
-        for case let obj as NSManagedObject in objs {
-            This.context.delete(obj)
-        }
-        try! This.context.save()
-
+        This.utils.deleteAll()
     }
     
     func testThatPersistentContainerIsSetted() {
