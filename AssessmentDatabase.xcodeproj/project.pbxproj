@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CA749E7822E5B2370011D406 /* AssessmentDatabase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA749E6E22E5B2370011D406 /* AssessmentDatabase.framework */; };
-		CA749E7D22E5B2370011D406 /* DatabaseManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E7C22E5B2370011D406 /* DatabaseManagerTest.swift */; };
+		CA749E7D22E5B2370011D406 /* EntityUtilsMethodsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E7C22E5B2370011D406 /* EntityUtilsMethodsTest.swift */; };
 		CA749E7F22E5B2370011D406 /* AssessmentDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = CA749E7122E5B2370011D406 /* AssessmentDatabase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CA749E8A22E5B24A0011D406 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CA749E8822E5B24A0011D406 /* DataModel.xcdatamodeld */; };
 		CA749E8C22E5B87F0011D406 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E8B22E5B87F0011D406 /* DatabaseManager.swift */; };
@@ -21,6 +21,20 @@
 		CA749E9C22E5CC440011D406 /* StudentsUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E9422E5CC430011D406 /* StudentsUtils.swift */; };
 		CA749E9D22E5CC440011D406 /* AssessmentsUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E9522E5CC430011D406 /* AssessmentsUtils.swift */; };
 		CA749E9F22E5CE2D0011D406 /* EntityUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E9E22E5CE2D0011D406 /* EntityUtils.swift */; };
+		CA99B54322F18E9800A2C7BC /* Predicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5B70D122F18C1200EE6C95 /* Predicate.swift */; };
+		CA99B54422F1947500A2C7BC /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CA749E8822E5B24A0011D406 /* DataModel.xcdatamodeld */; };
+		CA99B54522F1947700A2C7BC /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E8B22E5B87F0011D406 /* DatabaseManager.swift */; };
+		CA99B54622F1948C00A2C7BC /* AssessmentsUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E9522E5CC430011D406 /* AssessmentsUtils.swift */; };
+		CA99B54722F1948C00A2C7BC /* GradesUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E9322E5CC430011D406 /* GradesUtils.swift */; };
+		CA99B54822F1948C00A2C7BC /* InstructorsUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E9022E5CC430011D406 /* InstructorsUtils.swift */; };
+		CA99B54922F1948C00A2C7BC /* MicrotasksUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E9122E5CC430011D406 /* MicrotasksUtils.swift */; };
+		CA99B54A22F1948C00A2C7BC /* RubricsUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E8E22E5CC430011D406 /* RubricsUtils.swift */; };
+		CA99B54B22F1948C00A2C7BC /* SkillSetsUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E8F22E5CC430011D406 /* SkillSetsUtils.swift */; };
+		CA99B54C22F1948C00A2C7BC /* StudentMicrotaskGradesUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E9222E5CC430011D406 /* StudentMicrotaskGradesUtils.swift */; };
+		CA99B54D22F1948C00A2C7BC /* StudentsUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E9422E5CC430011D406 /* StudentsUtils.swift */; };
+		CA99B54E22F1948C00A2C7BC /* EntityUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E9E22E5CE2D0011D406 /* EntityUtils.swift */; };
+		CA99B54F22F1948F00A2C7BC /* Predicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5B70D122F18C1200EE6C95 /* Predicate.swift */; };
+		CA99B55122F1954F00A2C7BC /* MockPersistentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA99B55022F1954F00A2C7BC /* MockPersistentContainer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,11 +48,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CA5B70D122F18C1200EE6C95 /* Predicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Predicate.swift; sourceTree = "<group>"; };
 		CA749E6E22E5B2370011D406 /* AssessmentDatabase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AssessmentDatabase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA749E7122E5B2370011D406 /* AssessmentDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssessmentDatabase.h; sourceTree = "<group>"; };
 		CA749E7222E5B2370011D406 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA749E7722E5B2370011D406 /* AssessmentDatabaseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AssessmentDatabaseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CA749E7C22E5B2370011D406 /* DatabaseManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManagerTest.swift; sourceTree = "<group>"; };
+		CA749E7C22E5B2370011D406 /* EntityUtilsMethodsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityUtilsMethodsTest.swift; sourceTree = "<group>"; };
 		CA749E7E22E5B2370011D406 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA749E8922E5B24A0011D406 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		CA749E8B22E5B87F0011D406 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
@@ -51,6 +66,7 @@
 		CA749E9422E5CC430011D406 /* StudentsUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentsUtils.swift; sourceTree = "<group>"; };
 		CA749E9522E5CC430011D406 /* AssessmentsUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssessmentsUtils.swift; sourceTree = "<group>"; };
 		CA749E9E22E5CE2D0011D406 /* EntityUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityUtils.swift; sourceTree = "<group>"; };
+		CA99B55022F1954F00A2C7BC /* MockPersistentContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPersistentContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +109,7 @@
 		CA749E7022E5B2370011D406 /* AssessmentDatabase */ = {
 			isa = PBXGroup;
 			children = (
+				CA5B70D122F18C1200EE6C95 /* Predicate.swift */,
 				CA749E8D22E5C9210011D406 /* Utils */,
 				CA749E7122E5B2370011D406 /* AssessmentDatabase.h */,
 				CA749E7222E5B2370011D406 /* Info.plist */,
@@ -105,8 +122,9 @@
 		CA749E7B22E5B2370011D406 /* AssessmentDatabaseTests */ = {
 			isa = PBXGroup;
 			children = (
-				CA749E7C22E5B2370011D406 /* DatabaseManagerTest.swift */,
+				CA749E7C22E5B2370011D406 /* EntityUtilsMethodsTest.swift */,
 				CA749E7E22E5B2370011D406 /* Info.plist */,
+				CA99B55022F1954F00A2C7BC /* MockPersistentContainer.swift */,
 			);
 			path = AssessmentDatabaseTests;
 			sourceTree = "<group>";
@@ -243,6 +261,7 @@
 				CA749E9822E5CC440011D406 /* InstructorsUtils.swift in Sources */,
 				CA749E9B22E5CC440011D406 /* GradesUtils.swift in Sources */,
 				CA749E9F22E5CE2D0011D406 /* EntityUtils.swift in Sources */,
+				CA99B54322F18E9800A2C7BC /* Predicate.swift in Sources */,
 				CA749E9A22E5CC440011D406 /* StudentMicrotaskGradesUtils.swift in Sources */,
 				CA749E8C22E5B87F0011D406 /* DatabaseManager.swift in Sources */,
 				CA749E9722E5CC440011D406 /* SkillSetsUtils.swift in Sources */,
@@ -254,7 +273,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CA749E7D22E5B2370011D406 /* DatabaseManagerTest.swift in Sources */,
+				CA99B55122F1954F00A2C7BC /* MockPersistentContainer.swift in Sources */,
+				CA99B54B22F1948C00A2C7BC /* SkillSetsUtils.swift in Sources */,
+				CA99B54F22F1948F00A2C7BC /* Predicate.swift in Sources */,
+				CA99B54A22F1948C00A2C7BC /* RubricsUtils.swift in Sources */,
+				CA99B54D22F1948C00A2C7BC /* StudentsUtils.swift in Sources */,
+				CA749E7D22E5B2370011D406 /* EntityUtilsMethodsTest.swift in Sources */,
+				CA99B54422F1947500A2C7BC /* DataModel.xcdatamodeld in Sources */,
+				CA99B54522F1947700A2C7BC /* DatabaseManager.swift in Sources */,
+				CA99B54E22F1948C00A2C7BC /* EntityUtils.swift in Sources */,
+				CA99B54722F1948C00A2C7BC /* GradesUtils.swift in Sources */,
+				CA99B54922F1948C00A2C7BC /* MicrotasksUtils.swift in Sources */,
+				CA99B54822F1948C00A2C7BC /* InstructorsUtils.swift in Sources */,
+				CA99B54622F1948C00A2C7BC /* AssessmentsUtils.swift in Sources */,
+				CA99B54C22F1948C00A2C7BC /* StudentMicrotaskGradesUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

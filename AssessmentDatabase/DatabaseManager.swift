@@ -20,6 +20,17 @@ final public class DatabaseManager {
         }
     }()
     
+    public lazy var assessments = AssessmentsUtils(with: self.persistentContainer)
+    public lazy var grades = GradesUtils(with: self.persistentContainer)
+    public lazy var instructors = InstructorsUtils()
+    public lazy var microtasks = MicrotasksUtils()
+    public lazy var rubrics = RubricsUtils()
+    public lazy var skillSets = SkillSetsUtils()
+    public lazy var students = StudentsUtils()
+    public lazy var studentMicrotaskGrades = StudentMicrotaskGradesUtils()
+    
+    private init() {}
+    
     public func getInitializedPersistentContainer(named: String = "DataModel") throws -> NSPersistentContainer {
         let container = NSPersistentContainer(name: "DataModel")
         var errorToThrow: Error?
@@ -34,13 +45,4 @@ final public class DatabaseManager {
             return container
         }
     }
-    
-    public let assessments = AssessmentsUtils()
-    public let grades = GradesUtils()
-    public let instructors = InstructorsUtils()
-    public let microtasks = MicrotasksUtils()
-    public let rubrics = RubricsUtils()
-    public let skillSets = SkillSetsUtils()
-    public let students = StudentsUtils()
-    public let studentMicrotaskGrades = StudentMicrotaskGradesUtils()
 }
