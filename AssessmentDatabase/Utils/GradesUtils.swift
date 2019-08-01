@@ -3,39 +3,21 @@ import CoreData
 
 public class GradesUtils: EntityUtils {
     public typealias EntityType = Grade
-    public typealias EntityValueFields = GradeValueFields
+    public typealias EntityValueFields = GradeFields
     
     public var container: NSPersistentContainer
+    public lazy var backgroundContext = container.newBackgroundContext()
     
     public init(with container: NSPersistentContainer) {
         self.container = container
     }
     
-    public func copyFields(from item: GradeValueFields, to entity: Grade) {
-        fatalError()
+    public func copyFields(from item: GradeFields, to entity: Grade) {
+        entity.sid = Int64(item.sid)
+        entity.title = item.title
     }
     
-    public func save(item: GradeValueFields) {
-        fatalError()
-    }
-    
-    public func save(items: [GradeValueFields]) {
-        fatalError()
-    }
-    
-    public func delete(item: GradeValueFields) {
-        fatalError()
-    }
-    
-    public func delete(items: [GradeValueFields]) {
-        fatalError()
-    }
-    
-    public func update(item: GradeValueFields) {
-        fatalError()
-    }
-    
-    public func update(items: [GradeValueFields]) {
-        fatalError()
+    public func setRelations(of entity: Grade, like item: GradeFields) throws {
+        #warning("Nothing is implemented")
     }
 }

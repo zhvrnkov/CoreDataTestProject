@@ -6,29 +6,18 @@ public class RubricsUtils: EntityUtils {
     public typealias EntityValueFields = RubricFields
     
     public var container: NSPersistentContainer
+    public lazy var backgroundContext = container.newBackgroundContext()
     
     public init(with container: NSPersistentContainer) {
         self.container = container
     }
     
     public func copyFields(from item: RubricFields, to entity: Rubric) {
-        fatalError()
+        entity.sid = Int64(item.sid)
     }
     
-    public func save(item: RubricFields) {
-        fatalError()
-    }
-    
-    public func save(items: [RubricFields]) {
-        fatalError()
-    }
-    
-    public func delete(item: RubricFields) {
-        fatalError()
-    }
-    
-    public func delete(items: [RubricFields]) {
-        fatalError()
+    public func setRelations(of entity: Rubric, like item: RubricFields) throws {
+        #warning("Nothing is implemented")
     }
     
     public func update(item: RubricFields) {

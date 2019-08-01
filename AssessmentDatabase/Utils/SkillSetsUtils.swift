@@ -6,6 +6,7 @@ public class SkillSetsUtils: EntityUtils {
     public typealias EntityValueFields = SkillSetValueFields
     
     public var container: NSPersistentContainer
+    public lazy var backgroundContext = container.newBackgroundContext()
     
     public init(with container: NSPersistentContainer) {
         self.container = container
@@ -15,19 +16,7 @@ public class SkillSetsUtils: EntityUtils {
         fatalError()
     }
     
-    public func save(item: SkillSetValueFields) {
-        fatalError()
-    }
-    
-    public func save(items: [SkillSetValueFields]) {
-        fatalError()
-    }
-    
-    public func delete(item: SkillSetValueFields) {
-        fatalError()
-    }
-    
-    public func delete(items: [SkillSetValueFields]) {
+    public func setRelations(of entity: SkillSet, like item: SkillSetValueFields) throws {
         fatalError()
     }
     

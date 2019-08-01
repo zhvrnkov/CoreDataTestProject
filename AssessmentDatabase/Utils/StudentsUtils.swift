@@ -6,29 +6,18 @@ public class StudentsUtils: EntityUtils {
     public typealias EntityValueFields = StudentFields
     
     public var container: NSPersistentContainer
+    public lazy var backgroundContext = container.newBackgroundContext()
     
     public init(with container: NSPersistentContainer) {
         self.container = container
     }
     
     public func copyFields(from item: StudentFields, to entity: Student) {
-        fatalError()
+        entity.sid = Int64(item.sid)
     }
     
-    public func save(item: StudentFields) {
-        fatalError()
-    }
-    
-    public func save(items: [StudentFields]) {
-        fatalError()
-    }
-    
-    public func delete(item: StudentFields) {
-        fatalError()
-    }
-    
-    public func delete(items: [StudentFields]) {
-        fatalError()
+    public func setRelations(of entity: Student, like item: StudentFields) throws {
+        #warning("Nothing is implemented")
     }
     
     public func update(item: StudentFields) {

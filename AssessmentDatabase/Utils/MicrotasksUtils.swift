@@ -6,6 +6,7 @@ public class MicrotasksUtils: EntityUtils {
     public typealias EntityValueFields = MicrotaskValueFields
     
     public var container: NSPersistentContainer
+    public lazy var backgroundContext = container.newBackgroundContext()
     
     public init(with container: NSPersistentContainer) {
         self.container = container
@@ -15,19 +16,7 @@ public class MicrotasksUtils: EntityUtils {
         fatalError()
     }
     
-    public func save(item: MicrotaskValueFields) {
-        fatalError()
-    }
-    
-    public func save(items: [MicrotaskValueFields]) {
-        fatalError()
-    }
-    
-    public func delete(item: MicrotaskValueFields) {
-        fatalError()
-    }
-    
-    public func delete(items: [MicrotaskValueFields]) {
+    public func setRelations(of entity: Microtask, like item: MicrotaskValueFields) throws {
         fatalError()
     }
     

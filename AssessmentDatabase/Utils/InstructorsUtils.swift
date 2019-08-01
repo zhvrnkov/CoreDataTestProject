@@ -6,6 +6,7 @@ public class InstructorsUtils: EntityUtils {
     public typealias EntityValueFields = InstructorValueFields
     
     public var container: NSPersistentContainer
+    public lazy var backgroundContext = container.newBackgroundContext()
     
     public init(with container: NSPersistentContainer) {
         self.container = container
@@ -15,19 +16,7 @@ public class InstructorsUtils: EntityUtils {
         fatalError()
     }
     
-    public func save(item: InstructorValueFields) {
-        fatalError()
-    }
-    
-    public func save(items: [InstructorValueFields]) {
-        fatalError()
-    }
-    
-    public func delete(item: InstructorValueFields) {
-        fatalError()
-    }
-    
-    public func delete(items: [InstructorValueFields]) {
+    public func setRelations(of entity: Instructor, like item: InstructorValueFields) throws {
         fatalError()
     }
     
