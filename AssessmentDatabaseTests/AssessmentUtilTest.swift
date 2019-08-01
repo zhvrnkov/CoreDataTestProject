@@ -23,8 +23,8 @@ final class AssessmentUtilTest: XCTestCase {
     
     override func tearDown() {
         super.tearDown()
-        This.rubricUtil.delete(whereSids:
-            mockRubrics.map { $0.sid })
+        XCTAssertNoThrow(try This.rubricUtil.delete(whereSids:
+            mockRubrics.map { $0.sid }))
     }
     
     func testSaveItem() {

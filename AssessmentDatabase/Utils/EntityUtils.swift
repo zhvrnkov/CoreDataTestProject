@@ -38,7 +38,7 @@ public protocol EntityUtils {
     func delete(whereSids sids: [Int]) throws
     
     func update(whereSid sid: Int, like item: EntityValueFields) throws
-    func update(items: [EntityValueFields]) throws
+//    func update(whereSids sids: [Int], like items: [EntityValueFields]) throws
 }
 
 public extension EntityUtils {
@@ -169,17 +169,29 @@ public extension EntityUtils {
         }
     }
     
-    func delete(whereSid sid: Int) {
+    func delete(whereSid sid: Int) throws {
         guard let entity = get(whereSid: sid) else {
             fatalError("No such entity to delete")
         }
-        backgroundContext.delete(entity)
+        let backgroundContextObject = backgroundContext.object(with: entity.objectID)
+        backgroundContext.delete(backgroundContextObject)
+        do {
+            try backgroundContext.save()
+        } catch {
+            throw error
+        }
     }
     
-    func delete(whereSids sids: [Int]) {
+    func delete(whereSids sids: [Int]) throws {
         let entities = get(whereSids: sids)
         entities.forEach {
-            backgroundContext.delete($0)
+            let backgroundContextObject = backgroundContext.object(with: $0.objectID)
+            backgroundContext.delete(backgroundContextObject)
+        }
+        do {
+            try backgroundContext.save()
+        } catch {
+            throw error
         }
     }
     
@@ -195,9 +207,21 @@ public extension EntityUtils {
         }
     }
     
-    func update(items: [EntityValueFields]) throws {
-        
-    }
+//    func update(whereSids sids: [Int], like items: [EntityValueFields]) throws {
+//        let entities = get(whereSids: sids)
+//        guard !entities.isEmpty else {
+//            throw EntityUtilsError.entityNotFound
+//        }
+//        let updateEntity: (EntityValueFields) throws -> Void = { item in
+//            guard let entity = entities.first(where: { Int($0.sid) == item.sid }) else {
+//                throw EntityUtilsError.entityNotFound
+//            }
+//            copyFields(from: item, to: )
+//        }
+//        try items.forEach { item in
+//
+//        }
+//    }
     
     func deleteAll() {
         let all = getAll()

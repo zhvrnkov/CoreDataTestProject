@@ -77,8 +77,9 @@ class EntityUtilsMethodsTest: XCTestCase {
     }
     
     func testWhereSids() {
-        let items = This.utils.get(whereSids: mockGrades.map { $0.sid })
-        XCTAssertEqual(items.count, mockGrades.count)
+        let mocks = mockGrades[0..<(mockGrades.count / 2)]
+        let items = This.utils.get(whereSids: mocks.map { $0.sid })
+        XCTAssertEqual(items.count, mocks.count)
     }
     
     func testAsyncWhereSids() {
@@ -95,6 +96,19 @@ class EntityUtilsMethodsTest: XCTestCase {
         wait(for: [exp], timeout: 10)
     }
     
+    func testDeleteWhereSid() {
+        let item = mockGrades[0]
+        XCTAssertNoThrow(try This.utils.delete(whereSid: item.sid))
+        This.utils.getAll().forEach {
+            XCTAssertNotEqual(Int($0.sid), item.sid)
+        }
+    }
+    
+    func testDeleteWhereSids() {
+        XCTAssertNoThrow(try This.utils.delete(whereSids: mockGrades.map { $0.sid }))
+        XCTAssertTrue(This.utils.getAll().isEmpty)
+    }
+    
     func testUpdate() {
         var toUpdate = mockGrades[0]
         toUpdate.title = "Ipsum Lorem"
@@ -105,6 +119,23 @@ class EntityUtilsMethodsTest: XCTestCase {
         }
         compareItem(toUpdate, entity)
     }
+    
+//    func testUpdateMany() {
+//        var toUpdate = Array(mockGrades[0...2])
+//        toUpdate[0].title = "Lorem Upsum"
+//        toUpdate[1].title = "Datur Fixum"
+//        toUpdate[2].title = "Ergo sum"
+//        XCTAssertNoThrow(try This.utils.update(whereSids: toUpdate.map { $0.sid }, like: toUpdate))
+//        let entities = This.utils.get(whereSids: toUpdate.map { $0.sid })
+//        XCTAssertFalse(entities.isEmpty)
+//        toUpdate.forEach { item in
+//            guard let entity = entities.first(where: { Int($0.sid) == item.sid }) else {
+//                XCTFail()
+//                return
+//            }
+//            compareItem(item, entity)
+//        }
+//    }
     
     func compareItem(_ item: MockGradeFields, _ entity: Grade) {
         XCTAssertEqual(item.sid, Int(entity.sid))
