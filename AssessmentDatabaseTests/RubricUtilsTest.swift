@@ -9,25 +9,39 @@
 import XCTest
 
 class RubricUtilsTest: XCTestCase {
+    typealias This = RubricUtilsTest
+    static let util = RubricsUtils(with: getMockPersistentContainer())
+    static let context = util.container.viewContext
 
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func testSaveItem() {
+        let item = mockRubrics[0]
+        XCTAssertNoThrow(try This.util.save(item: item))
+        compareItems([item], This.util.getAll())
     }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    func testSaveItems() {
+        let items = Array(mockRubrics[1..<mockRubrics.count])
+        XCTAssertNoThrow(try This.util.save(items: items))
+        compareItems(mockRubrics, This.util.getAll())
     }
-
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    
+    private func compareItems(
+        _ items: [MockRubricFields],
+        _ entities: [Rubric]
+    ) {
+        XCTAssertEqual(items.count, entities.count)
+        for index in items.indices {
+            let item = items[index]
+            guard let entity = entities.first(where: { Int($0.sid) == item.sid })
+            else {
+                XCTFail("entity is nil")
+                return
+            }
+            compareItem(item, entity)
         }
     }
-
+    
+    private func compareItem(_ item: MockRubricFields, _ entity: Rubric) {
+        
+    }
 }
