@@ -20,7 +20,7 @@ final public class DatabaseManager {
         }
     }()
     
-    public lazy var assessments = AssessmentsUtils(with: self.persistentContainer)
+    public lazy var assessments = AssessmentsUtils(container: self.persistentContainer, studentsUtils: students, rubricsUtils: rubrics)
     public lazy var grades = GradesUtils(with: self.persistentContainer)
     public lazy var instructors = InstructorsUtils(with: self.persistentContainer)
     public lazy var microtasks = MicrotasksUtils(with: self.persistentContainer)

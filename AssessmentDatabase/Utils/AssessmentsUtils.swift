@@ -8,8 +8,17 @@ public class AssessmentsUtils: EntityUtils {
     public var container: NSPersistentContainer
     public lazy var backgroundContext = container.newBackgroundContext()
     
-    public init(with container: NSPersistentContainer) {
+    public var studentsUtils: StudentsUtils
+    public var rubricsUtils: RubricsUtils
+    
+    public init(
+        container: NSPersistentContainer,
+        studentsUtils: StudentsUtils,
+        rubricsUtils: RubricsUtils
+    ) {
         self.container = container
+        self.studentsUtils = studentsUtils
+        self.rubricsUtils = rubricsUtils
     }
     
     public func update(item: AssessmentFields) {
@@ -39,7 +48,7 @@ public class AssessmentsUtils: EntityUtils {
     }
     
     private func set(students: [StudentFields], of assessment: Assessment) throws {
-        let savedStudents = DatabaseManager.shared.students.get(whereSids: students.map { $0.sid })
+        let savedStudents = studentsUtils.get(whereSids: students.map { $0.sid })
         if !savedStudents.isEmpty {
             assessment.addToStudents(NSSet(array: savedStudents))
         } else {
@@ -48,11 +57,14 @@ public class AssessmentsUtils: EntityUtils {
     }
     
     private func set(rubric: RubricFields, of assessment: Assessment) throws {
-        guard let rubric = DatabaseManager.shared.rubrics.get(whereSid: rubric.sid)
+        guard let rubric = rubricsUtils.get(whereSid: rubric.sid),
+            let backgroundContextRubric = backgroundContext.object(with: rubric.objectID) as? Rubric
         else {
             throw Errors.rubricNotFound
         }
-        assessment.rubric = rubric
+        backgroundContextRubric.addToAssessments(assessment)
+        assessment.rubric = backgroundContextRubric
+//        assessment.rubric = backgroundContextRubric
     }
     
     public enum Errors: Error {
