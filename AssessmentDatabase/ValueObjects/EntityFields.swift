@@ -7,3 +7,7 @@
 //
 
 import Foundation
+
+public protocol EntityFields {
+    var sid: Int { get set }
+}

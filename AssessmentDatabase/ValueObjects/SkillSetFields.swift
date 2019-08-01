@@ -9,5 +9,5 @@
 import Foundation
 
 public protocol SkillSetValueFields {
-    
+    var sid: Int { get set }
 }

@@ -9,5 +9,5 @@
 import Foundation
 
 public protocol StudentFields {
-    
+    var sid: Int { get set }
 }

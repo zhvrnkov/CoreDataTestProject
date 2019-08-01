@@ -8,6 +8,7 @@
 
 import Foundation
 
-public protocol GradeValueFields {
-    
+public protocol GradeFields {
+    var sid: Int { get set }
+    var title: String { get set }
 }

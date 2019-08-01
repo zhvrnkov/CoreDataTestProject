@@ -9,5 +9,5 @@
 import Foundation
 
 public protocol InstructorValueFields {
-    
+    var sid: Int { get set }
 }

@@ -9,5 +9,5 @@
 import Foundation
 
 public protocol MicrotaskValueFields {
-    
+    var sid: Int { get set }
 }

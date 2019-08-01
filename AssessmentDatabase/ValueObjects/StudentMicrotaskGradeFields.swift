@@ -9,5 +9,5 @@
 import Foundation
 
 public protocol StudentMicrotaskGradeValueFields {
-    
+    var sid: Int { get set }
 }

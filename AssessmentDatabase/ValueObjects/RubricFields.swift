@@ -9,5 +9,5 @@
 import Foundation
 
 public protocol RubricFields {
-    
+    var sid: Int { get set }
 }
