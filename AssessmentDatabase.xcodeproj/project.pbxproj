@@ -25,6 +25,7 @@
 		CA4CCCC522F1ACA500859D7E /* StudentFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4CCCB422F1AC9200859D7E /* StudentFields.swift */; };
 		CA4CCD1522F1B07F00859D7E /* AssessmentUtilTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4CCD1422F1B07F00859D7E /* AssessmentUtilTest.swift */; };
 		CA4CCD1722F1B2CF00859D7E /* MockValueFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4CCD1622F1B2CF00859D7E /* MockValueFields.swift */; };
+		CA4FC54F22F2CED3005BE45F /* StudentsUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4FC54E22F2CED3005BE45F /* StudentsUtilsTest.swift */; };
 		CA749E7822E5B2370011D406 /* AssessmentDatabase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA749E6E22E5B2370011D406 /* AssessmentDatabase.framework */; };
 		CA749E7D22E5B2370011D406 /* EntityUtilsMethodsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E7C22E5B2370011D406 /* EntityUtilsMethodsTest.swift */; };
 		CA749E7F22E5B2370011D406 /* AssessmentDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = CA749E7122E5B2370011D406 /* AssessmentDatabase.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -53,6 +54,11 @@
 		CA99B54E22F1948C00A2C7BC /* EntityUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E9E22E5CE2D0011D406 /* EntityUtils.swift */; };
 		CA99B54F22F1948F00A2C7BC /* Predicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5B70D122F18C1200EE6C95 /* Predicate.swift */; };
 		CA99B55122F1954F00A2C7BC /* MockPersistentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA99B55022F1954F00A2C7BC /* MockPersistentContainer.swift */; };
+		CAEDF67722F2DE4700087D60 /* EntityFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAEDF67622F2DE4700087D60 /* EntityFields.swift */; };
+		CAEDF67822F2DE6E00087D60 /* EntityFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAEDF67622F2DE4700087D60 /* EntityFields.swift */; };
+		CAEDF67A22F2E6CF00087D60 /* RubricUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAEDF67922F2E6CF00087D60 /* RubricUtilsTest.swift */; };
+		CAEDF67D22F2FD7F00087D60 /* EntityUtilsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAEDF67C22F2FD7F00087D60 /* EntityUtilsError.swift */; };
+		CAEDF67E22F2FD9700087D60 /* EntityUtilsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAEDF67C22F2FD7F00087D60 /* EntityUtilsError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +82,7 @@
 		CA4CCCB422F1AC9200859D7E /* StudentFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentFields.swift; sourceTree = "<group>"; };
 		CA4CCD1422F1B07F00859D7E /* AssessmentUtilTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssessmentUtilTest.swift; sourceTree = "<group>"; };
 		CA4CCD1622F1B2CF00859D7E /* MockValueFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockValueFields.swift; sourceTree = "<group>"; };
+		CA4FC54E22F2CED3005BE45F /* StudentsUtilsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentsUtilsTest.swift; sourceTree = "<group>"; };
 		CA5B70D122F18C1200EE6C95 /* Predicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Predicate.swift; sourceTree = "<group>"; };
 		CA749E6E22E5B2370011D406 /* AssessmentDatabase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AssessmentDatabase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA749E7122E5B2370011D406 /* AssessmentDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssessmentDatabase.h; sourceTree = "<group>"; };
@@ -95,6 +102,9 @@
 		CA749E9522E5CC430011D406 /* AssessmentsUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssessmentsUtils.swift; sourceTree = "<group>"; };
 		CA749E9E22E5CE2D0011D406 /* EntityUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityUtils.swift; sourceTree = "<group>"; };
 		CA99B55022F1954F00A2C7BC /* MockPersistentContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPersistentContainer.swift; sourceTree = "<group>"; };
+		CAEDF67622F2DE4700087D60 /* EntityFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityFields.swift; sourceTree = "<group>"; };
+		CAEDF67922F2E6CF00087D60 /* RubricUtilsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RubricUtilsTest.swift; sourceTree = "<group>"; };
+		CAEDF67C22F2FD7F00087D60 /* EntityUtilsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityUtilsError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +137,7 @@
 				CA4CCCB022F1AC3E00859D7E /* SkillSetFields.swift */,
 				CA4CCCB222F1AC8000859D7E /* StudentMicrotaskGradeFields.swift */,
 				CA4CCCB422F1AC9200859D7E /* StudentFields.swift */,
+				CAEDF67622F2DE4700087D60 /* EntityFields.swift */,
 			);
 			path = ValueObjects;
 			sourceTree = "<group>";
@@ -152,6 +163,7 @@
 		CA749E7022E5B2370011D406 /* AssessmentDatabase */ = {
 			isa = PBXGroup;
 			children = (
+				CAEDF67B22F2FD7000087D60 /* Helpers */,
 				CA749E7222E5B2370011D406 /* Info.plist */,
 				CA4CCCA122F1A7AA00859D7E /* ValueObjects */,
 				CA5B70D122F18C1200EE6C95 /* Predicate.swift */,
@@ -167,9 +179,11 @@
 			children = (
 				CA749E7E22E5B2370011D406 /* Info.plist */,
 				CA99B55022F1954F00A2C7BC /* MockPersistentContainer.swift */,
+				CA4CCD1622F1B2CF00859D7E /* MockValueFields.swift */,
 				CA749E7C22E5B2370011D406 /* EntityUtilsMethodsTest.swift */,
 				CA4CCD1422F1B07F00859D7E /* AssessmentUtilTest.swift */,
-				CA4CCD1622F1B2CF00859D7E /* MockValueFields.swift */,
+				CA4FC54E22F2CED3005BE45F /* StudentsUtilsTest.swift */,
+				CAEDF67922F2E6CF00087D60 /* RubricUtilsTest.swift */,
 			);
 			path = AssessmentDatabaseTests;
 			sourceTree = "<group>";
@@ -197,6 +211,14 @@
 				CA749E8822E5B24A0011D406 /* DataModel.xcdatamodeld */,
 			);
 			path = "Supporting FIles";
+			sourceTree = "<group>";
+		};
+		CAEDF67B22F2FD7000087D60 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				CAEDF67C22F2FD7F00087D60 /* EntityUtilsError.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -327,6 +349,8 @@
 				CA749E9722E5CC440011D406 /* SkillSetsUtils.swift in Sources */,
 				CA4CCCA922F1ABC700859D7E /* GradeFields.swift in Sources */,
 				CA4CCCB122F1AC3E00859D7E /* SkillSetFields.swift in Sources */,
+				CAEDF67D22F2FD7F00087D60 /* EntityUtilsError.swift in Sources */,
+				CAEDF67722F2DE4700087D60 /* EntityFields.swift in Sources */,
 				CA749E8A22E5B24A0011D406 /* DataModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -338,12 +362,16 @@
 				CA4CCCC022F1ACA500859D7E /* InstructorFields.swift in Sources */,
 				CA99B55122F1954F00A2C7BC /* MockPersistentContainer.swift in Sources */,
 				CA4CCCC522F1ACA500859D7E /* StudentFields.swift in Sources */,
+				CAEDF67822F2DE6E00087D60 /* EntityFields.swift in Sources */,
 				CA99B54B22F1948C00A2C7BC /* SkillSetsUtils.swift in Sources */,
+				CAEDF67E22F2FD9700087D60 /* EntityUtilsError.swift in Sources */,
 				CA4CCCC322F1ACA500859D7E /* SkillSetFields.swift in Sources */,
+				CAEDF67A22F2E6CF00087D60 /* RubricUtilsTest.swift in Sources */,
 				CA99B54F22F1948F00A2C7BC /* Predicate.swift in Sources */,
 				CA4CCCC222F1ACA500859D7E /* RubricFields.swift in Sources */,
 				CA99B54A22F1948C00A2C7BC /* RubricsUtils.swift in Sources */,
 				CA99B54D22F1948C00A2C7BC /* StudentsUtils.swift in Sources */,
+				CA4FC54F22F2CED3005BE45F /* StudentsUtilsTest.swift in Sources */,
 				CA4CCCBF22F1ACA500859D7E /* GradeFields.swift in Sources */,
 				CA749E7D22E5B2370011D406 /* EntityUtilsMethodsTest.swift in Sources */,
 				CA99B54422F1947500A2C7BC /* DataModel.xcdatamodeld in Sources */,
@@ -499,9 +527,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 8J36HRS7L3;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -528,6 +557,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 8J36HRS7L3;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -551,6 +581,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8J36HRS7L3;
 				INFOPLIST_FILE = AssessmentDatabaseTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -569,6 +600,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8J36HRS7L3;
 				INFOPLIST_FILE = AssessmentDatabaseTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
