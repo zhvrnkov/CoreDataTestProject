@@ -8,6 +8,8 @@
 
 import Foundation
 
+let count = (0..<7)
+
 struct MockAssessmentFields: AssessmentFields {
     var sid: Int
     var date: Date
@@ -17,15 +19,32 @@ struct MockAssessmentFields: AssessmentFields {
 }
 
 struct MockStudentFields: StudentFields {
-    
+    var sid: Int
 }
 
 struct MockRubricFields: RubricFields {
-    
+    var sid: Int
 }
 
-let assessments: [MockAssessmentFields] = (0..<7).map {
-    let students = (0..<$0).map { _ in MockStudentFields() }
-    let rubric = MockRubricFields()
-    return MockAssessmentFields(sid: $0, date: Date(), schoolId: $0, students: students, rubric: rubric)
+struct MockGradeFields: GradeFields {
+    var sid: Int
+    var title: String
+}
+
+let mockAssessments: [MockAssessmentFields] = count.map {
+    let rubric = mockRubrics[$0]
+    let students = mockStudents
+    return MockAssessmentFields(sid: $0, date: Date(), schoolId: $0+1, students: students, rubric: rubric)
+}
+
+let mockStudents: [MockStudentFields] = count.map {
+    MockStudentFields(sid: $0)
+}
+
+let mockRubrics: [MockRubricFields] = count.map {
+    MockRubricFields(sid: $0)
+}
+
+let mockGrades: [MockGradeFields] = count.map {
+    MockGradeFields(sid: $0, title: "Lorem Ipsum")
 }
