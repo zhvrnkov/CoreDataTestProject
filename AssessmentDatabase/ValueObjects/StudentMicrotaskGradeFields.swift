@@ -10,4 +10,10 @@ import Foundation
 
 public protocol StudentMicrotaskGradeFields {
     var sid: Int { get set }
+    
+    var assessment: AssessmentFields { get set }
+    var grade: GradeFields { get set }
+    #warning("")
+//    var microTask: MicrotaskFields { get set }
+    var student: StudentFields { get set }
 }
