@@ -12,6 +12,7 @@ class InstructorUtilsTest: XCTestCase {
     typealias This = InstructorUtilsTest
     static let container = getMockPersistentContainer()
     static let util = InstructorsUtils(with: container)
+    private let mockInstructors = Mocks.mockInstructors
 
     override func setUp() {
         super.setUp()

@@ -12,11 +12,24 @@ class StudentsUtilsTest: XCTestCase {
     typealias This = StudentsUtilsTest
     static let util = StudentsUtils(with: getMockPersistentContainer())
     static let context = util.container.viewContext
+    private let mockStudents = Mocks.mockStudents
+    
+    override func tearDown() {
+        super.tearDown()
+        This.util.deleteAll()
+        XCTAssertTrue(This.util.getAll().isEmpty)
+    }
     
     func testSaveItem() {
         let item = mockStudents[0]
         XCTAssertNoThrow(try This.util.save(item: item))
         compareItems([item], This.util.getAll())
+    }
+    
+    func testSaveItems() {
+        let items = Array(mockStudents[1..<mockStudents.count])
+        XCTAssertNoThrow(try This.util.save(items: items))
+        compareItems(items, This.util.getAll())
     }
     
     private func compareItems(_ items: [MockStudentFields], _ entities: [Student]) {

@@ -12,6 +12,7 @@ class RubricUtilsTest: XCTestCase {
     typealias This = RubricUtilsTest
     static let util = RubricsUtils(with: getMockPersistentContainer())
     static let context = util.container.viewContext
+    private let mockRubrics = Mocks.mockRubrics
 
     func testSaveItem() {
         let item = mockRubrics[0]

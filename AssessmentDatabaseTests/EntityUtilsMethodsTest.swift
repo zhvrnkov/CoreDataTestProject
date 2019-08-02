@@ -13,6 +13,7 @@ class EntityUtilsMethodsTest: XCTestCase {
     typealias This = EntityUtilsMethodsTest
     static var utils: GradesUtils = .init(with: getMockPersistentContainer())
     static let context = This.utils.container.viewContext
+    private let mockGrades = Mocks.mockGrades
     
     override func setUp() {
         super.setUp()
@@ -26,7 +27,7 @@ class EntityUtilsMethodsTest: XCTestCase {
     }
     
     func testThatPersistentContainerIsSetted() {
-        XCTAssertNoThrow(try DatabaseManager.shared.getInitializedPersistentContainer())
+        XCTAssertNoThrow(try DatabaseManager.getInitializedPersistentContainer())
     }
     
     func testGetAll() {
@@ -45,7 +46,7 @@ class EntityUtilsMethodsTest: XCTestCase {
         This.utils.asyncGetAll { result in
             switch result {
             case .success(let grades):
-                XCTAssertEqual(grades.count, mockGrades.count)
+                XCTAssertEqual(grades.count, self.mockGrades.count)
             case .failure(let error):
                 XCTFail(error.localizedDescription)
             }
@@ -91,7 +92,7 @@ class EntityUtilsMethodsTest: XCTestCase {
             switch result {
             case .success(let output):
                 XCTAssertNotNil(output)
-                XCTAssertEqual(output?.sid, Int64(mockGrades[0].sid))
+                XCTAssertEqual(output?.sid, Int64(self.mockGrades[0].sid))
             case .failure(let error):
                 XCTFail(error.localizedDescription)
             }
@@ -111,7 +112,7 @@ class EntityUtilsMethodsTest: XCTestCase {
         This.utils.asyncGet(whereSids: mockGrades.map { $0.sid }) { result in
             switch result {
             case .success(let output):
-                XCTAssertEqual(output.count, mockGrades.count)
+                XCTAssertEqual(output.count, self.mockGrades.count)
             case .failure(let error):
                 XCTFail(error.localizedDescription)
             }
