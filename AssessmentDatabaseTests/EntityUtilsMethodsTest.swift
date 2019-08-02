@@ -22,13 +22,14 @@ class EntityUtilsMethodsTest: XCTestCase {
     override func tearDown() {
         super.tearDown()
         This.utils.deleteAll()
+        XCTAssertEqual(This.utils.getAll().count, 0)
     }
     
     func testThatPersistentContainerIsSetted() {
         XCTAssertNoThrow(try DatabaseManager.shared.getInitializedPersistentContainer())
     }
     
-    func testNumberOfItems() {
+    func testGetAll() {
         let grades = This.utils.getAll()
         XCTAssertEqual(grades.count, mockGrades.count)
         mockGrades.forEach { item in
@@ -39,7 +40,7 @@ class EntityUtilsMethodsTest: XCTestCase {
         }
     }
     
-    func testAsyncNumberOfItems() {
+    func testAsynGetAll() {
         let expectation = XCTestExpectation(description: "")
         This.utils.asyncGetAll { result in
             switch result {
@@ -53,7 +54,30 @@ class EntityUtilsMethodsTest: XCTestCase {
         wait(for: [expectation], timeout: 10)
     }
     
-    func testWhereSid() {
+    func testGetWherePredicate() {
+        let item = mockGrades[0]
+        let predicate = Predicate(format: "sid==%d", arguments: [item.sid])
+        let entities = This.utils.get(where: predicate)
+        compareItems([item], entities)
+    }
+    
+    func testAsyncGetWherePredicate() {
+        let item = mockGrades[mockGrades.count - 1]
+        let predicate = Predicate(format: "sid==%d", arguments: [item.sid])
+        let exp = XCTestExpectation(description: "check entity in async get method")
+        This.utils.asyncGet(where: predicate) { result in
+            switch result {
+            case .success(let data):
+                self.compareItems([item], data)
+            case .failure(let error):
+                XCTFail(error.localizedDescription)
+            }
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 10)
+    }
+    
+    func testGetWhereSid() {
         mockGrades.forEach {
             let item = This.utils.get(whereSid: $0.sid)
             XCTAssertNotNil(item)
@@ -61,7 +85,7 @@ class EntityUtilsMethodsTest: XCTestCase {
         }
     }
     
-    func testAsyncWhereSid() {
+    func testAsyncGetWhereSid() {
         let exp = XCTestExpectation(description: "")
         This.utils.asyncGet(whereSid: mockGrades[0].sid) { result in
             switch result {
@@ -76,13 +100,13 @@ class EntityUtilsMethodsTest: XCTestCase {
         wait(for: [exp], timeout: 10)
     }
     
-    func testWhereSids() {
+    func testGetWhereSids() {
         let mocks = mockGrades[0..<(mockGrades.count / 2)]
         let items = This.utils.get(whereSids: mocks.map { $0.sid })
         XCTAssertEqual(items.count, mocks.count)
     }
     
-    func testAsyncWhereSids() {
+    func testAsyncGetWhereSids() {
         let exp = XCTestExpectation(description: "")
         This.utils.asyncGet(whereSids: mockGrades.map { $0.sid }) { result in
             switch result {
@@ -94,6 +118,12 @@ class EntityUtilsMethodsTest: XCTestCase {
             exp.fulfill()
         }
         wait(for: [exp], timeout: 10)
+    }
+    
+    func testSaveItem() {
+        let item = mockGrades[0]
+        XCTAssertNoThrow(try This.utils.save(item: item))
+        XCTAssertEqual(This.utils.getAll().count, mockGrades.count + 1)
     }
     
     func testDeleteWhereSid() {
@@ -120,22 +150,17 @@ class EntityUtilsMethodsTest: XCTestCase {
         compareItem(toUpdate, entity)
     }
     
-//    func testUpdateMany() {
-//        var toUpdate = Array(mockGrades[0...2])
-//        toUpdate[0].title = "Lorem Upsum"
-//        toUpdate[1].title = "Datur Fixum"
-//        toUpdate[2].title = "Ergo sum"
-//        XCTAssertNoThrow(try This.utils.update(whereSids: toUpdate.map { $0.sid }, like: toUpdate))
-//        let entities = This.utils.get(whereSids: toUpdate.map { $0.sid })
-//        XCTAssertFalse(entities.isEmpty)
-//        toUpdate.forEach { item in
-//            guard let entity = entities.first(where: { Int($0.sid) == item.sid }) else {
-//                XCTFail()
-//                return
-//            }
-//            compareItem(item, entity)
-//        }
-//    }
+    func compareItems(_ items: [MockGradeFields], _ entities: [Grade]) {
+        XCTAssertEqual(items.count, entities.count)
+        for index in items.indices {
+            let item = items[index]
+            guard let entity = entities.first(where: { Int($0.sid) == item.sid }) else {
+                XCTFail("can't found entity")
+                return
+            }
+            compareItem(item, entity)
+        }
+    }
     
     func compareItem(_ item: MockGradeFields, _ entity: Grade) {
         XCTAssertEqual(item.sid, Int(entity.sid))

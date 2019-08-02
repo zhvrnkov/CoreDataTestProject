@@ -38,7 +38,6 @@ public protocol EntityUtils {
     func delete(whereSids sids: [Int]) throws
     
     func update(whereSid sid: Int, like item: EntityValueFields) throws
-//    func update(whereSids sids: [Int], like items: [EntityValueFields]) throws
 }
 
 public extension EntityUtils {
@@ -206,22 +205,6 @@ public extension EntityUtils {
             throw error
         }
     }
-    
-//    func update(whereSids sids: [Int], like items: [EntityValueFields]) throws {
-//        let entities = get(whereSids: sids)
-//        guard !entities.isEmpty else {
-//            throw EntityUtilsError.entityNotFound
-//        }
-//        let updateEntity: (EntityValueFields) throws -> Void = { item in
-//            guard let entity = entities.first(where: { Int($0.sid) == item.sid }) else {
-//                throw EntityUtilsError.entityNotFound
-//            }
-//            copyFields(from: item, to: )
-//        }
-//        try items.forEach { item in
-//
-//        }
-//    }
     
     func deleteAll() {
         let all = getAll()
