@@ -64,7 +64,6 @@ public class AssessmentsUtils: EntityUtils {
         }
         backgroundContextRubric.addToAssessments(assessment)
         assessment.rubric = backgroundContextRubric
-//        assessment.rubric = backgroundContextRubric
     }
     
     public enum Errors: Error {

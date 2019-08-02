@@ -8,6 +8,6 @@
 
 import Foundation
 
-public protocol StudentMicrotaskGradeValueFields {
+public protocol StudentMicrotaskGradeFields {
     var sid: Int { get set }
 }

@@ -12,6 +12,9 @@ public protocol AssessmentFields {
     var sid: Int { get set }
     var date: Date { get set }
     var schoolId: Int { get set }
-    var students: [StudentFields] { get set }
+    
+    var instructor: InstructorFields { get set }
     var rubric: RubricFields { get set }
+    var studentMicrotaskGrades: [StudentMicrotaskGradeFields] { get set }
+    var students: [StudentFields] { get set }
 }

@@ -8,6 +8,6 @@
 
 import Foundation
 
-public protocol InstructorValueFields {
+public protocol InstructorFields {
     var sid: Int { get set }
 }

@@ -34,9 +34,11 @@ final class AssessmentUtilTest: XCTestCase {
     func testSaveItem() {
         let item = mockAssessments[0]
         XCTAssertNoThrow(try This.util.save(item: item))
-        let entity = This.util.get(whereSid: item.sid)
-        XCTAssertNotNil(entity)
-        compareItems([item], [entity!])
+        guard let entity = This.util.get(whereSid: item.sid) else {
+            XCTFail("can't find entity")
+            return
+        }
+        compareItems([item], [entity])
     }
     
     func testSaveItems() {
@@ -53,23 +55,43 @@ final class AssessmentUtilTest: XCTestCase {
                 XCTFail("entity is nil")
                 return
             }
-            XCTAssertNotNil(entity.rubric)
             compareItem(item, entity)
         }
     }
     
     func compareItem(_ item: AssessmentFields, _ entity: Assessment) {
-        XCTAssertEqual(item.sid, Int(entity.sid))
-        XCTAssertEqual(item.schoolId, Int(entity.schoolId))
-        XCTAssertEqual(item.date, entity.date)
+        checkFields(of: entity, source: item)
+        checkRelations(of: entity)
+        
         guard let students = entity.students?.allObjects as? [Student],
-            let rubric = entity.rubric
+              let rubric = entity.rubric,
+              let instructor = entity.instructor,
+              let microtaskGrades = entity.studentMicrotaskGrades?.allObjects as? [StudentMicrotaskGrade]
         else {
             XCTFail()
             return
         }
-        compareStudents(item.students, students)
+        compareInstructors([item.instructor], [instructor])
         comapareRubric(item.rubric, rubric)
+        comapreMicrotaskGrades(item.studentMicrotaskGrades, microtaskGrades)
+        compareStudents(item.students, students)
+    }
+    
+    func checkRelations(of entity: Assessment) {
+        XCTAssertNotNil(entity.instructor)
+        XCTAssertNotNil(entity.rubric)
+        XCTAssertNotNil(entity.studentMicrotaskGrades?.allObjects as? [StudentMicrotaskGrade])
+        XCTAssertNotNil(entity.students?.allObjects as? [Student])
+    }
+    
+    func checkFields(of entity: Assessment, source item: AssessmentFields) {
+        XCTAssertEqual(item.sid, Int(entity.sid))
+        XCTAssertEqual(item.schoolId, Int(entity.schoolId))
+        XCTAssertEqual(item.date, entity.date)
+    }
+    
+    func compareInstructors(_ items: [InstructorFields], _ entities: [Instructor]) {
+        XCTFail()
     }
     
     func compareStudents(_ items: [StudentFields], _ entities: [Student]) {
@@ -82,6 +104,10 @@ final class AssessmentUtilTest: XCTestCase {
             }
             compareStudent(item, entity)
         }
+    }
+    
+    func comapreMicrotaskGrades(_ items: [StudentMicrotaskGradeFields], _ entities: [StudentMicrotaskGrade]) {
+        XCTFail()
     }
     
     func compareStudent(_ item: StudentFields, _ entity: Student) {

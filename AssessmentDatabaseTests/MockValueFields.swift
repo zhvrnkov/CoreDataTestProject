@@ -14,15 +14,26 @@ struct MockAssessmentFields: AssessmentFields {
     var sid: Int
     var date: Date
     var schoolId: Int
-    var students: [StudentFields]
+    
+    var instructor: InstructorFields
     var rubric: RubricFields
+    var studentMicrotaskGrades: [StudentMicrotaskGradeFields]
+    var students: [StudentFields]
 }
 
-struct MockStudentFields: StudentFields {
+struct MockInstructorFields: InstructorFields {
     var sid: Int
 }
 
 struct MockRubricFields: RubricFields {
+    var sid: Int
+}
+
+struct MockStudentMicrotaskGrade: StudentMicrotaskGradeFields {
+    var sid: Int
+}
+
+struct MockStudentFields: StudentFields {
     var sid: Int
 }
 
@@ -34,7 +45,9 @@ struct MockGradeFields: GradeFields {
 let mockAssessments: [MockAssessmentFields] = count.map {
     let rubric = mockRubrics[$0]
     let students = mockStudents
-    return MockAssessmentFields(sid: $0, date: Date(), schoolId: $0+1, students: students, rubric: rubric)
+    let instructor = mockInstructors[$0]
+    let microtaskGrades = mockMicrotaskGrades
+    return MockAssessmentFields(sid: $0, date: Date(), schoolId: $0 + 1, instructor: instructor, rubric: rubric, studentMicrotaskGrades: microtaskGrades, students: students)
 }
 
 let mockStudents: [MockStudentFields] = count.map {
@@ -47,4 +60,12 @@ let mockRubrics: [MockRubricFields] = count.map {
 
 let mockGrades: [MockGradeFields] = count.map {
     MockGradeFields(sid: $0, title: "Lorem Ipsum")
+}
+
+let mockInstructors: [MockInstructorFields] = count.map {
+    MockInstructorFields(sid: $0)
+}
+
+let mockMicrotaskGrades: [MockStudentMicrotaskGrade] = count.map {
+    MockStudentMicrotaskGrade(sid: $0)
 }
