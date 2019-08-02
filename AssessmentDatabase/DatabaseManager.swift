@@ -12,26 +12,28 @@ import CoreData
 final public class DatabaseManager {
     public static let shared = DatabaseManager()
     
-    private(set) public lazy var persistentContainer: NSPersistentContainer = {
+    private(set) public static var persistentContainer: NSPersistentContainer = {
         do {
-            return try getInitializedPersistentContainer()
+            return try DatabaseManager.getInitializedPersistentContainer()
         } catch {
             fatalError(error.localizedDescription)
         }
     }()
     
-    public lazy var assessments = AssessmentsUtils(container: self.persistentContainer, studentsUtils: students, rubricsUtils: rubrics)
-    public lazy var grades = GradesUtils(with: self.persistentContainer)
-    public lazy var instructors = InstructorsUtils(with: self.persistentContainer)
-    public lazy var microtasks = MicrotasksUtils(with: self.persistentContainer)
-    public lazy var rubrics = RubricsUtils(with: self.persistentContainer)
-    public lazy var skillSets = SkillSetsUtils(with: self.persistentContainer)
-    public lazy var students = StudentsUtils(with: self.persistentContainer)
-    public lazy var studentMicrotaskGrades = StudentMicrotaskGradesUtils(with: self.persistentContainer)
+    public let assessments = AssessmentsUtils(container: DatabaseManager.persistentContainer)
+    public let grades = GradesUtils(with: DatabaseManager.persistentContainer)
+    public let instructors = InstructorsUtils(with: DatabaseManager.persistentContainer)
+    public let microtasks = MicrotasksUtils(with: DatabaseManager.persistentContainer)
+    public let rubrics = RubricsUtils(with: DatabaseManager.persistentContainer)
+    public let skillSets = SkillSetsUtils(with: DatabaseManager.persistentContainer)
+    public let students = StudentsUtils(with: DatabaseManager.persistentContainer)
+    public let studentMicrotaskGrades = StudentMicrotaskGradesUtils(with: DatabaseManager.persistentContainer)
     
-    private init() {}
+    private init() {
+        setAssessmentsUtils()
+    }
     
-    public func getInitializedPersistentContainer(named: String = "DataModel") throws -> NSPersistentContainer {
+    public static func getInitializedPersistentContainer(named: String = "DataModel") throws -> NSPersistentContainer {
         let container = NSPersistentContainer(name: "DataModel")
         var errorToThrow: Error?
         container.loadPersistentStores { _, error in
@@ -44,5 +46,12 @@ final public class DatabaseManager {
         } else {
             return container
         }
+    }
+    
+    private func setAssessmentsUtils() {
+        assessments.studentsUtils = students
+        assessments.rubricsUtils = rubrics
+        assessments.instructorsUtils = instructors
+        assessments.studentMicrotaskGradesUtils = studentMicrotaskGrades
     }
 }

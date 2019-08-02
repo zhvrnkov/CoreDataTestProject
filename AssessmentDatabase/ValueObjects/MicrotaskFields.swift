@@ -8,6 +8,6 @@
 
 import Foundation
 
-public protocol MicrotaskValueFields {
+public protocol MicrotaskFields {
     var sid: Int { get set }
 }
