@@ -34,14 +34,16 @@ final class AssessmentUtilTest: XCTestCase {
     func testSaveItem() {
         let item = mockAssessments[0]
         XCTAssertNoThrow(try This.util.save(item: item))
-        compareItems([item], This.util.getAll())
+        let entity = This.util.get(whereSid: item.sid)
+        XCTAssertNotNil(entity)
+        compareItems([item], [entity!])
     }
     
-//    func testSaveItems() {
-//        let items = Array(mockAssessments[1..<mockAssessments.count])
-//        XCTAssertNoThrow(try This.util.save(items: items))
-//        compareItems(mockAssessments, This.util.getAll())
-//    }
+    func testSaveItems() {
+        let items = Array(mockAssessments[1..<mockAssessments.count])
+        XCTAssertNoThrow(try This.util.save(items: items))
+        compareItems(items, This.util.getAll())
+    }
     
     func compareItems(_ items: [AssessmentFields], _ entities: [Assessment]) {
         XCTAssertEqual(items.count, entities.count)
