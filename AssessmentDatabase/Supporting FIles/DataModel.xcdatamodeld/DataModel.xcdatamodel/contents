@@ -5,9 +5,9 @@
         <attribute name="schoolId" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="sid" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="instructor" optional="YES" maxCount="1" deletionRule="Deny" destinationEntity="Instructor" inverseName="assessments" inverseEntity="Instructor" syncable="YES"/>
-        <relationship name="rubric" maxCount="1" deletionRule="Cascade" destinationEntity="Rubric" inverseName="assessments" inverseEntity="Rubric" syncable="YES"/>
+        <relationship name="rubric" maxCount="1" deletionRule="Nullify" destinationEntity="Rubric" inverseName="assessments" inverseEntity="Rubric" syncable="YES"/>
         <relationship name="studentMicrotaskGrades" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="StudentMicrotaskGrade" inverseName="assessment" inverseEntity="StudentMicrotaskGrade" syncable="YES"/>
-        <relationship name="students" toMany="YES" deletionRule="Cascade" destinationEntity="Student" inverseName="assessments" inverseEntity="Student" syncable="YES"/>
+        <relationship name="students" toMany="YES" deletionRule="Nullify" destinationEntity="Student" inverseName="assessments" inverseEntity="Student" syncable="YES"/>
     </entity>
     <entity name="Grade" representedClassName=".Grade" syncable="YES" codeGenerationType="class">
         <attribute name="sid" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -24,7 +24,7 @@
     </entity>
     <entity name="Rubric" representedClassName=".Rubric" syncable="YES" codeGenerationType="class">
         <attribute name="sid" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="assessments" toMany="YES" deletionRule="Nullify" destinationEntity="Assessment" inverseName="rubric" inverseEntity="Assessment" syncable="YES"/>
+        <relationship name="assessments" toMany="YES" deletionRule="Cascade" destinationEntity="Assessment" inverseName="rubric" inverseEntity="Assessment" syncable="YES"/>
         <relationship name="skillSets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SkillSet" inverseName="rubric" inverseEntity="SkillSet" syncable="YES"/>
     </entity>
     <entity name="SkillSet" representedClassName=".SkillSet" syncable="YES" codeGenerationType="class">
@@ -34,8 +34,8 @@
     <entity name="Student" representedClassName=".Student" syncable="YES" codeGenerationType="class">
         <attribute name="sid" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="assessments" toMany="YES" deletionRule="Nullify" destinationEntity="Assessment" inverseName="students" inverseEntity="Assessment" syncable="YES"/>
-        <relationship name="instructors" toMany="YES" deletionRule="Deny" destinationEntity="Instructor" inverseName="students" inverseEntity="Instructor" syncable="YES"/>
-        <relationship name="microTaskGrades" toMany="YES" deletionRule="Deny" destinationEntity="StudentMicrotaskGrade" inverseName="student" inverseEntity="StudentMicrotaskGrade" syncable="YES"/>
+        <relationship name="instructors" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="Instructor" inverseName="students" inverseEntity="Instructor" syncable="YES"/>
+        <relationship name="microTaskGrades" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="StudentMicrotaskGrade" inverseName="student" inverseEntity="StudentMicrotaskGrade" syncable="YES"/>
     </entity>
     <entity name="StudentMicrotaskGrade" representedClassName=".StudentMicrotaskGrade" syncable="YES" codeGenerationType="class">
         <relationship name="assessment" maxCount="1" deletionRule="Deny" destinationEntity="Assessment" inverseName="studentMicrotaskGrades" inverseEntity="Assessment" syncable="YES"/>
