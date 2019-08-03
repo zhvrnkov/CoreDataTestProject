@@ -10,10 +10,25 @@ import XCTest
 
 class RubricUtilsTest: XCTestCase {
     typealias This = RubricUtilsTest
-    static let util = RubricsUtils(with: getMockPersistentContainer())
+    static let container = getMockPersistentContainer()
+    static let skillSetsUtils = SkillSetsUtils(with: container)
+    static let util: RubricsUtils = {
+        let utils = RubricsUtils(with: container)
+        utils.skillSetsUtils = skillSetsUtils
+        return utils
+    }()
     static let context = util.container.viewContext
-    private let mockRubrics = Mocks.mockRubrics
-
+    private var mockRubrics = Mocks.mockRubrics
+    
+    override func setUp() {
+        super.setUp()
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        This.util.deleteAll()
+    }
+    
     func testSaveItem() {
         let item = mockRubrics[0]
         XCTAssertNoThrow(try This.util.save(item: item))
@@ -23,26 +38,26 @@ class RubricUtilsTest: XCTestCase {
     func testSaveItems() {
         let items = Array(mockRubrics[1..<mockRubrics.count])
         XCTAssertNoThrow(try This.util.save(items: items))
-        compareItems(mockRubrics, This.util.getAll())
+        compareItems(items, This.util.getAll())
     }
     
     private func compareItems(
         _ items: [MockRubricFields],
         _ entities: [Rubric]
-    ) {
+        ) {
         XCTAssertEqual(items.count, entities.count)
         for index in items.indices {
             let item = items[index]
             guard let entity = entities.first(where: { Int($0.sid) == item.sid })
-            else {
-                XCTFail("entity is nil")
-                return
+                else {
+                    XCTFail("entity is nil")
+                    return
             }
             compareItem(item, entity)
         }
     }
     
     private func compareItem(_ item: MockRubricFields, _ entity: Rubric) {
-        
+        XCTAssertEqual(item.skillSets.count, entity.skillSets?.count)
     }
 }

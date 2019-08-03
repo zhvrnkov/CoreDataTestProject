@@ -27,6 +27,8 @@ struct MockInstructorFields: InstructorFields {
 
 struct MockRubricFields: RubricFields {
     var sid: Int
+    
+    var skillSets: [SkillSetFields]
 }
 
 struct MockStudentMicrotaskGrade: StudentMicrotaskGradeFields {
@@ -45,6 +47,18 @@ struct MockStudentFields: StudentFields {
 struct MockGradeFields: GradeFields {
     var sid: Int
     var title: String
+}
+
+struct MockSkillSets: SkillSetFields, Hashable {
+    static func == (lhs: MockSkillSets, rhs: MockSkillSets) -> Bool {
+        return lhs.sid == rhs.sid
+    }
+    
+    var hashValue: Int { return sid }
+    var sid: Int
+    
+    var rubric: RubricFields
+    var microTasks: [Microtask]
 }
 
 struct Mocks {
@@ -80,13 +94,22 @@ struct Mocks {
     
     static var mockRubrics: [MockRubricFields] {
         return count.map {
-            MockRubricFields(sid: $0)
+            MockRubricFields(sid: $0, skillSets: [])
         }
     }
     
     static var mockGrades: [MockGradeFields] {
         return count.map {
             MockGradeFields(sid: $0, title: "Lorem Ipsum")
+        }
+    }
+    
+    static var mockSkillSets: [[MockSkillSets]] {
+        let rubrics = mockRubrics
+        return count.map { index in
+            count.map {
+                MockSkillSets(sid: (index * (count.max()! + 1)) + $0, rubric: rubrics[index], microTasks: [])
+            }
         }
     }
     

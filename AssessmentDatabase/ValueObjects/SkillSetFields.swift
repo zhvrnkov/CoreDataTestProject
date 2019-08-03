@@ -8,6 +8,9 @@
 
 import Foundation
 
-public protocol SkillSetValueFields {
+public protocol SkillSetFields {
     var sid: Int { get set }
+    
+    var rubric: RubricFields { get set }
+    var microTasks: [Microtask] { get set }
 }

@@ -10,4 +10,5 @@ import Foundation
 
 public protocol RubricFields {
     var sid: Int { get set }
+    var skillSets: [SkillSetFields] { get set }
 }

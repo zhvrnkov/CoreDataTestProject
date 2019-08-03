@@ -45,25 +45,29 @@ public class AssessmentsUtils: EntityUtils {
     }
     
     private func set(students: [StudentFields], of assessment: Assessment) throws {
-        guard let savedStudents = studentsUtils?.get(whereSids: students.map { $0.sid }) else {
+        guard !students.isEmpty else {
+            return
+        }
+        guard let utils = studentsUtils else {
             throw Errors.noUtils
         }
-        if !savedStudents.isEmpty {
-            guard let backgroundContextStudents = savedStudents.map({ backgroundContext.object(with: $0.objectID) }) as? [Student]
-            else {
-                fatalError()
-            }
-            assessment.addToStudents(NSSet(array: backgroundContextStudents))
-            backgroundContextStudents.forEach {
-                $0.addToAssessments(assessment)
-            }
-        } else if !students.isEmpty {
+        let savedStudents = utils.get(whereSids: students.map { $0.sid })
+        guard !savedStudents.isEmpty,
+            let backgroundContextStudents = savedStudents
+                .map({ backgroundContext.object(with: $0.objectID) }) as? [Student]
+        else {
             throw Errors.studentsNotFound
+        }
+        assessment.addToStudents(NSSet(array: backgroundContextStudents))
+        backgroundContextStudents.forEach {
+            $0.addToAssessments(assessment)
         }
     }
     
     private func set(rubric: RubricFields, of assessment: Assessment) throws {
-        guard let rubric = rubricsUtils?.get(whereSid: rubric.sid),
+        guard let utils = rubricsUtils
+            else { throw Errors.noUtils }
+        guard let rubric = utils.get(whereSid: rubric.sid),
             let backgroundContextRubric = backgroundContext.object(with: rubric.objectID) as? Rubric
         else {
             throw Errors.rubricNotFound
@@ -73,7 +77,9 @@ public class AssessmentsUtils: EntityUtils {
     }
     
     private func set(instructor: InstructorFields, of assessment: Assessment) throws {
-        guard let instructor = instructorsUtils?.get(whereSid: instructor.sid),
+        guard let utils = instructorsUtils
+            else { throw Errors.noUtils }
+        guard let instructor = utils.get(whereSid: instructor.sid),
             let backgroundContextInstructor = backgroundContext.object(with: instructor.objectID) as? Instructor
         else {
             throw Errors.instructorNotFound
@@ -83,21 +89,23 @@ public class AssessmentsUtils: EntityUtils {
     }
     
     private func set(studentMicrotasksGrades: [StudentMicrotaskGradeFields], of assessment: Assessment) throws {
-        guard let savedStudentMicrotasksGrades = studentMicrotaskGradesUtils?.get(whereSids: studentMicrotasksGrades.map { $0.sid }) else {
+        guard !studentMicrotasksGrades.isEmpty else {
+            return
+        }
+        guard let utils = studentMicrotaskGradesUtils else {
             throw Errors.noUtils
         }
-        if !savedStudentMicrotasksGrades.isEmpty {
-            guard let backgroundContextGrades = savedStudentMicrotasksGrades.map({ backgroundContext.object(with: $0.objectID) }) as? [StudentMicrotaskGrade]
-            else {
-                fatalError()
-            }
-            print(backgroundContextGrades)
-            assessment.addToStudentMicrotaskGrades(NSSet(array: backgroundContextGrades))
-            backgroundContextGrades.forEach {
-                $0.assessment = assessment
-            }
-        } else if !studentMicrotasksGrades.isEmpty {
+        let savedStudentMicrotasksGrades = utils
+            .get(whereSids: studentMicrotasksGrades.map { $0.sid })
+        guard !savedStudentMicrotasksGrades.isEmpty,
+            let backgroundContextGrades = savedStudentMicrotasksGrades
+                .map({ backgroundContext.object(with: $0.objectID) }) as? [StudentMicrotaskGrade]
+        else {
             throw Errors.studentMicrotasksGradesNotFound
+        }
+        assessment.addToStudentMicrotaskGrades(NSSet(array: backgroundContextGrades))
+        backgroundContextGrades.forEach {
+            $0.assessment = assessment
         }
     }
     
