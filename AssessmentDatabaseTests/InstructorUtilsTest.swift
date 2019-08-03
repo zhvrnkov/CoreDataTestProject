@@ -51,6 +51,7 @@ class InstructorUtilsTest: XCTestCase {
     }
     
     func compareItem(_ item: InstructorFields, _ entity: Instructor) {
-        
+        XCTAssertEqual(item.assessments.count, entity.assessments?.count)
+        XCTAssertEqual(item.students.count, entity.students?.count)
     }
 }

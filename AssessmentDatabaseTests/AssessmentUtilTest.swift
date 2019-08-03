@@ -26,6 +26,7 @@ final class AssessmentUtilTest: XCTestCase {
         return utils
     }()
     
+    private let mockAssessments = Mocks.mockEmptyAssessments
     private let mockRubrics = Mocks.mockRubrics
     private let mockStudents = Mocks.mockStudents
     private let mockInstructors = Mocks.mockInstructors
@@ -33,6 +34,7 @@ final class AssessmentUtilTest: XCTestCase {
     
     override func setUp() {
         super.setUp()
+        This.studentMicrotaskGradesUtils.assessmentsUtils = This.util
 //        let context = This.context
 //        context.performAndWait {
 //            mockRubrics.forEach {
@@ -57,26 +59,28 @@ final class AssessmentUtilTest: XCTestCase {
 //            }
 //            try! context.save()
 //        }
-        XCTAssertNoThrow(try This.rubricsUtil.save(items: mockRubrics))
-        XCTAssertNoThrow(try This.studentsUtil.save(items: mockStudents))
         XCTAssertNoThrow(try This.instructorsUtil.save(items: mockInstructors))
-        XCTAssertNoThrow(try This.studentMicrotaskGradesUtils.save(items: mockMicrotaskGrades))
+        XCTAssertNoThrow(try This.rubricsUtil.save(items: mockRubrics))
+//        XCTAssertNoThrow(try This.studentsUtil.save(items: mockStudents))
+        
+//        XCTAssertNoThrow(try This.studentMicrotaskGradesUtils.save(items: mockMicrotaskGrades))
     }
     
     override func tearDown() {
         super.tearDown()
-        XCTAssertNoThrow(try This.rubricsUtil.delete(whereSids:
-            mockRubrics.map { $0.sid }))
-        XCTAssertNoThrow(try This.studentsUtil.delete(whereSids:
-            mockStudents.map { $0.sid }))
         XCTAssertNoThrow(try This.instructorsUtil.delete(whereSids:
             mockInstructors.map { $0.sid }))
-        XCTAssertNoThrow(try This.studentMicrotaskGradesUtils.delete(whereSids:
-            mockMicrotaskGrades.map { $0.sid }))
+        XCTAssertNoThrow(try This.rubricsUtil.delete(whereSids:
+            mockRubrics.map { $0.sid }))
+
+//        XCTAssertNoThrow(try This.studentsUtil.delete(whereSids:
+//            mockStudents.map { $0.sid }))
+//        XCTAssertNoThrow(try This.studentMicrotaskGradesUtils.delete(whereSids:
+//            mockMicrotaskGrades.map { $0.sid }))
     }
     
     func testSaveItem() {
-        let item = Mocks.mockAssessments[0]
+        let item = mockAssessments[0]
         XCTAssertNoThrow(try This.util.save(item: item))
         guard let entity = This.util.get(whereSid: item.sid) else {
             XCTFail("can't find entity")
@@ -84,9 +88,9 @@ final class AssessmentUtilTest: XCTestCase {
         }
         compareItems([item], [entity])
     }
-    
+
     func testSaveItems() {
-        let items = Array(Mocks.mockAssessments[1..<Mocks.mockAssessments.count])
+        let items = Array(mockAssessments[1..<mockAssessments.count])
         XCTAssertNoThrow(try This.util.save(items: items))
         compareItems(items, This.util.getAll())
     }
