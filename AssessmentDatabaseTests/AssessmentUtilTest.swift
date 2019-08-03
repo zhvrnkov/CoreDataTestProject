@@ -13,10 +13,21 @@ final class AssessmentUtilTest: XCTestCase {
     typealias This = AssessmentUtilTest
     static let container = getMockPersistentContainer()
     static let rubricsUtil = RubricsUtils(with: container)
+    static let skillSetsUtils: SkillSetsUtils = {
+        let util = SkillSetsUtils(with: container)
+        util.rubricUtils = This.rubricsUtil
+        return util
+    }()
+    static let microtasksUtils: MicrotasksUtils = {
+        let util = MicrotasksUtils(with: container)
+        util.skillSetsUtils = This.skillSetsUtils
+        return util
+    }()
     static let studentsUtil = StudentsUtils(with: container)
     static let instructorsUtil = InstructorsUtils(with: container)
     static let studentMicrotaskGradesUtils = StudentMicrotaskGradesUtils(with: container)
     static let gradesUtils = GradesUtils(with: container)
+    
 
     static let util: AssessmentsUtils = {
         let utils = AssessmentsUtils(container: container)
@@ -29,6 +40,8 @@ final class AssessmentUtilTest: XCTestCase {
     
     private let mockAssessments = Mocks.mockAssessments
     private let mockRubrics = Mocks.mockRubrics
+    private let mockSkillSets = Mocks.mockSkillSets
+    private let mockMicrotasks = Mocks.mockMicrotasks
     private let mockStudents = Mocks.mockStudents
     private let mockInstructors = Mocks.mockInstructors
     private let mockMicrotaskGrades = Mocks.mockMicrotaskGrades
@@ -39,25 +52,33 @@ final class AssessmentUtilTest: XCTestCase {
         This.studentMicrotaskGradesUtils.assessmentsUtils = This.util
         This.studentMicrotaskGradesUtils.studentsUtils = This.studentsUtil
         This.studentMicrotaskGradesUtils.gradesUtils = This.gradesUtils
+        This.studentMicrotaskGradesUtils.microtasksUtils = This.microtasksUtils
         
         XCTAssertNoThrow(try This.instructorsUtil.save(items: mockInstructors))
         XCTAssertNoThrow(try This.rubricsUtil.save(items: mockRubrics))
+        XCTAssertNoThrow(try This.skillSetsUtils.save(items: mockSkillSets.reduce([]) { $0 + $1 }))
+        XCTAssertNoThrow(try This.microtasksUtils.save(items: mockMicrotasks.reduce([]) { $0 + $1 }))
         XCTAssertNoThrow(try This.studentsUtil.save(items: mockStudents))
         XCTAssertNoThrow(try This.gradesUtils.save(items: mockGrades))
     }
     
     override func tearDown() {
         super.tearDown()
-        XCTAssertNoThrow(try This.instructorsUtil.delete(whereSids:
-            mockInstructors.map { $0.sid }))
-        XCTAssertNoThrow(try This.rubricsUtil.delete(whereSids:
-            mockRubrics.map { $0.sid }))
-        XCTAssertNoThrow(try This.studentsUtil.delete(whereSids:
-            mockStudents.map { $0.sid }))
-        XCTAssertNoThrow(try This.studentMicrotaskGradesUtils.delete(whereSids:
-            mockMicrotaskGrades.map { $0.sid }))
-        XCTAssertNoThrow(try This.gradesUtils.delete(whereSids:
-            mockGrades.map { $0.sid }))
+        This.instructorsUtil.deleteAll()
+        This.rubricsUtil.deleteAll()
+        This.studentsUtil.deleteAll()
+        This.studentMicrotaskGradesUtils.deleteAll()
+        This.gradesUtils.deleteAll()
+        This.skillSetsUtils.deleteAll()
+        This.microtasksUtils.deleteAll()
+        
+        XCTAssertTrue(This.instructorsUtil.getAll().isEmpty)
+        XCTAssertTrue(This.rubricsUtil.getAll().isEmpty)
+        XCTAssertTrue(This.studentsUtil.getAll().isEmpty)
+        XCTAssertTrue(This.studentMicrotaskGradesUtils.getAll().isEmpty)
+        XCTAssertTrue(This.gradesUtils.getAll().isEmpty)
+        XCTAssertTrue(This.skillSetsUtils.getAll().isEmpty)
+        XCTAssertTrue(This.microtasksUtils.getAll().isEmpty)
     }
     
     func testSaveItem() {

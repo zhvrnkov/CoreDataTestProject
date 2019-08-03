@@ -27,11 +27,7 @@ class InstructorUtilsTest: XCTestCase {
     func testSaveItem() {
         let item = mockInstructors[0]
         XCTAssertNoThrow(try This.util.save(item: item))
-        guard let entity = This.util.get(whereSid: item.sid) else {
-            XCTFail("can't find entity")
-            return
-        }
-        compareItems([item], [entity])
+        compareItems([item], This.util.getAll())
     }
     
     func testSaveItems() {
