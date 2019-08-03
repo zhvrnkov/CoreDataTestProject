@@ -26,7 +26,13 @@ final class AssessmentUtilTest: XCTestCase {
         return utils
     }()
     
-    private let mockAssessments = Mocks.mockEmptyAssessments
+    private let mockAssessments: [AssessmentFields] = {
+        var assessments = Mocks.mockAssessments
+        for index in assessments.indices {
+            assessments[index].studentMicrotaskGrades = []
+        }
+        return assessments
+    }()
     private let mockRubrics = Mocks.mockRubrics
     private let mockStudents = Mocks.mockStudents
     private let mockInstructors = Mocks.mockInstructors
@@ -61,7 +67,7 @@ final class AssessmentUtilTest: XCTestCase {
 //        }
         XCTAssertNoThrow(try This.instructorsUtil.save(items: mockInstructors))
         XCTAssertNoThrow(try This.rubricsUtil.save(items: mockRubrics))
-//        XCTAssertNoThrow(try This.studentsUtil.save(items: mockStudents))
+        XCTAssertNoThrow(try This.studentsUtil.save(items: mockStudents))
         
 //        XCTAssertNoThrow(try This.studentMicrotaskGradesUtils.save(items: mockMicrotaskGrades))
     }
@@ -72,9 +78,8 @@ final class AssessmentUtilTest: XCTestCase {
             mockInstructors.map { $0.sid }))
         XCTAssertNoThrow(try This.rubricsUtil.delete(whereSids:
             mockRubrics.map { $0.sid }))
-
-//        XCTAssertNoThrow(try This.studentsUtil.delete(whereSids:
-//            mockStudents.map { $0.sid }))
+        XCTAssertNoThrow(try This.studentsUtil.delete(whereSids:
+            mockStudents.map { $0.sid }))
 //        XCTAssertNoThrow(try This.studentMicrotaskGradesUtils.delete(whereSids:
 //            mockMicrotaskGrades.map { $0.sid }))
     }
