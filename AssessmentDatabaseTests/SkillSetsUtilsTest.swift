@@ -39,9 +39,7 @@ class SkillSetsUtilsTest: XCTestCase {
     }
     
     func testSaveItems() {
-        let items = mockSkillSets.reduce([]) { acc, items in
-            return acc + items
-        }
+        let items = mockSkillSets.reduce([]) { $0 + $1 }
         XCTAssertNoThrow(try This.util.save(items: items))
         compareItems(items, This.util.getAll())
     }

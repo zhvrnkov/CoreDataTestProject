@@ -20,6 +20,7 @@
         <relationship name="students" toMany="YES" deletionRule="Deny" destinationEntity="Student" inverseName="instructors" inverseEntity="Student" syncable="YES"/>
     </entity>
     <entity name="Microtask" representedClassName=".Microtask" syncable="YES" codeGenerationType="class">
+        <attribute name="sid" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="skillSet" maxCount="1" deletionRule="Nullify" destinationEntity="SkillSet" inverseName="microTasks" inverseEntity="SkillSet" syncable="YES"/>
         <relationship name="studentMicroTaskGrades" toMany="YES" deletionRule="Cascade" destinationEntity="StudentMicrotaskGrade" inverseName="microTask" inverseEntity="StudentMicrotaskGrade" syncable="YES"/>
     </entity>
@@ -50,7 +51,7 @@
         <element name="Assessment" positionX="-525.5" positionY="-28.609375" width="128" height="150"/>
         <element name="Grade" positionX="206.83203125" positionY="-147.3828125" width="128" height="90"/>
         <element name="Instructor" positionX="-282.92578125" positionY="-167.46484375" width="128" height="90"/>
-        <element name="Microtask" positionX="88.8359375" positionY="322.8125" width="128" height="75"/>
+        <element name="Microtask" positionX="88.8359375" positionY="322.8125" width="128" height="90"/>
         <element name="Rubric" positionX="-291.74609375" positionY="173.453125" width="128" height="90"/>
         <element name="SkillSet" positionX="-293.2109375" positionY="296.1328125" width="128" height="90"/>
         <element name="Student" positionX="-52.90234375" positionY="-152.33984375" width="128" height="105"/>
