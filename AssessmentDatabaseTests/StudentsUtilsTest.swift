@@ -68,15 +68,19 @@ class StudentsUtilsTest: XCTestCase {
     
     override func tearDown() {
         super.tearDown()
+        This.gradesUtils.deleteAll()
         This.rubricsUtils.deleteAll()
+        This.skillSetsUtils.deleteAll()
+        This.microtasksUtils.deleteAll()
         This.instructorsUtils.deleteAll()
         This.assessmentsUtils.deleteAll()
-        This.util.deleteAll()
         
+        XCTAssertTrue(This.gradesUtils.getAll().isEmpty)
         XCTAssertTrue(This.rubricsUtils.getAll().isEmpty)
+        XCTAssertTrue(This.skillSetsUtils.getAll().isEmpty)
+        XCTAssertTrue(This.microtasksUtils.getAll().isEmpty)
         XCTAssertTrue(This.instructorsUtils.getAll().isEmpty)
         XCTAssertTrue(This.assessmentsUtils.getAll().isEmpty)
-        XCTAssertTrue(This.util.getAll().isEmpty)
     }
     
     func testSaveItem() {

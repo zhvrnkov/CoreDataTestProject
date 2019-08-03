@@ -42,7 +42,7 @@ final class AssessmentUtilTest: XCTestCase {
     private let mockRubrics = Mocks.mockEmptyRubrics
     private let mockSkillSets = Mocks.mockSkillSets
     private let mockMicrotasks = Mocks.mockMicrotasks
-    private let mockStudents = Mocks.mockStudents
+    private let mockStudents = Mocks.mockEmptyStudents
     private let mockInstructors = Mocks.mockEmptyInstructors
     private let mockMicrotaskGrades = Mocks.mockMicrotaskGrades
     private let mockGrades = Mocks.mockGrades

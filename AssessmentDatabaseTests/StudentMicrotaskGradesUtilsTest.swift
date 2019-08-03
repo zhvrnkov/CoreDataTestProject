@@ -49,7 +49,7 @@ class StudentMicrotaskGradesUtilsTest: XCTestCase {
     private let mockMicrotasks = Mocks.mockMicrotasks.reduce([]) { $0 + $1 }
     private let mockSkillsets = Mocks.mockSkillSets.reduce([]) { $0 + $1 }
     private let mockGrades = Mocks.mockGrades
-    private let mockStudents = Mocks.mockStudents
+    private let mockStudents = Mocks.mockEmptyStudents
     
     override func setUp() {
         super.setUp()
