@@ -45,6 +45,10 @@ struct MockStudentMicrotaskGrade: StudentMicrotaskGradeFields {
 
 struct MockStudentFields: StudentFields {
     var sid: Int
+    
+    var assessments: [AssessmentFields]
+    var instructors: [InstructorFields]
+    var microTaskGrades: [StudentMicrotaskGradeFields]
 }
 
 struct MockGradeFields: GradeFields {
@@ -76,9 +80,9 @@ struct MockSkillSets: SkillSetFields {
 
 struct Mocks {
     static var mockAssessments: [MockAssessmentFields] {
-        let rubrics = mockRubrics
+        let rubrics = mockEmptyRubrics
         let students = mockStudents
-        let instructors = mockInstructors
+        let instructors = mockEmptyInstructors
         let grades = mockGrades
         let microTasks = mockMicrotasks.reduce([]) { $0 + $1 }
         return count.map {
@@ -95,8 +99,8 @@ struct Mocks {
     }
     
     static var mockEmptyAssessments: [MockAssessmentFields] {
-        let rubrics = mockRubrics
-        let instructors = mockInstructors
+        let rubrics = mockEmptyRubrics
+        let instructors = mockEmptyInstructors
         return count.map {
             let rubric = rubrics[$0]
             let instructor = instructors[$0]
@@ -105,12 +109,21 @@ struct Mocks {
     }
     
     static var mockStudents: [MockStudentFields] {
+        let assessments = mockEmptyAssessments
+        let instructors = mockEmptyInstructors
+        let microTaskGrades = mockMicrotaskGrades
         return count.map {
-            MockStudentFields(sid: $0)
+            MockStudentFields(sid: $0, assessments: assessments, instructors: instructors, microTaskGrades: microTaskGrades)
         }
     }
     
-    static var mockRubrics: [MockRubricFields] {
+    static var mockEmptyStudents: [MockStudentFields] {
+        return count.map {
+            MockStudentFields(sid: $0, assessments: [], instructors: [], microTaskGrades: [])
+        }
+    }
+    
+    static var mockEmptyRubrics: [MockRubricFields] {
         return count.map {
             MockRubricFields(sid: $0, skillSets: [])
         }
@@ -123,7 +136,7 @@ struct Mocks {
     }
     
     static var mockSkillSets: [[MockSkillSets]] {
-        let rubrics = mockRubrics
+        let rubrics = mockEmptyRubrics
         return count.map { index in
             count.map {
                 MockSkillSets(sid: (index * (count.max()! + 1)) + $0, rubric: rubrics[index], microTasks: [])
@@ -131,16 +144,24 @@ struct Mocks {
         }
     }
     
-    static var mockInstructors: [MockInstructorFields] {
+    static var mockEmptyInstructors: [MockInstructorFields] {
         return count.map {
             MockInstructorFields(sid: $0, assessments: [], students: [])
+        }
+    }
+    
+    static var mockInstructors: [MockInstructorFields] {
+        let assessments = mockEmptyAssessments
+        let students = mockEmptyStudents
+        return count.map {
+            MockInstructorFields(sid: $0, assessments: [assessments[$0]], students: [students[$0]])
         }
     }
     
     static var mockMicrotaskGrades: [MockStudentMicrotaskGrade] {
         let assessments = mockEmptyAssessments
         let grades = mockGrades
-        let students = mockStudents
+        let students = mockEmptyStudents
         let microtasks = mockMicrotasks.reduce([]) { $0 + $1 }
         return count.map {
             let assessment = assessments[$0]

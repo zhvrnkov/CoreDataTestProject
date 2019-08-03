@@ -61,4 +61,8 @@ public protocol StudentMicrotaskGradeFields {
 
 public protocol StudentFields {
     var sid: Int { get set }
+    
+    var assessments: [AssessmentFields] { get set }
+    var instructors: [InstructorFields] { get set }
+    var microTaskGrades: [StudentMicrotaskGradeFields] { get set }
 }
