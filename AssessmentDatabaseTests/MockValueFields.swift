@@ -49,12 +49,22 @@ struct MockGradeFields: GradeFields {
     var title: String
 }
 
-struct MockSkillSets: SkillSetFields, Hashable {
-    static func == (lhs: MockSkillSets, rhs: MockSkillSets) -> Bool {
-        return lhs.sid == rhs.sid
+struct MockMicrotaskFields: MicrotaskFields, Hashable {
+    static func == (lhs: MockMicrotaskFields, rhs: MockMicrotaskFields) -> Bool {
+        return lhs.hashValue == rhs.hashValue
     }
     
-    var hashValue: Int { return sid }
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(sid)
+    }
+    
+    var sid: Int
+    
+    var skillSet: SkillSetFields
+    var studentMicroTaskGrades: [StudentMicrotaskGrade]
+}
+
+struct MockSkillSets: SkillSetFields {
     var sid: Int
     
     var rubric: RubricFields
@@ -131,4 +141,12 @@ struct Mocks {
         }
     }
     
+    static var mockMicrotasks: [[MockMicrotaskFields]] {
+        let skillSets = mockSkillSets.reduce([]) { $0 + $1 }
+        return skillSets.map { skillSet in
+            return count.map {
+                MockMicrotaskFields(sid: (skillSet.sid * (count.max()! + 1)) + $0, skillSet: skillSet, studentMicroTaskGrades: [])
+            }
+        }
+    }
 }

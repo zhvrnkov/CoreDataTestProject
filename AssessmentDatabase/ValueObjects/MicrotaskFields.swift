@@ -10,4 +10,7 @@ import Foundation
 
 public protocol MicrotaskFields {
     var sid: Int { get set }
+    
+    var skillSet: SkillSetFields { get set }
+    var studentMicroTaskGrades: [StudentMicrotaskGrade] { get set }
 }
