@@ -31,7 +31,7 @@ class StudentMicrotaskGradesUtilsTest: XCTestCase {
         return utils
     }()
     
-    private let instructor = MockInstructorFields(sid: 1)
+    private let instructor = MockInstructorFields(sid: 1, assessments: [], students: [])
     private let rubric = MockRubricFields(sid: 1, skillSets: [])
     private var assessment: MockAssessmentFields!
     private var mockStudentMicrtaskGrades: [MockStudentMicrotaskGrade]!

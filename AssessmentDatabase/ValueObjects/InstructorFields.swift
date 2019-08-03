@@ -10,4 +10,7 @@ import Foundation
 
 public protocol InstructorFields {
     var sid: Int { get set }
+    
+    var assessments: [AssessmentFields] { get set }
+    var students: [StudentFields] { get set }
 }

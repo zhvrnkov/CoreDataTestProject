@@ -23,6 +23,9 @@ struct MockAssessmentFields: AssessmentFields {
 
 struct MockInstructorFields: InstructorFields {
     var sid: Int
+    
+    var assessments: [AssessmentFields]
+    var students: [StudentFields]
 }
 
 struct MockRubricFields: RubricFields {
@@ -125,7 +128,7 @@ struct Mocks {
     
     static var mockInstructors: [MockInstructorFields] {
         return count.map {
-            MockInstructorFields(sid: $0)
+            MockInstructorFields(sid: $0, assessments: [], students: [])
         }
     }
     
