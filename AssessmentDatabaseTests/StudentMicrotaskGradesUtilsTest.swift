@@ -42,8 +42,8 @@ class StudentMicrotaskGradesUtilsTest: XCTestCase {
         return utils
     }()
     
-    private let instructors = Mocks.mockInstructors
-    private let rubrics = Mocks.mockRubrics
+    private let instructors = Mocks.mockEmptyInstructors
+    private let rubrics = Mocks.mockEmptyRubrics
     private let assessments = Mocks.mockEmptyAssessments
     private let mockStudentMicrtaskGrades = Mocks.mockMicrotaskGrades
     private let mockMicrotasks = Mocks.mockMicrotasks.reduce([]) { $0 + $1 }

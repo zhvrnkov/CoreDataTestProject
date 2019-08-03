@@ -8,6 +8,9 @@ public class InstructorsUtils: EntityUtils {
     public var container: NSPersistentContainer
     public lazy var backgroundContext = container.newBackgroundContext()
     
+    public var assessmentsUtils: AssessmentsUtils?
+    public var studentsUtils: StudentsUtils?
+    
     public init(with container: NSPersistentContainer) {
         self.container = container
     }
@@ -18,14 +21,58 @@ public class InstructorsUtils: EntityUtils {
     }
     
     public func setRelations(of entity: Instructor, like item: InstructorFields) throws {
-        #warning("Not implemented")
+        do {
+            try set(assessments: item.assessments, of: entity)
+            try set(students: item.students, of: entity)
+        } catch {
+            throw error
+        }
     }
     
-    public func update(item: InstructorFields) {
-        fatalError()
+    private func set(assessments: [AssessmentFields], of instructor: Instructor) throws {
+        guard !assessments.isEmpty else {
+            return
+        }
+        guard let utils = assessmentsUtils else {
+            throw Errors.noUtils
+        }
+        let savedAssessments = utils.get(whereSids: assessments.map { $0.sid })
+        guard !savedAssessments.isEmpty,
+            let backgroundContextAssessments = savedAssessments
+                .map({ backgroundContext.object(with: $0.objectID) }) as? [Assessment]
+        else {
+            throw Errors.assessmentsNotFound
+        }
+        instructor.addToAssessments(NSSet(array: backgroundContextAssessments))
+        backgroundContextAssessments.forEach {
+            $0.instructor = instructor
+        }
     }
     
-    public func update(items: [InstructorFields]) {
-        fatalError()
+    private func set(students: [StudentFields], of instructor: Instructor) throws {
+        guard !students.isEmpty else {
+            return
+        }
+        guard let utils = studentsUtils else {
+            throw Errors.noUtils
+        }
+        let savedStudents = utils.get(whereSids: students.map { $0.sid })
+        guard !savedStudents.isEmpty,
+            let backgroundContextStudents = savedStudents
+                .map({ backgroundContext.object(with: $0.objectID) }) as? [Student]
+        else {
+            throw Errors.studentsNotFound
+        }
+        instructor.addToStudents(NSSet(array: backgroundContextStudents))
+        backgroundContextStudents.forEach {
+            $0.addToInstructors(instructor)
+        }
+    }
+    
+    public enum Errors: Error {
+        case noUtils
+        
+        case assessmentsNotFound
+        case studentsNotFound
     }
 }

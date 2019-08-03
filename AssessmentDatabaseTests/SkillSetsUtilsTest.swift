@@ -19,7 +19,7 @@ class SkillSetsUtilsTest: XCTestCase {
     }()
     
     private let mockSkillSets = Mocks.mockSkillSets
-    private let mockRubrics = Mocks.mockRubrics
+    private let mockRubrics = Mocks.mockEmptyRubrics
     
     override func setUp() {
         super.setUp()

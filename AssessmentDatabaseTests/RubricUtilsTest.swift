@@ -18,7 +18,7 @@ class RubricUtilsTest: XCTestCase {
         return utils
     }()
     static let context = util.container.viewContext
-    private var mockRubrics = Mocks.mockRubrics
+    private var mockRubrics = Mocks.mockEmptyRubrics
     
     override func setUp() {
         super.setUp()

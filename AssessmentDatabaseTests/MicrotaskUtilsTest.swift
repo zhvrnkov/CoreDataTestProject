@@ -29,7 +29,7 @@ class MicrotaskUtilsTest: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        XCTAssertNoThrow(try This.rubricUtils.save(items: Mocks.mockRubrics))
+        XCTAssertNoThrow(try This.rubricUtils.save(items: Mocks.mockEmptyRubrics))
         XCTAssertNoThrow(try This.skillSetsUtils.save(items:
             Mocks.mockSkillSets.reduce([]) { $0 + $1 }))
     }
