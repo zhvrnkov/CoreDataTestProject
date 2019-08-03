@@ -79,13 +79,17 @@ struct Mocks {
         let rubrics = mockRubrics
         let students = mockStudents
         let instructors = mockInstructors
-        let microtaskGrades = mockMicrotaskGrades
+        let grades = mockGrades
         return count.map {
             let rubric = rubrics[$0]
             let students = students
             let instructor = instructors[$0]
-            let microtaskGrades = microtaskGrades
-            return MockAssessmentFields(sid: $0, date: Date(), schoolId: $0 + 1, instructor: instructor, rubric: rubric, studentMicrotaskGrades: microtaskGrades, students: students)
+            var assessment = MockAssessmentFields(sid: $0, date: Date(), schoolId: $0 + 1, instructor: instructor, rubric: rubric, studentMicrotaskGrades: [], students: students)
+            let microtaskGrades = count.map {
+                MockStudentMicrotaskGrade(sid: (assessment.sid * (count.max()! + 1)) + $0, assessment: assessment, grade: grades[$0], student: students[$0])
+            }
+            assessment.studentMicrotaskGrades = microtaskGrades
+            return assessment
         }
     }
     

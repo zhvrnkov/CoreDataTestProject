@@ -16,6 +16,7 @@ final class AssessmentUtilTest: XCTestCase {
     static let studentsUtil = StudentsUtils(with: container)
     static let instructorsUtil = InstructorsUtils(with: container)
     static let studentMicrotaskGradesUtils = StudentMicrotaskGradesUtils(with: container)
+    static let gradesUtils = GradesUtils(with: container)
 
     static let util: AssessmentsUtils = {
         let utils = AssessmentsUtils(container: container)
@@ -26,50 +27,23 @@ final class AssessmentUtilTest: XCTestCase {
         return utils
     }()
     
-    private let mockAssessments: [AssessmentFields] = {
-        var assessments = Mocks.mockAssessments
-        for index in assessments.indices {
-            assessments[index].studentMicrotaskGrades = []
-        }
-        return assessments
-    }()
+    private let mockAssessments = Mocks.mockAssessments
     private let mockRubrics = Mocks.mockRubrics
     private let mockStudents = Mocks.mockStudents
     private let mockInstructors = Mocks.mockInstructors
     private let mockMicrotaskGrades = Mocks.mockMicrotaskGrades
+    private let mockGrades = Mocks.mockGrades
     
     override func setUp() {
         super.setUp()
         This.studentMicrotaskGradesUtils.assessmentsUtils = This.util
-//        let context = This.context
-//        context.performAndWait {
-//            mockRubrics.forEach {
-//                let r = Rubric(context: context)
-//                This.rubricsUtil.copyFields(from: $0, to: r)
-//                try! This.rubricsUtil.setRelations(of: r, like: $0)
-//            }
-//            mockStudents.forEach {
-//                let s = Student(context: context)
-//                This.studentsUtil.copyFields(from: $0, to: s)
-//                try! This.studentsUtil.setRelations(of: s, like: $0)
-//            }
-//            mockInstructors.forEach {
-//                let i = Instructor(context: context)
-//                This.instructorsUtil.copyFields(from: $0, to: i)
-//                try! This.instructorsUtil.setRelations(of: i, like: $0)
-//            }
-//            mockMicrotaskGrades.forEach {
-//                let g = StudentMicrotaskGrade(context: context)
-//                This.studentMicrotaskGradesUtils.copyFields(from: $0, to: g)
-//                try! This.studentMicrotaskGradesUtils.setRelations(of: g, like: $0)
-//            }
-//            try! context.save()
-//        }
+        This.studentMicrotaskGradesUtils.studentsUtils = This.studentsUtil
+        This.studentMicrotaskGradesUtils.gradesUtils = This.gradesUtils
+        
         XCTAssertNoThrow(try This.instructorsUtil.save(items: mockInstructors))
         XCTAssertNoThrow(try This.rubricsUtil.save(items: mockRubrics))
         XCTAssertNoThrow(try This.studentsUtil.save(items: mockStudents))
-        
-//        XCTAssertNoThrow(try This.studentMicrotaskGradesUtils.save(items: mockMicrotaskGrades))
+        XCTAssertNoThrow(try This.gradesUtils.save(items: mockGrades))
     }
     
     override func tearDown() {
@@ -80,13 +54,18 @@ final class AssessmentUtilTest: XCTestCase {
             mockRubrics.map { $0.sid }))
         XCTAssertNoThrow(try This.studentsUtil.delete(whereSids:
             mockStudents.map { $0.sid }))
-//        XCTAssertNoThrow(try This.studentMicrotaskGradesUtils.delete(whereSids:
-//            mockMicrotaskGrades.map { $0.sid }))
+        XCTAssertNoThrow(try This.studentMicrotaskGradesUtils.delete(whereSids:
+            mockMicrotaskGrades.map { $0.sid }))
+        XCTAssertNoThrow(try This.gradesUtils.delete(whereSids:
+            mockGrades.map { $0.sid }))
     }
     
     func testSaveItem() {
         let item = mockAssessments[0]
-        XCTAssertNoThrow(try This.util.save(item: item))
+        var clearedItem = item
+        clearedItem.studentMicrotaskGrades = []
+        XCTAssertNoThrow(try This.util.save(item: clearedItem))
+        XCTAssertNoThrow(try This.studentMicrotaskGradesUtils.save(items: item.studentMicrotaskGrades))
         guard let entity = This.util.get(whereSid: item.sid) else {
             XCTFail("can't find entity")
             return
@@ -96,7 +75,12 @@ final class AssessmentUtilTest: XCTestCase {
 
     func testSaveItems() {
         let items = Array(mockAssessments[1..<mockAssessments.count])
-        XCTAssertNoThrow(try This.util.save(items: items))
+        var clearedItems = items
+        for index in clearedItems.indices {
+            clearedItems[index].studentMicrotaskGrades = []
+        }
+        XCTAssertNoThrow(try This.util.save(items: clearedItems))
+        XCTAssertNoThrow(try This.studentMicrotaskGradesUtils.save(items: items.reduce([]) { $0 + $1.studentMicrotaskGrades }))
         compareItems(items, This.util.getAll())
     }
     
