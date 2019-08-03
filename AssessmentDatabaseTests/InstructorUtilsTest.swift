@@ -8,7 +8,7 @@
 
 import XCTest
 
-class InstructorUtilsTest: XCTestCase {
+final class InstructorUtilsTest: XCTestCase {
     typealias This = InstructorUtilsTest
     static let container = getMockPersistentContainer()
     static let util: InstructorsUtils = {

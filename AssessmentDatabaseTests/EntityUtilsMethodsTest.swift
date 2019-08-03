@@ -9,7 +9,7 @@
 import XCTest
 import CoreData
 
-class EntityUtilsMethodsTest: XCTestCase {
+final class EntityUtilsMethodsTest: XCTestCase {
     typealias This = EntityUtilsMethodsTest
     static var utils: GradesUtils = .init(with: getMockPersistentContainer())
     static let context = This.utils.container.viewContext

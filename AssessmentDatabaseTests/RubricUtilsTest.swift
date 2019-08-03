@@ -8,7 +8,7 @@
 
 import XCTest
 
-class RubricUtilsTest: XCTestCase {
+final class RubricUtilsTest: XCTestCase {
     typealias This = RubricUtilsTest
     static let container = getMockPersistentContainer()
     static let skillSetsUtils = SkillSetsUtils(with: container)
