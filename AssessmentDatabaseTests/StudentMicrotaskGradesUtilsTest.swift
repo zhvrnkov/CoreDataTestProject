@@ -69,6 +69,12 @@ class StudentMicrotaskGradesUtilsTest: XCTestCase {
         compareItems([item], This.util.getAll())
     }
     
+    func testSaveItems() {
+        let items = mockStudentMicrtaskGrades!
+        XCTAssertNoThrow(try This.util.save(items: items))
+        compareItems(items, This.util.getAll())
+    }
+    
     private func compareItems(_ items: [StudentMicrotaskGradeFields], _ entities: [StudentMicrotaskGrade]) {
         XCTAssertEqual(items.count, entities.count)
         items.forEach { item in
