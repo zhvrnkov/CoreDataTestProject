@@ -39,7 +39,7 @@ struct MockStudentMicrotaskGrade: StudentMicrotaskGradeFields {
     
     var assessment: AssessmentFields
     var grade: GradeFields
-    //    var microTask: MicrotaskFields
+    var microTask: MicrotaskFields
     var student: StudentFields
 }
 
@@ -80,13 +80,14 @@ struct Mocks {
         let students = mockStudents
         let instructors = mockInstructors
         let grades = mockGrades
+        let microTasks = mockMicrotasks.reduce([]) { $0 + $1 }
         return count.map {
             let rubric = rubrics[$0]
             let students = students
             let instructor = instructors[$0]
             var assessment = MockAssessmentFields(sid: $0, date: Date(), schoolId: $0 + 1, instructor: instructor, rubric: rubric, studentMicrotaskGrades: [], students: students)
             let microtaskGrades = count.map {
-                MockStudentMicrotaskGrade(sid: (assessment.sid * (count.max()! + 1)) + $0, assessment: assessment, grade: grades[$0], student: students[$0])
+                MockStudentMicrotaskGrade(sid: (assessment.sid * (count.max()! + 1)) + $0, assessment: assessment, grade: grades[$0], microTask: microTasks[$0], student: students[$0])
             }
             assessment.studentMicrotaskGrades = microtaskGrades
             return assessment
@@ -140,11 +141,13 @@ struct Mocks {
         let assessments = mockEmptyAssessments
         let grades = mockGrades
         let students = mockStudents
+        let microtasks = mockMicrotasks.reduce([]) { $0 + $1 }
         return count.map {
             let assessment = assessments[$0]
             let grade = grades[$0]
             let student = students[$0]
-            return MockStudentMicrotaskGrade(sid: $0, assessment: assessment, grade: grade, student: student)
+            let microTask = microtasks[$0]
+            return MockStudentMicrotaskGrade(sid: $0, assessment: assessment, grade: grade, microTask: microTask, student: student)
         }
     }
     

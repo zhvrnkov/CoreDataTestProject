@@ -13,7 +13,6 @@ public protocol StudentMicrotaskGradeFields {
     
     var assessment: AssessmentFields { get set }
     var grade: GradeFields { get set }
-    #warning("")
-//    var microTask: MicrotaskFields { get set }
+    var microTask: MicrotaskFields { get set }
     var student: StudentFields { get set }
 }

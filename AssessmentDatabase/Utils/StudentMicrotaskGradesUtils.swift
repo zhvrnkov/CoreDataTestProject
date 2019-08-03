@@ -11,6 +11,7 @@ public class StudentMicrotaskGradesUtils: EntityUtils {
     public var assessmentsUtils: AssessmentsUtils?
     public var gradesUtils: GradesUtils?
     public var studentsUtils: StudentsUtils?
+    public var microtasksUtils: MicrotasksUtils?
     
     public init(with container: NSPersistentContainer) {
         self.container = container
@@ -24,7 +25,7 @@ public class StudentMicrotaskGradesUtils: EntityUtils {
         do {
             try set(assessment: item.assessment, of: entity)
             try set(grade: item.grade, of: entity)
-//            try set(microTask: item.microTask, of: entity)
+            try set(microTask: item.microTask, of: entity)
             try set(student: item.student, of: entity)
         } catch {
             throw error
@@ -58,7 +59,15 @@ public class StudentMicrotaskGradesUtils: EntityUtils {
     }
     
     private func set(microTask: MicrotaskFields, of entity: StudentMicrotaskGrade) throws {
-        
+        guard let utils = microtasksUtils
+            else { throw Errors.noUtils }
+        guard let savedMicrotask = utils.get(whereSid: microTask.sid),
+            let backgroundContextMicrotask = backgroundContext.object(with: savedMicrotask.objectID) as? Microtask
+        else {
+            throw Errors.microTaskNotFound
+        }
+        entity.microTask = backgroundContextMicrotask
+        backgroundContextMicrotask.addToStudentMicroTaskGrades(entity)
     }
     
     private func set(student: StudentFields, of entity: StudentMicrotaskGrade) throws {
