@@ -9,25 +9,42 @@
 import XCTest
 
 class GradesUtilsTest: XCTestCase {
-
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
+    typealias This = GradesUtilsTest
+    static let container = getMockPersistentContainer()
+    static let util = GradesUtils(with: container)
+    private let mockGrades = Mocks.mockGrades
+    
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        super.tearDown()
+        This.util.deleteAll()
+        XCTAssertTrue(This.util.getAll().isEmpty)
     }
 
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testSaveItem() {
+        let item = mockGrades[0]
+        XCTAssertNoThrow(try This.util.save(item: item))
+        compareItems([item], This.util.getAll())
     }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    
+    func testSaveItems() {
+        XCTAssertNoThrow(try This.util.save(items: mockGrades))
+        compareItems(mockGrades, This.util.getAll())
+    }
+    
+    private func compareItems(_ items: [GradeFields], _ entities: [Grade]) {
+        XCTAssertEqual(items.count, entities.count)
+        items.forEach { item in
+            guard let entity = entities.first(where: { Int($0.sid) == item.sid })
+            else {
+                XCTFail("can't find entity")
+                return
+            }
+            compareItem(item, entity)
         }
     }
-
+    
+    private func compareItem(_ item: GradeFields, _ entity: Grade) {
+        XCTAssertEqual(item.sid, Int(entity.sid))
+        XCTAssertEqual(item.title, entity.title)
+    }
 }
