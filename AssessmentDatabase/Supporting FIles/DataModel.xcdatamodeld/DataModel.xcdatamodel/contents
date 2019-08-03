@@ -37,15 +37,15 @@
     <entity name="Student" representedClassName=".Student" syncable="YES" codeGenerationType="class">
         <attribute name="sid" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="assessments" toMany="YES" deletionRule="Nullify" destinationEntity="Assessment" inverseName="students" inverseEntity="Assessment" syncable="YES"/>
-        <relationship name="instructors" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="Instructor" inverseName="students" inverseEntity="Instructor" syncable="YES"/>
-        <relationship name="microTaskGrades" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="StudentMicrotaskGrade" inverseName="student" inverseEntity="StudentMicrotaskGrade" syncable="YES"/>
+        <relationship name="instructors" toMany="YES" deletionRule="Deny" destinationEntity="Instructor" inverseName="students" inverseEntity="Instructor" syncable="YES"/>
+        <relationship name="microTaskGrades" toMany="YES" deletionRule="Deny" destinationEntity="StudentMicrotaskGrade" inverseName="student" inverseEntity="StudentMicrotaskGrade" syncable="YES"/>
     </entity>
     <entity name="StudentMicrotaskGrade" representedClassName=".StudentMicrotaskGrade" syncable="YES" codeGenerationType="class">
         <attribute name="sid" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="assessment" maxCount="1" deletionRule="Nullify" destinationEntity="Assessment" inverseName="studentMicrotaskGrades" inverseEntity="Assessment" syncable="YES"/>
-        <relationship name="grade" maxCount="1" deletionRule="No Action" destinationEntity="Grade" inverseName="studentMicrotaskGrades" inverseEntity="Grade" syncable="YES"/>
-        <relationship name="microTask" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Microtask" inverseName="studentMicroTaskGrades" inverseEntity="Microtask" syncable="YES"/>
-        <relationship name="student" maxCount="1" deletionRule="No Action" destinationEntity="Student" inverseName="microTaskGrades" inverseEntity="Student" syncable="YES"/>
+        <relationship name="grade" maxCount="1" deletionRule="Nullify" destinationEntity="Grade" inverseName="studentMicrotaskGrades" inverseEntity="Grade" syncable="YES"/>
+        <relationship name="microTask" maxCount="1" deletionRule="Nullify" destinationEntity="Microtask" inverseName="studentMicroTaskGrades" inverseEntity="Microtask" syncable="YES"/>
+        <relationship name="student" maxCount="1" deletionRule="Nullify" destinationEntity="Student" inverseName="microTaskGrades" inverseEntity="Student" syncable="YES"/>
     </entity>
     <elements>
         <element name="Assessment" positionX="-525.5" positionY="-28.609375" width="128" height="150"/>
@@ -55,6 +55,6 @@
         <element name="Rubric" positionX="-291.74609375" positionY="173.453125" width="128" height="90"/>
         <element name="SkillSet" positionX="-293.2109375" positionY="296.1328125" width="128" height="90"/>
         <element name="Student" positionX="-52.90234375" positionY="-152.33984375" width="128" height="105"/>
-        <element name="StudentMicrotaskGrade" positionX="40.56640625" positionY="-9.375" width="128" height="120"/>
+        <element name="StudentMicrotaskGrade" positionX="40.56640625" positionY="-9.375" width="128" height="30"/>
     </elements>
 </model>

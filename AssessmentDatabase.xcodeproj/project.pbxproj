@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CA0D4B8222F559610099193C /* SkillSetsUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0D4B8122F559610099193C /* SkillSetsUtilsTest.swift */; };
+		CA0D4B8422F58CF90099193C /* GradesUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0D4B8322F58CF90099193C /* GradesUtilsTest.swift */; };
 		CA4CCCA322F1A82F00859D7E /* AssessmentFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4CCCA222F1A82F00859D7E /* AssessmentFields.swift */; };
 		CA4CCCA922F1ABC700859D7E /* GradeFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4CCCA822F1ABC700859D7E /* GradeFields.swift */; };
 		CA4CCCAB22F1ABDC00859D7E /* InstructorFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4CCCAA22F1ABDC00859D7E /* InstructorFields.swift */; };
@@ -77,6 +78,7 @@
 
 /* Begin PBXFileReference section */
 		CA0D4B8122F559610099193C /* SkillSetsUtilsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillSetsUtilsTest.swift; sourceTree = "<group>"; };
+		CA0D4B8322F58CF90099193C /* GradesUtilsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradesUtilsTest.swift; sourceTree = "<group>"; };
 		CA4CCCA222F1A82F00859D7E /* AssessmentFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssessmentFields.swift; sourceTree = "<group>"; };
 		CA4CCCA822F1ABC700859D7E /* GradeFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeFields.swift; sourceTree = "<group>"; };
 		CA4CCCAA22F1ABDC00859D7E /* InstructorFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructorFields.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 				CAEDF67922F2E6CF00087D60 /* RubricUtilsTest.swift */,
 				CA0D4B8122F559610099193C /* SkillSetsUtilsTest.swift */,
 				CA4ED8AD22F466BB0024897E /* MicrotaskUtilsTest.swift */,
+				CA0D4B8322F58CF90099193C /* GradesUtilsTest.swift */,
 			);
 			path = AssessmentDatabaseTests;
 			sourceTree = "<group>";
@@ -395,6 +398,7 @@
 				CA4CCCBD22F1ACA500859D7E /* AssessmentFields.swift in Sources */,
 				CA99B54722F1948C00A2C7BC /* GradesUtils.swift in Sources */,
 				CA4ED8A822F41C260024897E /* InstructorUtilsTest.swift in Sources */,
+				CA0D4B8422F58CF90099193C /* GradesUtilsTest.swift in Sources */,
 				CA99B54922F1948C00A2C7BC /* MicrotasksUtils.swift in Sources */,
 				CA4CCCC422F1ACA500859D7E /* StudentMicrotaskGradeFields.swift in Sources */,
 				CA4CCD1522F1B07F00859D7E /* AssessmentUtilTest.swift in Sources */,
