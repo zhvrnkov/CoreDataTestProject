@@ -17,27 +17,35 @@ final class RubricUtilsTest: XCTestCase {
         utils.skillSetsUtils = skillSetsUtils
         return utils
     }()
-    static let context = util.container.viewContext
-    private var mockRubrics = Mocks.mockEmptyRubrics
+    private var mocks = RubricUtilsTestMocks()
     
     override func setUp() {
         super.setUp()
+        This.skillSetsUtils.rubricUtils = This.util
     }
     
     override func tearDown() {
         super.tearDown()
+
         This.util.deleteAll()
+        XCTAssertTrue(This.util.getAll().isEmpty)
     }
     
     func testSaveItem() {
-        let item = mockRubrics[0]
+        let item = mocks.rubrics.randomElement()!
         XCTAssertNoThrow(try This.util.save(item: item))
         compareItems([item], This.util.getAll())
     }
     
     func testSaveItems() {
-        let items = Array(mockRubrics[1..<mockRubrics.count])
+        var items = mocks.getAllRubrics()
+        let skillSets = mocks.skillSets
         XCTAssertNoThrow(try This.util.save(items: items))
+        XCTAssertNoThrow(try This.skillSetsUtils.save(items: skillSets))
+        for index in items.indices {
+            let itemSkillSets = skillSets.filter { $0.rubric.sid == items[index].sid }
+            items[index].skillSets = itemSkillSets
+        }
         compareItems(items, This.util.getAll())
     }
     
@@ -59,5 +67,17 @@ final class RubricUtilsTest: XCTestCase {
     
     private func compareItem(_ item: MockRubricFields, _ entity: Rubric) {
         XCTAssertEqual(item.skillSets.count, entity.skillSets?.count)
+        compareSkillSets(of: item, and: entity)
+    }
+    
+    private func compareSkillSets(of item: MockRubricFields, and entity: Rubric) {
+        item.skillSets.forEach { skillSet in
+            guard let entitySkillSets = (entity.skillSets?.allObjects as? [SkillSet])?.first(where: { $0.sid == Int64(skillSet.sid) })
+            else {
+                XCTFail("no such skillSet")
+                return
+            }
+            XCTAssertEqual(entitySkillSets.sid, Int64(skillSet.sid))
+        }
     }
 }

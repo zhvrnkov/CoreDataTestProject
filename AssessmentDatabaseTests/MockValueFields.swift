@@ -190,6 +190,23 @@ struct MicrotaskUtilsTestMocks {
     }
 }
 
+struct RubricUtilsTestMocks {
+    let rubrics: [MockRubricFields] = (0..<3).map {
+        MockRubricFields(sid: $0, skillSets: [])
+    }
+    let rubricsWithSkillSets = (3..<count.max()!).map {
+        MockRubricFields(sid: $0, skillSets: [])
+    }
+    lazy var skillSets: [MockSkillSets] = rubricsWithSkillSets.map { rubric in
+        return smallCount.map {
+            let sid = rubric.sid * (smallCount.max()! + 1) + $0
+            return MockSkillSets(sid: sid, rubric: rubric, microTasks: [])
+        }
+        }.reduce([]) { $0 + $1 }
+    func getAllRubrics() -> [MockRubricFields] {
+        return rubrics + rubricsWithSkillSets
+    }
+}
 struct Mocks {
     static var mockAssessments: [MockAssessmentFields] {
         let rubrics = mockEmptyRubrics
