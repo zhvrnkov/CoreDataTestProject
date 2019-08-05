@@ -21,18 +21,21 @@ final class InstructorUtilsTest: XCTestCase {
     static let studentsUtils = StudentsUtils(with: container)
     static let rubricsUtils = RubricsUtils(with: container)
     
-    private let mockInstructors = Mocks.mockInstructors
+    private var mocks = InstructorUtilsTestMocks()
     
-    private let mockRubrics = Mocks.mockEmptyRubrics
-    private let mockStudents = Mocks.mockEmptyStudents
+    private lazy var mockInstructors = mocks.emptyInstructors
+    private lazy var mockRubrics = mocks.rubrics
+    private lazy var mockStudents = mocks.students
+    private lazy var mockAssessments = mocks.assessments
 
     override func setUp() {
         super.setUp()
         This.assessmentsUtils.instructorsUtils = This.util
         This.assessmentsUtils.rubricsUtils = This.rubricsUtils
+        This.assessmentsUtils.studentsUtils = This.studentsUtils
         
-        XCTAssertNoThrow(try This.rubricsUtils.save(items: mockRubrics))
-        XCTAssertNoThrow(try This.studentsUtils.save(items: mockStudents))
+        XCTAssertNoThrow(try This.rubricsUtils.save(items: mocks.rubrics))
+        XCTAssertNoThrow(try This.studentsUtils.save(items: mocks.students))
     }
     
     override func tearDown() {
@@ -50,22 +53,23 @@ final class InstructorUtilsTest: XCTestCase {
     }
     
     func testSaveItem() {
-        let item = mockInstructors[0]
-        var clearedItem = item
-        clearedItem.assessments = []
-        XCTAssertNoThrow(try This.util.save(item: clearedItem))
-        XCTAssertNoThrow(try This.assessmentsUtils.save(items: item.assessments))
+        var item = mocks.instructorsWithAssessments[0]
+        let assessments = mocks.assessments.filter({ $0.instructor.sid == item.sid })
+        XCTAssertNoThrow(try This.util.save(item: item))
+        item.assessments = assessments
+        XCTAssertNoThrow(try This.assessmentsUtils.save(items: assessments))
         compareItems([item], This.util.getAll())
     }
 
     func testSaveItems() {
-        let items = mockInstructors
-        var clearedItems = mockInstructors
-        for index in clearedItems.indices {
-            clearedItems[index].assessments = []
+        var items = mocks.getAllInstructors()
+        let assessments = mocks.assessments
+        XCTAssertNoThrow(try This.util.save(items: items))
+        assessments.forEach { assessment in
+            let instructorIndex = items.firstIndex(where: { $0.sid == assessment.instructor.sid })!
+            items[instructorIndex].assessments.append(assessment)
         }
-        XCTAssertNoThrow(try This.util.save(items: clearedItems))
-        XCTAssertNoThrow(try This.assessmentsUtils.save(items: items.map({$0.assessments}).reduce([]) { $0 + $1 }))
+        XCTAssertNoThrow(try This.assessmentsUtils.save(items: assessments))
         compareItems(items, This.util.getAll())
     }
     

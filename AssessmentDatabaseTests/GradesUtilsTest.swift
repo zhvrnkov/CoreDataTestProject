@@ -12,7 +12,7 @@ final class GradesUtilsTest: XCTestCase {
     typealias This = GradesUtilsTest
     static let container = getMockPersistentContainer()
     static let util = GradesUtils(with: container)
-    private let mockGrades = Mocks.mockGrades
+    private let mockGrades = GradesUtilsTestMocks().grades
     
     override func tearDown() {
         super.tearDown()
