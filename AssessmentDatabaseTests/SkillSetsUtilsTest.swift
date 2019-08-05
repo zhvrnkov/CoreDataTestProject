@@ -12,34 +12,41 @@ final class SkillSetsUtilsTest: XCTestCase {
     typealias This = SkillSetsUtilsTest
     static let container = getMockPersistentContainer()
     static let rubricsUtils = RubricsUtils(with: container)
-    static let util: SkillSetsUtils = {
-        let utils = SkillSetsUtils(with: container)
-        utils.rubricUtils = This.rubricsUtils
-        return utils
+    static let microtasksUtils: MicrotasksUtils = {
+        let util = MicrotasksUtils(with: container)
+        util.skillSetsUtils = This.util
+        return util
     }()
-    
-    private let mockSkillSets = Mocks.mockSkillSets
-    private let mockRubrics = Mocks.mockEmptyRubrics
+    static let util: SkillSetsUtils = {
+        let util = SkillSetsUtils(with: container)
+        util.rubricUtils = This.rubricsUtils
+        return util
+    }()
+    private var mocks = SkillSetsUtilsTestMocks()
     
     override func setUp() {
         super.setUp()
-        XCTAssertNoThrow(try This.rubricsUtils.save(items: mockRubrics))
+        XCTAssertNoThrow(try This.rubricsUtils.save(items: mocks.rubrics))
     }
     
     override func tearDown() {
         super.setUp()
+        
         This.rubricsUtils.deleteAll()
         XCTAssertTrue(This.rubricsUtils.getAll().isEmpty)
     }
     
     func testSaveItem() {
-        let item = mockSkillSets[0][0]
+        var item = mocks.skillSets.randomElement()!
+        let itemMicrotasks = mocks.microtasks.filter { $0.skillSet.sid == item.sid }
         XCTAssertNotNil(try This.util.save(item: item))
+        XCTAssertNotNil(try This.microtasksUtils.save(items: itemMicrotasks))
+        item.microTasks = itemMicrotasks
         compareItems([item], This.util.getAll())
     }
     
     func testSaveItems() {
-        let items = mockSkillSets.reduce([]) { $0 + $1 }
+        let items = mocks.skillSets
         XCTAssertNoThrow(try This.util.save(items: items))
         compareItems(items, This.util.getAll())
     }
@@ -60,5 +67,16 @@ final class SkillSetsUtilsTest: XCTestCase {
     private func compareItem(_ item: SkillSetFields, _ entity: SkillSet) {
         XCTAssertEqual(item.sid, Int(entity.sid))
         XCTAssertEqual(Int64(item.rubric.sid), entity.rubric?.sid)
+        compareMicrotasks(of: item, and: entity)
+    }
+    
+    private func compareMicrotasks(of item: SkillSetFields, and entity: SkillSet) {
+        item.microTasks.forEach { microtask in
+            guard ((entity.microTasks?.allObjects as? [Microtask])?.first(where: { $0.sid == microtask.sid })) != nil
+            else {
+                XCTFail("no such microtask")
+                return
+            }
+        }
     }
 }
