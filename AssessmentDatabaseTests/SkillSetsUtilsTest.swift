@@ -42,12 +42,20 @@ final class SkillSetsUtilsTest: XCTestCase {
         XCTAssertNotNil(try This.util.save(item: item))
         XCTAssertNotNil(try This.microtasksUtils.save(items: itemMicrotasks))
         item.microTasks = itemMicrotasks
+        XCTAssertNoThrow(try This.util.update(whereSid: item.sid, like: item))
         compareItems([item], This.util.getAll())
     }
     
     func testSaveItems() {
-        let items = mocks.skillSets
+        var items = mocks.skillSets
+        let itemMicrotasks = mocks.microtasks
         XCTAssertNoThrow(try This.util.save(items: items))
+        XCTAssertNoThrow(try This.microtasksUtils.save(items: itemMicrotasks))
+        try? items.indices.forEach { index in
+            let microtasks = itemMicrotasks.filter { $0.skillSet.sid == items[index].sid }
+            items[index].microTasks = microtasks
+            XCTAssertNoThrow(try This.util.update(whereSid: items[index].sid, like: items[index]))
+        }
         compareItems(items, This.util.getAll())
     }
     
@@ -74,6 +82,7 @@ final class SkillSetsUtilsTest: XCTestCase {
         item.microTasks.forEach { microtask in
             guard ((entity.microTasks?.allObjects as? [Microtask])?.first(where: { $0.sid == microtask.sid })) != nil
             else {
+                // TODO: Because of Merge Conflicts
                 XCTFail("no such microtask")
                 return
             }

@@ -6,7 +6,11 @@ public class SkillSetsUtils: EntityUtils {
     public typealias EntityValueFields = SkillSetFields
     
     public var container: NSPersistentContainer
-    public lazy var backgroundContext = container.newBackgroundContext()
+    public lazy var backgroundContext: NSManagedObjectContext = {
+        let moc = container.newBackgroundContext()
+        moc.mergePolicy = NSMergePolicy(merge: NSMergePolicyType.overwriteMergePolicyType)
+        return moc
+    }()
     
     public var rubricUtils: RubricsUtils?
     
