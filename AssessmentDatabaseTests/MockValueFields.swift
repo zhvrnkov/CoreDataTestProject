@@ -178,6 +178,18 @@ struct InstructorUtilsTestMocks {
     }
 }
 
+struct MicrotaskUtilsTestMocks {
+    let rubrics: [MockRubricFields] = count.map {
+        MockRubricFields(sid: $0, skillSets: [])
+    }
+    lazy var skillSets: [MockSkillSets] = count.map {
+        MockSkillSets(sid: $0, rubric: rubrics[$0], microTasks: [])
+    }
+    lazy var microtasks: [MockMicrotaskFields] = count.map {
+        MockMicrotaskFields(sid: $0, skillSet: skillSets[$0], studentMicroTaskGrades: [])
+    }
+}
+
 struct Mocks {
     static var mockAssessments: [MockAssessmentFields] {
         let rubrics = mockEmptyRubrics

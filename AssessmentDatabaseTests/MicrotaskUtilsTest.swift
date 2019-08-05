@@ -25,32 +25,33 @@ final class MicrotaskUtilsTest: XCTestCase {
         let util = RubricsUtils(with: container)
         return util
     }()
-    private let mockMicrotasks = Mocks.mockMicrotasks
+    private var mocks = MicrotaskUtilsTestMocks()
     
     override func setUp() {
         super.setUp()
-        XCTAssertNoThrow(try This.rubricUtils.save(items: Mocks.mockEmptyRubrics))
-        XCTAssertNoThrow(try This.skillSetsUtils.save(items:
-            Mocks.mockSkillSets.reduce([]) { $0 + $1 }))
+        XCTAssertNoThrow(try This.rubricUtils.save(items: mocks.rubrics))
+        XCTAssertNoThrow(try This.skillSetsUtils.save(items: mocks.skillSets))
     }
 
     override func tearDown() {
         super.tearDown()
+        
         This.rubricUtils.deleteAll()
         This.skillSetsUtils.deleteAll()
+        
         XCTAssertTrue(This.rubricUtils.getAll().isEmpty)
         XCTAssertTrue(This.skillSetsUtils.getAll().isEmpty)
     }
 
     func testSaveItem() {
-        let item = mockMicrotasks[0][0]
+        let item = mocks.microtasks.randomElement()!
         XCTAssertNoThrow(try This.util.save(item: item))
         compareItems([item], This.util.getAll())
     }
     
     
     func testSaveItems() {
-        let items = Mocks.mockMicrotasks.reduce([]) { $0 + $1 }
+        let items = mocks.microtasks
         XCTAssertNoThrow(try This.util.save(items: items))
         compareItems(items, This.util.getAll())
     }
