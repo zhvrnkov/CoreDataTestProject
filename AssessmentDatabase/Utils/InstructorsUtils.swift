@@ -6,7 +6,11 @@ public class InstructorsUtils: EntityUtils {
     public typealias EntityValueFields = InstructorFields
     
     public var container: NSPersistentContainer
-    public lazy var backgroundContext = container.newBackgroundContext()
+    public lazy var backgroundContext: NSManagedObjectContext = {
+        let moc = container.newBackgroundContext()
+        moc.mergePolicy = NSMergePolicy(merge: NSMergePolicyType.overwriteMergePolicyType)
+        return moc
+    }()
     
     public var assessmentsUtils: AssessmentsUtils?
     public var studentsUtils: StudentsUtils?
@@ -43,8 +47,8 @@ public class InstructorsUtils: EntityUtils {
         else {
             throw Errors.assessmentsNotFound
         }
-        instructor.addToAssessments(NSSet(array: backgroundContextAssessments))
         backgroundContextAssessments.forEach {
+            instructor.addToAssessments($0)
             $0.instructor = instructor
         }
     }
@@ -63,8 +67,8 @@ public class InstructorsUtils: EntityUtils {
         else {
             throw Errors.studentsNotFound
         }
-        instructor.addToStudents(NSSet(array: backgroundContextStudents))
         backgroundContextStudents.forEach {
+            instructor.addToStudents($0)
             $0.addToInstructors(instructor)
         }
     }

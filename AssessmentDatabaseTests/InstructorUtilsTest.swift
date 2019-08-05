@@ -52,24 +52,56 @@ final class InstructorUtilsTest: XCTestCase {
         XCTAssertTrue(This.rubricsUtils.getAll().isEmpty)
     }
     
-    func testSaveItem() {
-        var item = mocks.instructorsWithAssessments[0]
+    func testSaveEmptyItem() {
+        let item = mocks.emptyInstructors.randomElement()!
+        XCTAssertNoThrow(try This.util.save(item: item))
+        compareItems([item], This.util.getAll())
+    }
+    
+    func testSaveEmptyItems() {
+        let items = mocks.emptyInstructors
+        XCTAssertNoThrow(try This.util.save(items: items))
+        compareItems(items, This.util.getAll())
+    }
+    
+    func testSaveItemWithStudents() {
+        let item = mocks.instructorsWithStudents.randomElement()!
+        XCTAssertNoThrow(try This.util.save(item: item))
+        compareItems([item], This.util.getAll())
+    }
+    
+    func testSaveItemsWithStudents() {
+        let items = mocks.instructorsWithStudents
+        XCTAssertNoThrow(try This.util.save(items: items))
+        compareItems(items, This.util.getAll())
+    }
+    
+    func testSaveItemWithAssessments() {
+        var item = mocks.instructorsWithAssessments.randomElement()!
         let assessments = mocks.assessments.filter({ $0.instructor.sid == item.sid })
         XCTAssertNoThrow(try This.util.save(item: item))
         item.assessments = assessments
         XCTAssertNoThrow(try This.assessmentsUtils.save(items: assessments))
+        XCTAssertNoThrow(try This.util.update(whereSid: item.sid, like: item))
         compareItems([item], This.util.getAll())
     }
 
-    func testSaveItems() {
-        var items = mocks.getAllInstructors()
+    func testSaveItemsWithAssessments() {
+        var items = mocks.instructorsWithAssessments
         let assessments = mocks.assessments
         XCTAssertNoThrow(try This.util.save(items: items))
-        assessments.forEach { assessment in
-            let instructorIndex = items.firstIndex(where: { $0.sid == assessment.instructor.sid })!
-            items[instructorIndex].assessments.append(assessment)
-        }
         XCTAssertNoThrow(try This.assessmentsUtils.save(items: assessments))
+        try? assessments.forEach { assessment in
+            guard let instructorIndex = items.firstIndex(where: {
+                $0.sid == assessment.instructor.sid
+            }) else {
+                XCTFail("no such instructor")
+                return
+            }
+            items[instructorIndex].assessments.append(assessment)
+            XCTAssertNoThrow(try This.util.update(whereSid: items[instructorIndex].sid, like: items[instructorIndex]))
+        }
+        
         compareItems(items, This.util.getAll())
     }
     

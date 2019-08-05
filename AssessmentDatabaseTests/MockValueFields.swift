@@ -155,26 +155,25 @@ struct InstructorUtilsTestMocks {
     let students: [MockStudentFields] = count.map {
         MockStudentFields(sid: $0, assessments: [], instructors: [], microTaskGrades: [])
     }
-    lazy var instructorsWithAssessments: [MockInstructorFields] = (0..<2).map {
+    lazy var instructorsWithAssessments: [MockInstructorFields] = mediumCount.map {
         let partOfStudents = Array(students[(0..<(0..<students.count).randomElement()!)])
         return MockInstructorFields(sid: $0, assessments: [], students: partOfStudents)
     }
-    lazy var instructorsWithStudents: [MockInstructorFields] = (2..<4).map {
+    lazy var instructorsWithStudents: [MockInstructorFields] = mediumCount.map {
         let partOfStudents = Array(students[(0..<(0..<students.count).randomElement()!)])
         return MockInstructorFields(sid: $0, assessments: [], students: partOfStudents)
     }
-    let emptyInstructors: [MockInstructorFields] = (4..<6).map {
+    let emptyInstructors: [MockInstructorFields] = count.map {
         return MockInstructorFields(sid: $0, assessments: [], students: [])
     }
     lazy var assessments: [MockAssessmentFields] = instructorsWithAssessments.map { instructor in
         let assessment = MockAssessmentFields(sid: instructor.sid, date: Date(), schoolId: instructor.sid + 1, instructor: instructor, rubric: rubrics.randomElement()!, studentMicrotaskGrades: [], students: instructor.students)
         return assessment
     }
-    mutating func getAllInstructors() -> [MockInstructorFields] {
+    mutating func getInstructorsWithRelations() -> [MockInstructorFields] {
         let a = instructorsWithStudents
         let b = instructorsWithAssessments
-        let c = emptyInstructors
-        return a + b + c
+        return a + b
     }
 }
 
