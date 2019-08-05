@@ -31,20 +31,37 @@ final class RubricUtilsTest: XCTestCase {
         XCTAssertTrue(This.util.getAll().isEmpty)
     }
     
-    func testSaveItem() {
-        let item = mocks.rubrics.randomElement()!
+    func testSaveEmptyItem() {
+        let item = mocks.emptyRubrics.randomElement()!
         XCTAssertNoThrow(try This.util.save(item: item))
         compareItems([item], This.util.getAll())
     }
     
-    func testSaveItems() {
-        var items = mocks.getAllRubrics()
+    func testSaveEmptyItems() {
+        let items = mocks.emptyRubrics
+        XCTAssertNoThrow(try This.util.save(items: items))
+        compareItems(items, This.util.getAll())
+    }
+    
+    func testSaveAndUpdateItemWithRelations() {
+        var item = mocks.rubricsWithRelations.randomElement()!
+        XCTAssertNoThrow(try This.util.save(item: item))
+        let skillSets = mocks.skillSets.filter { $0.rubric.sid == item.sid }
+        XCTAssertNoThrow(try This.skillSetsUtils.save(items: skillSets))
+        item.skillSets = skillSets
+        XCTAssertNoThrow(try This.util.update(whereSid: item.sid, like: item))
+        compareItems([item], This.util.getAll())
+    }
+
+    func testSaveItemsWithRelations() {
+        var items = mocks.rubricsWithRelations
         let skillSets = mocks.skillSets
         XCTAssertNoThrow(try This.util.save(items: items))
         XCTAssertNoThrow(try This.skillSetsUtils.save(items: skillSets))
         for index in items.indices {
             let itemSkillSets = skillSets.filter { $0.rubric.sid == items[index].sid }
             items[index].skillSets = itemSkillSets
+            XCTAssertNoThrow(try This.util.update(whereSid: items[index].sid, like: items[index]))
         }
         compareItems(items, This.util.getAll())
     }

@@ -78,7 +78,19 @@ final class AssessmentUtilsTest: XCTestCase {
         XCTAssertTrue(This.util.getAll().isEmpty)
     }
     
-    func testSaveItem() {
+    func testSaveEmptyItem() {
+        let item = mocks.emptyAssessments.randomElement()!
+        XCTAssertNoThrow(try This.util.save(item: item))
+        compareItems([item], This.util.getAll())
+    }
+    
+    func testSaveEmptyItems() {
+        let items = mocks.emptyAssessments
+        XCTAssertNoThrow(try This.util.save(items: items))
+        compareItems(items, This.util.getAll())
+    }
+    
+    func testSaveItemWithRelations() {
         var item = mocks.assessments.randomElement()!
         XCTAssertNoThrow(try This.util.save(item: item))
         let itemGrades = mocks.microtaskGrades.filter { grade in
@@ -86,23 +98,21 @@ final class AssessmentUtilsTest: XCTestCase {
         }
         item.studentMicrotaskGrades = itemGrades
         XCTAssertNoThrow(try This.studentMicrotaskGradesUtils.save(items: itemGrades))
-        guard let entity = This.util.get(whereSid: item.sid) else {
-            XCTFail("can't find entity")
-            return
-        }
-        compareItems([item], [entity])
+        XCTAssertNoThrow(try This.util.update(whereSid: item.sid, like: item))
+        compareItems([item], This.util.getAll())
     }
 
-    func testSaveItems() {
+    func testSaveItemsWithRelations() {
         var items = mocks.assessments
         let grades = mocks.microtaskGrades
         XCTAssertNoThrow(try This.util.save(items: items))
-        grades.forEach { grade in
+        XCTAssertNoThrow(try This.studentMicrotaskGradesUtils.save(items: grades))
+        try? grades.forEach { grade in
             let assessment = items.first(where: { $0.sid == grade.assessment.sid })!
             let index = items.firstIndex(where: { $0.sid == assessment.sid })!
             items[index].studentMicrotaskGrades.append(grade)
+            XCTAssertNoThrow(try This.util.update(whereSid: items[index].sid, like: items[index]))
         }
-        XCTAssertNoThrow(try This.studentMicrotaskGradesUtils.save(items: grades))
         compareItems(items, This.util.getAll())
     }
     
@@ -128,8 +138,8 @@ final class AssessmentUtilsTest: XCTestCase {
         XCTAssertNotNil(entity.rubric)
         XCTAssertNotNil(entity.studentMicrotaskGrades?.allObjects as? [StudentMicrotaskGrade])
         XCTAssertNotNil(entity.students?.allObjects as? [Student])
-        XCTAssertFalse(entity.studentMicrotaskGrades?.allObjects.isEmpty ?? true)
-        XCTAssertFalse(entity.students?.allObjects.isEmpty ?? true)
+        XCTAssertEqual(entity.studentMicrotaskGrades?.allObjects.count, item.studentMicrotaskGrades.count)
+        XCTAssertEqual(entity.students?.allObjects.count, item.students.count)
         XCTAssertEqual(item.studentMicrotaskGrades.count, entity.studentMicrotaskGrades?.count)
         XCTAssertEqual(item.students.count, entity.students?.count)
         XCTAssertEqual(Int64(item.instructor.sid), entity.instructor?.sid)
