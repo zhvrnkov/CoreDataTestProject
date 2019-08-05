@@ -19,14 +19,6 @@ public class AssessmentsUtils: EntityUtils {
         self.container = container
     }
     
-    public func update(item: AssessmentFields) {
-        fatalError()
-    }
-    
-    public func update(items: [AssessmentFields]) {
-        fatalError()
-    }
-    
     public func copyFields(from item: AssessmentFields, to entity: Assessment) {
         entity.sid = Int64(item.sid)
         entity.schoolId = Int64(item.schoolId)

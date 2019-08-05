@@ -136,6 +136,7 @@ public extension EntityUtils {
             do {
                 try self.setRelations(of: entity, like: item)
                 try backgroundContext.save()
+                try saveMain()
             } catch let err {
                 error = err
             }
@@ -159,6 +160,7 @@ public extension EntityUtils {
             }
             do {
                 try backgroundContext.save()
+                try saveMain()
             } catch let err {
                 error == nil ? error = err : ()
             }
@@ -169,39 +171,65 @@ public extension EntityUtils {
     }
     
     func delete(whereSid sid: Int) throws {
-        guard let entity = get(whereSid: sid) else {
-            fatalError("No such entity to delete")
+        var error: Error?
+        backgroundContext.performAndWait {
+            guard let entity = get(whereSid: sid) else {
+                error = EntityUtilsError.entityNotFound
+                return
+            }
+            let backgroundContextObject = backgroundContext.object(with: entity.objectID)
+            backgroundContext.delete(backgroundContextObject)
+            do {
+                try backgroundContext.save()
+                try saveMain()
+            } catch let err {
+                error = err
+            }
         }
-        let backgroundContextObject = backgroundContext.object(with: entity.objectID)
-        backgroundContext.delete(backgroundContextObject)
-        do {
-            try backgroundContext.save()
-        } catch {
+        if let error = error {
             throw error
         }
     }
     
     func delete(whereSids sids: [Int]) throws {
-        let entities = get(whereSids: sids)
-        entities.forEach {
-            let backgroundContextObject = backgroundContext.object(with: $0.objectID)
-            backgroundContext.delete(backgroundContextObject)
+        var error: Error?
+        backgroundContext.performAndWait {
+            let entities = get(whereSids: sids)
+            entities.forEach {
+                let backgroundContextObject = backgroundContext.object(with: $0.objectID)
+                backgroundContext.delete(backgroundContextObject)
+            }
+            do {
+                try backgroundContext.save()
+                try saveMain()
+            } catch let err {
+                error = err
+            }
         }
-        do {
-            try backgroundContext.save()
-        } catch {
+        if let error = error {
             throw error
         }
     }
     
     func update(whereSid sid: Int, like item: EntityValueFields) throws {
-        guard let entity = get(whereSid: sid) else {
-            throw EntityUtilsError.entityNotFound
+        var error: Error?
+        backgroundContext.performAndWait {
+            guard let entity = get(whereSid: sid),
+                let bcEntity = backgroundContext.object(with: entity.objectID) as? EntityType
+            else {
+                error = EntityUtilsError.entityNotFound
+                return
+            }
+            copyFields(from: item, to: bcEntity)
+            do {
+                try setRelations(of: bcEntity, like: item)
+                try backgroundContext.save()
+                try saveMain()
+            } catch let err {
+                error = err
+            }
         }
-        copyFields(from: item, to: entity)
-        do {
-            try backgroundContext.save()
-        } catch {
+        if let error = error {
             throw error
         }
     }
@@ -211,6 +239,20 @@ public extension EntityUtils {
         for item in all {
             container.viewContext.delete(item)
         }
-        try? container.viewContext.save()
+        try? saveMain()
+    }
+    
+    func saveMain() throws {
+        var error: Error?
+        container.viewContext.performAndWait {
+            do {
+                try container.viewContext.save()
+            } catch let err {
+                error = err
+            }
+        }
+        if let error = error {
+            throw error
+        }
     }
 }
