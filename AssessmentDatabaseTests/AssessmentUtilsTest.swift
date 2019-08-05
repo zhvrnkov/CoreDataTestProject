@@ -9,8 +9,8 @@
 import Foundation
 import XCTest
 
-final class AssessmentUtilTest: XCTestCase {
-    typealias This = AssessmentUtilTest
+final class AssessmentUtilsTest: XCTestCase {
+    typealias This = AssessmentUtilsTest
     static let container = getMockPersistentContainer()
     static let rubricsUtil = RubricsUtils(with: container)
     static let skillSetsUtils: SkillSetsUtils = {

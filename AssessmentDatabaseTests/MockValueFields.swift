@@ -9,6 +9,8 @@
 import Foundation
 
 let count = (0..<7)
+let mediumCount = (0..<5)
+let smallCount = (0..<2)
 
 struct MockAssessmentFields: AssessmentFields {
     var sid: Int
@@ -76,6 +78,59 @@ struct MockSkillSets: SkillSetFields {
     
     var rubric: RubricFields
     var microTasks: [Microtask]
+}
+
+struct AssessmentUtilsTestMocks {
+    let instructors: [MockInstructorFields] = count.map {
+        MockInstructorFields(sid: $0, assessments: [], students: [])
+    }
+    lazy var students: [MockStudentFields] = instructors.map { instructor in
+        return smallCount.map {
+            let sid = (smallCount.max()! + 1) * instructor.sid + $0
+            return MockStudentFields(sid: sid, assessments: [], instructors: [instructor], microTaskGrades: [])
+        }
+        }.reduce([], { $0 + $1 })
+    let rubrics: [MockRubricFields] = count.map {
+        MockRubricFields(sid: $0, skillSets: [])
+    }
+    lazy var skillSets: [MockSkillSets] = rubrics.map { rubric in
+        return smallCount.map {
+            let sid = (smallCount.max()! + 1) * rubric.sid + $0
+            return MockSkillSets(sid: sid, rubric: rubric, microTasks: [])
+        }
+        }.reduce([], { $0 + $1 })
+    lazy var microtasks: [MockMicrotaskFields] = skillSets.map { skillSet in
+            return smallCount.map {
+                let sid = (smallCount.max()! + 1) * skillSet.sid + $0
+                return MockMicrotaskFields(sid: sid, skillSet: skillSet, studentMicroTaskGrades: [])
+            }
+        }.reduce([], { $0 + $1 })
+    let grades: [MockGradeFields] = {
+        let gradesTitles: [String] = [
+            "Excellent",
+            "Good",
+            "Common",
+            "Bad",
+            "Fuck you"
+        ]
+        return mediumCount.map {
+            MockGradeFields(sid: $0, title: gradesTitles[$0])
+        }
+    }()
+    lazy var assessments: [MockAssessmentFields] = instructors.map { instructor in
+        let instructorStudents = students.filter({ student in
+            return student.instructors.contains(where: { $0.sid == instructor.sid })
+        })
+        let rubric = rubrics.randomElement()!
+        return MockAssessmentFields(sid: instructor.sid, date: Date(), schoolId: count.randomElement()!, instructor: instructor, rubric: rubric, studentMicrotaskGrades: [], students: instructorStudents)
+    }
+    lazy var microtaskGrades: [MockStudentMicrotaskGrade] = students.map { student in
+        let microtask = microtasks.randomElement()!
+        let studentAssessment = assessments.filter { assessment in
+            return assessment.students.contains(where: { $0.sid == student.sid })
+        }.randomElement()!
+        return MockStudentMicrotaskGrade(sid: student.sid, assessment: studentAssessment, grade: grades.randomElement()!, microTask: microtask, student: student)
+    }
 }
 
 struct Mocks {
