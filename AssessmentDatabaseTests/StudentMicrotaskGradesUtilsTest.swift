@@ -11,7 +11,11 @@ import XCTest
 final class StudentMicrotaskGradesUtilsTest: XCTestCase {
     typealias This = StudentMicrotaskGradesUtilsTest
     static let container = getMockPersistentContainer()
-    static let instructorsUtils = InstructorsUtils(with: container)
+    static let instructorsUtils: InstructorsUtils = {
+        let util = InstructorsUtils(with: container)
+        util.studentsUtils = This.studentsUtils
+        return util
+    }()
     static let gradesUtils = GradesUtils(with: container)
     static let rubricsUtils = RubricsUtils(with: container)
     static let skillSetsUtils: SkillSetsUtils = {
@@ -41,25 +45,18 @@ final class StudentMicrotaskGradesUtilsTest: XCTestCase {
         utils.microtasksUtils = This.microtasksUtils
         return utils
     }()
-    
-    private let instructors = Mocks.mockEmptyInstructors
-    private let rubrics = Mocks.mockEmptyRubrics
-    private let assessments = Mocks.mockEmptyAssessments
-    private let mockStudentMicrtaskGrades = Mocks.mockMicrotaskGrades
-    private let mockMicrotasks = Mocks.mockMicrotasks.reduce([]) { $0 + $1 }
-    private let mockSkillsets = Mocks.mockSkillSets.reduce([]) { $0 + $1 }
-    private let mockGrades = Mocks.mockGrades
-    private let mockStudents = Mocks.mockEmptyStudents
+    private var mocks = StudentMicrotaskGradesUtilsTestMocks()
     
     override func setUp() {
         super.setUp()
-        XCTAssertNoThrow(try This.instructorsUtils.save(items: instructors))
-        XCTAssertNoThrow(try This.rubricsUtils.save(items: rubrics))
-        XCTAssertNoThrow(try This.assessmentsUtils.save(items: assessments))
-        XCTAssertNoThrow(try This.gradesUtils.save(items: mockGrades))
-        XCTAssertNoThrow(try This.studentsUtils.save(items: mockStudents))
-        XCTAssertNoThrow(try This.skillSetsUtils.save(items: mockSkillsets))
-        XCTAssertNoThrow(try This.microtasksUtils.save(items: mockMicrotasks))
+        
+        XCTAssertNoThrow(try This.gradesUtils.save(items: mocks.grades))
+        XCTAssertNoThrow(try This.studentsUtils.save(items: mocks.students))
+        XCTAssertNoThrow(try This.instructorsUtils.save(items: mocks.instructors))
+        XCTAssertNoThrow(try This.rubricsUtils.save(items: mocks.rubrics))
+        XCTAssertNoThrow(try This.skillSetsUtils.save(items: mocks.skillSets))
+        XCTAssertNoThrow(try This.microtasksUtils.save(items: mocks.microTasks))
+        XCTAssertNoThrow(try This.assessmentsUtils.save(items: mocks.assessments))
     }
 
     override func tearDown() {
@@ -82,13 +79,13 @@ final class StudentMicrotaskGradesUtilsTest: XCTestCase {
     }
     
     func testSaveItem() {
-        let item = mockStudentMicrtaskGrades[0]
+        let item = mocks.microtaskGrades.randomElement()!
         XCTAssertNoThrow(try This.util.save(item: item))
         compareItems([item], This.util.getAll())
     }
 
     func testSaveItems() {
-        let items = mockStudentMicrtaskGrades
+        let items = mocks.microtaskGrades
         XCTAssertNoThrow(try This.util.save(items: items))
         compareItems(items, This.util.getAll())
     }
@@ -106,21 +103,21 @@ final class StudentMicrotaskGradesUtilsTest: XCTestCase {
     }
     
     private func compareItem(_ item: StudentMicrotaskGradeFields, _ entity: StudentMicrotaskGrade) {
-        checkRelations(of: entity)
-        checkFields(of: entity)
+        checkRelations(of: entity, source: item)
+        checkFields(of: entity, source: item)
+    }
+    
+    private func checkRelations(of entity: StudentMicrotaskGrade, source item: StudentMicrotaskGradeFields) {
+        XCTAssertNotNil(entity.assessment)
+        XCTAssertNotNil(entity.grade)
+        XCTAssertNotNil(entity.student)
         
         XCTAssertEqual(entity.assessment?.sid, Int64(item.assessment.sid))
         XCTAssertEqual(entity.grade?.sid, Int64(item.grade.sid))
         XCTAssertEqual(entity.student?.sid, Int64(item.student.sid))
     }
     
-    private func checkRelations(of entity: StudentMicrotaskGrade) {
-        XCTAssertNotNil(entity.assessment)
-        XCTAssertNotNil(entity.grade)
-        XCTAssertNotNil(entity.student)
-    }
-    
-    private func checkFields(of entity: StudentMicrotaskGrade) {
-        
+    private func checkFields(of entity: StudentMicrotaskGrade, source item: StudentMicrotaskGradeFields) {
+        XCTAssertEqual(entity.sid, Int64(item.sid))
     }
 }
