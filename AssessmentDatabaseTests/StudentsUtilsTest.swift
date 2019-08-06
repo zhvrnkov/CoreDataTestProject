@@ -8,26 +8,66 @@
 
 import XCTest
 
-class StudentsUtilsTest: XCTestCase {
+// TODO: Save microtaskGrades. Set them into item.grades. Update student
+final class StudentsUtilsTest: XCTestCase {
     typealias This = StudentsUtilsTest
-    static let util = StudentsUtils(with: getMockPersistentContainer())
-    static let context = util.container.viewContext
-    private let mockStudents = Mocks.mockStudents
+    static let container = getMockPersistentContainer()
+    static let util: StudentsUtils = {
+        let util = StudentsUtils(with: container)
+        util.assessmentsUtils = This.assessmentsUtils
+        util.instructorsUtils = This.instructorsUtils
+        return util
+    }()
+    
+    static let assessmentsUtils = AssessmentsUtils(container: container)
+    static let instructorsUtils = InstructorsUtils(with: container)
+    static let rubricsUtils = RubricsUtils(with: container)
+    
+    private var mocks = StudentsUtilsTestMocks()
+    
+    override func setUp() {
+        super.setUp()
+        This.assessmentsUtils.rubricsUtils = This.rubricsUtils
+        This.assessmentsUtils.instructorsUtils = This.instructorsUtils
+        
+        XCTAssertNoThrow(try This.instructorsUtils.save(items: mocks.instructors))
+        XCTAssertNoThrow(try This.rubricsUtils.save(items: mocks.rubrics))
+        XCTAssertNoThrow(try This.assessmentsUtils.save(items: mocks.assessments))
+    }
     
     override func tearDown() {
         super.tearDown()
         This.util.deleteAll()
+        This.instructorsUtils.deleteAll()
+        This.rubricsUtils.deleteAll()
+        This.assessmentsUtils.deleteAll()
+        
         XCTAssertTrue(This.util.getAll().isEmpty)
+        XCTAssertTrue(This.instructorsUtils.getAll().isEmpty)
+        XCTAssertTrue(This.rubricsUtils.getAll().isEmpty)
+        XCTAssertTrue(This.assessmentsUtils.getAll().isEmpty)
     }
     
-    func testSaveItem() {
-        let item = mockStudents[0]
+    func testSaveEmptyItem() {
+        let item = mocks.emptyStudents.randomElement()!
         XCTAssertNoThrow(try This.util.save(item: item))
         compareItems([item], This.util.getAll())
     }
     
-    func testSaveItems() {
-        let items = Array(mockStudents[1..<mockStudents.count])
+    func testSaveEmptyItems() {
+        let items = mocks.emptyStudents
+        XCTAssertNoThrow(try This.util.save(items: items))
+        compareItems(items, This.util.getAll())
+    }
+    
+    func testSaveItemWithRelations() {
+        let item = mocks.studentsWithRelations.randomElement()!
+        XCTAssertNoThrow(try This.util.save(item: item))
+        compareItems([item], This.util.getAll())
+    }
+    
+    func testSaveItemsWithRelations() {
+        let items = mocks.studentsWithRelations
         XCTAssertNoThrow(try This.util.save(items: items))
         compareItems(items, This.util.getAll())
     }
@@ -45,6 +85,8 @@ class StudentsUtilsTest: XCTestCase {
     }
     
     private func compareItem(_ item: MockStudentFields, _ entity: Student) {
-        
+        XCTAssertEqual(item.assessments.count, entity.assessments?.count)
+        XCTAssertEqual(item.instructors.count, entity.instructors?.count)
+        XCTAssertEqual(item.microTaskGrades.count, entity.microTaskGrades?.count)
     }
 }

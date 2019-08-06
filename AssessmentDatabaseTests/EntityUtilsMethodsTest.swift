@@ -9,11 +9,11 @@
 import XCTest
 import CoreData
 
-class EntityUtilsMethodsTest: XCTestCase {
+final class EntityUtilsMethodsTest: XCTestCase {
     typealias This = EntityUtilsMethodsTest
     static var utils: GradesUtils = .init(with: getMockPersistentContainer())
     static let context = This.utils.container.viewContext
-    private let mockGrades = Mocks.mockGrades
+    private let mockGrades = EntityUtilsMethodsTestMocks().mockGrades
     
     override func setUp() {
         super.setUp()

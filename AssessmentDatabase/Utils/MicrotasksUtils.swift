@@ -6,25 +6,52 @@ public class MicrotasksUtils: EntityUtils {
     public typealias EntityValueFields = MicrotaskFields
     
     public var container: NSPersistentContainer
-    public lazy var backgroundContext = container.newBackgroundContext()
+    public var backgroundContext: NSManagedObjectContext {
+        return container.newBackgroundContext()
+    }
+    
+    public var skillSetsUtils: SkillSetsUtils?
     
     public init(with container: NSPersistentContainer) {
         self.container = container
     }
     
     public func copyFields(from item: MicrotaskFields, to entity: Microtask) {
-        fatalError()
+        entity.sid = Int64(item.sid)
     }
     
-    public func setRelations(of entity: Microtask, like item: MicrotaskFields) throws {
-        fatalError()
+    public func setRelations(
+        from item: MicrotaskFields,
+        of entity: Microtask,
+        in context: NSManagedObjectContext) throws
+    {
+        do {
+            try set(skillSet: item.skillSet, of: entity, in: context)
+        } catch {
+            throw error
+        }
     }
     
-    public func update(item: MicrotaskFields) {
-        fatalError()
+    private func set(
+        skillSet: SkillSetFields,
+        of microtask: Microtask,
+        in context: NSManagedObjectContext) throws
+    {
+        guard let utils = skillSetsUtils else {
+            throw Errors.noUtils
+        }
+        guard let savedSkillSet = utils.get(whereSid: skillSet.sid),
+            let contextSkillSets = context.object(with: savedSkillSet.objectID) as? SkillSet
+        else {
+            throw Errors.skillSetNotFound
+        }
+        contextSkillSets.addToMicroTasks(microtask)
+        microtask.skillSet = contextSkillSets
     }
     
-    public func update(items: [MicrotaskFields]) {
-        fatalError()
+    public enum Errors: Error {
+        case noUtils
+        
+        case skillSetNotFound
     }
 }

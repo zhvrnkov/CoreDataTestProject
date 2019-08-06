@@ -6,7 +6,9 @@ public class AssessmentsUtils: EntityUtils {
     public typealias EntityValueFields = AssessmentFields
     
     public var container: NSPersistentContainer
-    public lazy var backgroundContext = container.newBackgroundContext()
+    public var backgroundContext: NSManagedObjectContext {
+        return container.newBackgroundContext()
+    }
     
     public var studentsUtils: StudentsUtils?
     public var rubricsUtils: RubricsUtils?
@@ -19,85 +21,105 @@ public class AssessmentsUtils: EntityUtils {
         self.container = container
     }
     
-    public func update(item: AssessmentFields) {
-        fatalError()
-    }
-    
-    public func update(items: [AssessmentFields]) {
-        fatalError()
-    }
-    
     public func copyFields(from item: AssessmentFields, to entity: Assessment) {
         entity.sid = Int64(item.sid)
         entity.schoolId = Int64(item.schoolId)
         entity.date = item.date
     }
     
-    public func setRelations(of entity: Assessment, like item: AssessmentFields) throws {
+    public func setRelations(
+        from item: AssessmentFields,
+        of entity: Assessment,
+        in context: NSManagedObjectContext) throws
+    {
         do {
-            try set(rubric: item.rubric, of: entity)
-            try set(students: item.students, of: entity)
-            try set(instructor: item.instructor, of: entity)
-            try set(studentMicrotasksGrades: item.studentMicrotaskGrades, of: entity)
+            try set(rubric: item.rubric, of: entity, in: context)
+            try set(students: item.students, of: entity, in: context)
+            try set(instructor: item.instructor, of: entity, in: context)
+            try set(studentMicrotasksGrades: item.studentMicrotaskGrades, of: entity, in: context)
         } catch {
             throw error
         }
     }
     
-    private func set(students: [StudentFields], of assessment: Assessment) throws {
-        guard let savedStudents = studentsUtils?.get(whereSids: students.map { $0.sid }) else {
+    private func set(
+        students: [StudentFields],
+        of assessment: Assessment,
+        in context: NSManagedObjectContext) throws
+    {
+        guard !students.isEmpty else {
+            return
+        }
+        guard let utils = studentsUtils else {
             throw Errors.noUtils
         }
-        if !savedStudents.isEmpty {
-            guard let backgroundContextStudents = savedStudents.map({ backgroundContext.object(with: $0.objectID) }) as? [Student]
-            else {
-                fatalError()
-            }
-            assessment.addToStudents(NSSet(array: backgroundContextStudents))
-            backgroundContextStudents.forEach {
-                $0.addToAssessments(assessment)
-            }
-        } else if !students.isEmpty {
+        let savedStudents = utils.get(whereSids: students.map { $0.sid })
+        guard !savedStudents.isEmpty,
+            let contextStudents = savedStudents
+                .map({ context.object(with: $0.objectID) }) as? [Student]
+        else {
             throw Errors.studentsNotFound
+        }
+        contextStudents.forEach {
+            assessment.addToStudents($0)
+            $0.addToAssessments(assessment)
         }
     }
     
-    private func set(rubric: RubricFields, of assessment: Assessment) throws {
-        guard let rubric = rubricsUtils?.get(whereSid: rubric.sid),
-            let backgroundContextRubric = backgroundContext.object(with: rubric.objectID) as? Rubric
+    private func set(
+        rubric: RubricFields,
+        of assessment: Assessment,
+        in context: NSManagedObjectContext) throws
+    {
+        guard let utils = rubricsUtils
+            else { throw Errors.noUtils }
+        guard let rubric = utils.get(whereSid: rubric.sid),
+            let contextRubric = context.object(with: rubric.objectID) as? Rubric
         else {
             throw Errors.rubricNotFound
         }
-        backgroundContextRubric.addToAssessments(assessment)
-        assessment.rubric = backgroundContextRubric
+        contextRubric.addToAssessments(assessment)
+        assessment.rubric = contextRubric
     }
     
-    private func set(instructor: InstructorFields, of assessment: Assessment) throws {
-        guard let instructor = instructorsUtils?.get(whereSid: instructor.sid),
-            let backgroundContextInstructor = backgroundContext.object(with: instructor.objectID) as? Instructor
+    private func set(
+        instructor: InstructorFields,
+        of assessment: Assessment,
+        in context: NSManagedObjectContext) throws
+    {
+        guard let utils = instructorsUtils
+            else { throw Errors.noUtils }
+        guard let instructor = utils.get(whereSid: instructor.sid),
+            let contextInstructor = context.object(with: instructor.objectID) as? Instructor
         else {
             throw Errors.instructorNotFound
         }
-        backgroundContextInstructor.addToAssessments(assessment)
-        assessment.instructor = backgroundContextInstructor
+        contextInstructor.addToAssessments(assessment)
+        assessment.instructor = contextInstructor
     }
     
-    private func set(studentMicrotasksGrades: [StudentMicrotaskGradeFields], of assessment: Assessment) throws {
-        guard let savedStudentMicrotasksGrades = studentMicrotaskGradesUtils?.get(whereSids: studentMicrotasksGrades.map { $0.sid }) else {
+    private func set(
+        studentMicrotasksGrades: [StudentMicrotaskGradeFields],
+        of assessment: Assessment,
+        in context: NSManagedObjectContext) throws
+    {
+        guard !studentMicrotasksGrades.isEmpty else {
+            return
+        }
+        guard let utils = studentMicrotaskGradesUtils else {
             throw Errors.noUtils
         }
-        if !savedStudentMicrotasksGrades.isEmpty {
-            guard let backgroundContextGrades = savedStudentMicrotasksGrades.map({ backgroundContext.object(with: $0.objectID) }) as? [StudentMicrotaskGrade]
-            else {
-                fatalError()
-            }
-            print(backgroundContextGrades)
-            assessment.addToStudentMicrotaskGrades(NSSet(array: backgroundContextGrades))
-            backgroundContextGrades.forEach {
-                $0.assessment = assessment
-            }
-        } else if !studentMicrotasksGrades.isEmpty {
+        let savedStudentMicrotasksGrades = utils
+            .get(whereSids: studentMicrotasksGrades.map { $0.sid })
+        guard !savedStudentMicrotasksGrades.isEmpty,
+            let contextGrades = savedStudentMicrotasksGrades
+                .map({ context.object(with: $0.objectID) }) as? [StudentMicrotaskGrade]
+        else {
             throw Errors.studentMicrotasksGradesNotFound
+        }
+        contextGrades.forEach {
+            assessment.addToStudentMicrotaskGrades($0)
+            $0.assessment = assessment
         }
     }
     
