@@ -50,6 +50,8 @@ final class StudentMicrotaskGradesUtilsTest: XCTestCase {
     override func setUp() {
         super.setUp()
         
+        This.studentsUtils.microtaskGradesUtils = This.util
+        
         XCTAssertNoThrow(try This.gradesUtils.save(items: mocks.grades))
         XCTAssertNoThrow(try This.studentsUtils.save(items: mocks.students))
         XCTAssertNoThrow(try This.instructorsUtils.save(items: mocks.instructors))
@@ -80,13 +82,22 @@ final class StudentMicrotaskGradesUtilsTest: XCTestCase {
     
     func testSaveItem() {
         let item = mocks.microtaskGrades.randomElement()!
+        var student = item.student
+        student.microTaskGrades.append(item)
         XCTAssertNoThrow(try This.util.save(item: item))
+        XCTAssertNoThrow(try This.studentsUtils.update(whereSid: student.sid, like: student))
         compareItems([item], This.util.getAll())
     }
 
     func testSaveItems() {
         let items = mocks.microtaskGrades
         XCTAssertNoThrow(try This.util.save(items: items))
+        var students = items.map { $0.student }
+        for index in students.indices {
+            let grades = items.filter { $0.student.sid == students[index].sid }
+            students[index].microTaskGrades = grades
+            XCTAssertNoThrow(try This.studentsUtils.update(whereSid: students[index].sid, like: students[index]))
+        }
         compareItems(items, This.util.getAll())
     }
     
