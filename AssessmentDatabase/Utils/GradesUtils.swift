@@ -6,7 +6,9 @@ public class GradesUtils: EntityUtils {
     public typealias EntityValueFields = GradeFields
     
     public var container: NSPersistentContainer
-    public lazy var backgroundContext = container.newBackgroundContext()
+    public var backgroundContext: NSManagedObjectContext {
+        return container.newBackgroundContext()
+    }
     
     public init(with container: NSPersistentContainer) {
         self.container = container
@@ -17,7 +19,11 @@ public class GradesUtils: EntityUtils {
         entity.title = item.title
     }
     
-    public func setRelations(of entity: Grade, like item: GradeFields) throws {
+    public func setRelations(
+        from item: GradeFields,
+        of entity: Grade,
+        in context: NSManagedObjectContext) throws
+    {
         #warning("Nothing is implemented")
     }
 }

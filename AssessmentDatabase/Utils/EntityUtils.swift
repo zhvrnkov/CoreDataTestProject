@@ -9,15 +9,15 @@
 import Foundation
 import CoreData
 
-public protocol EntityUtils {
+public protocol EntityUtils: class {
     associatedtype EntityType: NSManagedObject
     associatedtype EntityValueFields
     
     var container: NSPersistentContainer { get set }
-    var backgroundContext: NSManagedObjectContext { get set }
+    var backgroundContext: NSManagedObjectContext { get }
     
     func copyFields(from item: EntityValueFields, to entity: EntityType)
-    func setRelations(of entity: EntityType, like item: EntityValueFields) throws
+    func setRelations(from item: EntityValueFields, of entity: EntityType, in context: NSManagedObjectContext) throws
     
     func getAll() -> [EntityType]
     func asyncGetAll(_ completion: @escaping (Result<[EntityType], Error>) -> Void)
@@ -127,15 +127,16 @@ public extension EntityUtils {
         let predicate = Predicate(format: "sid IN %@", arguments: [sids])
         asyncGet(where: predicate, completeion)
     }
-    
+
     func save(item: EntityValueFields) throws {
         var error: Error?
-        backgroundContext.performAndWait {
-            let entity = EntityType(context: backgroundContext)
+        let context = backgroundContext
+        context.performAndWait {
+            let entity = EntityType(context: context)
             self.copyFields(from: item, to: entity)
             do {
-                try self.setRelations(of: entity, like: item)
-                try backgroundContext.save()
+                try self.setRelations(from: item, of: entity, in: context)
+                try context.save()
                 try saveMain()
             } catch let err {
                 error = err
@@ -148,18 +149,19 @@ public extension EntityUtils {
     
     func save(items: [EntityValueFields]) throws {
         var error: Error?
-        backgroundContext.performAndWait {
+        let context = backgroundContext
+        context.performAndWait {
             items.forEach { item in
-                let entity = EntityType(context: backgroundContext)
+                let entity = EntityType(context: context)
                 self.copyFields(from: item, to: entity)
                 do {
-                    try self.setRelations(of: entity, like: item)
+                    try self.setRelations(from: item, of: entity, in: context)
                 } catch let err {
                     error = err
                 }
             }
             do {
-                try backgroundContext.save()
+                try context.save()
                 try saveMain()
             } catch let err {
                 error == nil ? error = err : ()
@@ -172,15 +174,16 @@ public extension EntityUtils {
     
     func delete(whereSid sid: Int) throws {
         var error: Error?
-        backgroundContext.performAndWait {
+        let context = backgroundContext
+        context.performAndWait {
             guard let entity = get(whereSid: sid) else {
                 error = EntityUtilsError.entityNotFound
                 return
             }
-            let backgroundContextObject = backgroundContext.object(with: entity.objectID)
-            backgroundContext.delete(backgroundContextObject)
+            let contextEntity = context.object(with: entity.objectID)
+            context.delete(contextEntity)
             do {
-                try backgroundContext.save()
+                try context.save()
                 try saveMain()
             } catch let err {
                 error = err
@@ -193,14 +196,15 @@ public extension EntityUtils {
     
     func delete(whereSids sids: [Int]) throws {
         var error: Error?
-        backgroundContext.performAndWait {
+        let context = backgroundContext
+        context.performAndWait {
             let entities = get(whereSids: sids)
-            entities.forEach {
-                let backgroundContextObject = backgroundContext.object(with: $0.objectID)
-                backgroundContext.delete(backgroundContextObject)
+            entities.forEach { entity in
+                let contextEntity = context.object(with: entity.objectID)
+                context.delete(contextEntity)
             }
             do {
-                try backgroundContext.save()
+                try context.save()
                 try saveMain()
             } catch let err {
                 error = err
@@ -213,17 +217,18 @@ public extension EntityUtils {
     
     func update(whereSid sid: Int, like item: EntityValueFields) throws {
         var error: Error?
-        backgroundContext.performAndWait {
+        let context = backgroundContext
+        context.performAndWait {
             guard let entity = get(whereSid: sid),
-                let bcEntity = backgroundContext.object(with: entity.objectID) as? EntityType
+                let contextEntity = context.object(with: entity.objectID) as? EntityType
             else {
                 error = EntityUtilsError.entityNotFound
                 return
             }
-            copyFields(from: item, to: bcEntity)
+            copyFields(from: item, to: contextEntity)
             do {
-                try setRelations(of: bcEntity, like: item)
-                try backgroundContext.save()
+                try setRelations(from: item, of: contextEntity, in: context)
+                try context.save()
                 try saveMain()
             } catch let err {
                 error = err

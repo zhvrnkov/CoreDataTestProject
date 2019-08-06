@@ -6,11 +6,9 @@ public class InstructorsUtils: EntityUtils {
     public typealias EntityValueFields = InstructorFields
     
     public var container: NSPersistentContainer
-    public lazy var backgroundContext: NSManagedObjectContext = {
-        let moc = container.newBackgroundContext()
-        moc.mergePolicy = NSMergePolicy(merge: NSMergePolicyType.overwriteMergePolicyType)
-        return moc
-    }()
+    public var backgroundContext: NSManagedObjectContext {
+        return container.newBackgroundContext()
+    }
     
     public var assessmentsUtils: AssessmentsUtils?
     public var studentsUtils: StudentsUtils?
@@ -24,16 +22,24 @@ public class InstructorsUtils: EntityUtils {
         #warning("Not fully implemented")
     }
     
-    public func setRelations(of entity: Instructor, like item: InstructorFields) throws {
+    public func setRelations(
+        from item: InstructorFields,
+        of entity: Instructor,
+        in context: NSManagedObjectContext) throws
+    {
         do {
-            try set(assessments: item.assessments, of: entity)
-            try set(students: item.students, of: entity)
+            try set(assessments: item.assessments, of: entity, in: context)
+            try set(students: item.students, of: entity, in: context)
         } catch {
             throw error
         }
     }
     
-    private func set(assessments: [AssessmentFields], of instructor: Instructor) throws {
+    private func set(
+        assessments: [AssessmentFields],
+        of instructor: Instructor,
+        in context: NSManagedObjectContext) throws
+    {
         guard !assessments.isEmpty else {
             return
         }
@@ -42,18 +48,22 @@ public class InstructorsUtils: EntityUtils {
         }
         let savedAssessments = utils.get(whereSids: assessments.map { $0.sid })
         guard !savedAssessments.isEmpty,
-            let backgroundContextAssessments = savedAssessments
-                .map({ backgroundContext.object(with: $0.objectID) }) as? [Assessment]
+            let contextAssessments = savedAssessments
+                .map({ context.object(with: $0.objectID) }) as? [Assessment]
         else {
             throw Errors.assessmentsNotFound
         }
-        backgroundContextAssessments.forEach {
+        contextAssessments.forEach {
             instructor.addToAssessments($0)
             $0.instructor = instructor
         }
     }
     
-    private func set(students: [StudentFields], of instructor: Instructor) throws {
+    private func set(
+        students: [StudentFields],
+        of instructor: Instructor,
+        in context: NSManagedObjectContext) throws
+    {
         guard !students.isEmpty else {
             return
         }
@@ -62,12 +72,12 @@ public class InstructorsUtils: EntityUtils {
         }
         let savedStudents = utils.get(whereSids: students.map { $0.sid })
         guard !savedStudents.isEmpty,
-            let backgroundContextStudents = savedStudents
-                .map({ backgroundContext.object(with: $0.objectID) }) as? [Student]
+            let contextStudents = savedStudents
+                .map({ context.object(with: $0.objectID) }) as? [Student]
         else {
             throw Errors.studentsNotFound
         }
-        backgroundContextStudents.forEach {
+        contextStudents.forEach {
             instructor.addToStudents($0)
             $0.addToInstructors(instructor)
         }

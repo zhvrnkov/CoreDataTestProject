@@ -6,11 +6,9 @@ public class SkillSetsUtils: EntityUtils {
     public typealias EntityValueFields = SkillSetFields
     
     public var container: NSPersistentContainer
-    public lazy var backgroundContext: NSManagedObjectContext = {
-        let moc = container.newBackgroundContext()
-        moc.mergePolicy = NSMergePolicy(merge: NSMergePolicyType.overwriteMergePolicyType)
-        return moc
-    }()
+    public var backgroundContext: NSManagedObjectContext {
+        return container.newBackgroundContext()
+    }
     
     public var rubricUtils: RubricsUtils?
     
@@ -22,25 +20,33 @@ public class SkillSetsUtils: EntityUtils {
         entity.sid = Int64(item.sid)
     }
     
-    public func setRelations(of entity: SkillSet, like item: SkillSetFields) throws {
+    public func setRelations(
+        from item: SkillSetFields,
+        of entity: SkillSet,
+        in context: NSManagedObjectContext) throws
+    {
         do {
-            try set(rubric: item.rubric, of: entity)
+            try set(rubric: item.rubric, of: entity, in: context)
         } catch {
             throw error
         }
     }
     
-    private func set(rubric: RubricFields, of skillSet: SkillSet) throws {
+    private func set(
+        rubric: RubricFields,
+        of skillSet: SkillSet,
+        in context: NSManagedObjectContext) throws
+    {
         guard let utils = rubricUtils else {
             throw Errors.noUtils
         }
         guard let savedRubric = utils.get(whereSid: rubric.sid),
-            let backgroundContextRubric = backgroundContext.object(with: savedRubric.objectID) as? Rubric
+            let contextRubric = context.object(with: savedRubric.objectID) as? Rubric
         else {
             throw Errors.rubricNotFound
         }
-        backgroundContextRubric.addToSkillSets(skillSet)
-        skillSet.rubric = backgroundContextRubric
+        contextRubric.addToSkillSets(skillSet)
+        skillSet.rubric = contextRubric
     }
     
     public enum Errors: Error {

@@ -6,7 +6,9 @@ public class RubricsUtils: EntityUtils {
     public typealias EntityValueFields = RubricFields
     
     public var container: NSPersistentContainer
-    public lazy var backgroundContext = container.newBackgroundContext()
+    public var backgroundContext: NSManagedObjectContext {
+        return container.newBackgroundContext()
+    }
     
     public var skillSetsUtils: SkillSetsUtils?
     
@@ -18,15 +20,23 @@ public class RubricsUtils: EntityUtils {
         entity.sid = Int64(item.sid)
     }
     
-    public func setRelations(of entity: Rubric, like item: RubricFields) throws {
+    public func setRelations(
+        from item: RubricFields,
+        of entity: Rubric,
+        in context: NSManagedObjectContext) throws
+    {
         do {
-            try set(skillSets: item.skillSets, of: entity)
+            try set(skillSets: item.skillSets, of: entity, in: context)
         } catch {
             throw error
         }
     }
     
-    private func set(skillSets: [SkillSetFields], of rubric: Rubric) throws {
+    private func set(
+        skillSets: [SkillSetFields],
+        of rubric: Rubric,
+        in context: NSManagedObjectContext) throws
+    {
         guard !skillSets.isEmpty else {
             return
         }
@@ -34,13 +44,13 @@ public class RubricsUtils: EntityUtils {
             else { throw Errors.noUtils }
         let savedSkillSets = utils.get(whereSids: skillSets.map { $0.sid })
         guard !savedSkillSets.isEmpty,
-            let backgroundContextSkillSets = savedSkillSets
-                .map({ backgroundContext.object(with: $0.objectID )}) as? [SkillSet]
+            let contextSkillSets = savedSkillSets
+                .map({ context.object(with: $0.objectID )}) as? [SkillSet]
         else {
             throw Errors.skillSetsNotFound
         }
-        rubric.addToSkillSets(NSSet(array: backgroundContextSkillSets))
-        backgroundContextSkillSets.forEach {
+        contextSkillSets.forEach {
+            rubric.addToSkillSets($0)
             $0.rubric = rubric
         }
     }
