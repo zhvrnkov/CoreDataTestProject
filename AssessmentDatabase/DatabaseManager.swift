@@ -12,7 +12,7 @@ import CoreData
 final public class DatabaseManager {
     public static let shared = DatabaseManager()
     
-    private(set) public static var persistentContainer: NSPersistentContainer = {
+    private(set) public static var persistentContainer: PersistentContainer = {
         do {
             return try DatabaseManager.getInitializedPersistentContainer()
         } catch {
@@ -33,8 +33,8 @@ final public class DatabaseManager {
         setAssessmentsUtils()
     }
     
-    public static func getInitializedPersistentContainer(named: String = "DataModel") throws -> NSPersistentContainer {
-        let container = NSPersistentContainer(name: "DataModel")
+    public static func getInitializedPersistentContainer(named name: String = "DataModel") throws -> PersistentContainer {
+        let container = PersistentContainer(name: name)
         var errorToThrow: Error?
         container.loadPersistentStores { _, error in
             if let error = error {

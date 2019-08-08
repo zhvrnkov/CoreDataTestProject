@@ -43,6 +43,8 @@
 		CA99B54E22F1948C00A2C7BC /* EntityUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E9E22E5CE2D0011D406 /* EntityUtils.swift */; };
 		CA99B54F22F1948F00A2C7BC /* Predicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5B70D122F18C1200EE6C95 /* Predicate.swift */; };
 		CA99B55122F1954F00A2C7BC /* MockPersistentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA99B55022F1954F00A2C7BC /* MockPersistentContainer.swift */; };
+		CAC75C1422FBF95C00C03316 /* PersistentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC75C1322FBF95C00C03316 /* PersistentContainer.swift */; };
+		CAC75C1522FBFA1400C03316 /* PersistentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC75C1322FBF95C00C03316 /* PersistentContainer.swift */; };
 		CAEDF67722F2DE4700087D60 /* EntitiesFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAEDF67622F2DE4700087D60 /* EntitiesFields.swift */; };
 		CAEDF67822F2DE6E00087D60 /* EntitiesFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAEDF67622F2DE4700087D60 /* EntitiesFields.swift */; };
 		CAEDF67A22F2E6CF00087D60 /* RubricUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAEDF67922F2E6CF00087D60 /* RubricUtilsTest.swift */; };
@@ -88,6 +90,7 @@
 		CA749E9522E5CC430011D406 /* AssessmentsUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssessmentsUtils.swift; sourceTree = "<group>"; };
 		CA749E9E22E5CE2D0011D406 /* EntityUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityUtils.swift; sourceTree = "<group>"; };
 		CA99B55022F1954F00A2C7BC /* MockPersistentContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPersistentContainer.swift; sourceTree = "<group>"; };
+		CAC75C1322FBF95C00C03316 /* PersistentContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentContainer.swift; sourceTree = "<group>"; };
 		CAEDF67622F2DE4700087D60 /* EntitiesFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntitiesFields.swift; sourceTree = "<group>"; };
 		CAEDF67922F2E6CF00087D60 /* RubricUtilsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RubricUtilsTest.swift; sourceTree = "<group>"; };
 		CAEDF67C22F2FD7F00087D60 /* EntityUtilsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityUtilsError.swift; sourceTree = "<group>"; };
@@ -200,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				CAEDF67C22F2FD7F00087D60 /* EntityUtilsError.swift */,
+				CAC75C1322FBF95C00C03316 /* PersistentContainer.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -315,6 +319,7 @@
 			files = (
 				CA749E9622E5CC440011D406 /* RubricsUtils.swift in Sources */,
 				CA749E9C22E5CC440011D406 /* StudentsUtils.swift in Sources */,
+				CAC75C1422FBF95C00C03316 /* PersistentContainer.swift in Sources */,
 				CA749E9922E5CC440011D406 /* MicrotasksUtils.swift in Sources */,
 				CA749E9D22E5CC440011D406 /* AssessmentsUtils.swift in Sources */,
 				CA749E9822E5CC440011D406 /* InstructorsUtils.swift in Sources */,
@@ -334,6 +339,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAC75C1522FBFA1400C03316 /* PersistentContainer.swift in Sources */,
 				CA99B55122F1954F00A2C7BC /* MockPersistentContainer.swift in Sources */,
 				CA0D4B8222F559610099193C /* SkillSetsUtilsTest.swift in Sources */,
 				CAEDF67822F2DE6E00087D60 /* EntitiesFields.swift in Sources */,
