@@ -28,8 +28,8 @@ public class StudentsUtils: EntityUtils {
         in context: NSManagedObjectContext) throws
     {
         do {
-            try set(assessments: item.assessments, of: entity, in: context)
-            try set(instructors: item.instructors, of: entity, in: context)
+            try set(assessmentSids: item.assessmentSids, of: entity, in: context)
+            try set(instructorSids: item.instructorSids, of: entity, in: context)
             try set(microtaskGrades: item.microTaskGrades, of: entity, in: context)
         } catch {
             throw error
@@ -37,17 +37,17 @@ public class StudentsUtils: EntityUtils {
     }
     
     private func set(
-        assessments: [AssessmentFields],
+        assessmentSids: [Int],
         of student: Student,
         in context: NSManagedObjectContext) throws
     {
-        guard !assessments.isEmpty else {
+        guard !assessmentSids.isEmpty else {
             return
         }
         guard let util = assessmentsUtils else {
             throw Errors.noUtils
         }
-        let savedAssessments = util.get(whereSids: assessments.map { $0.sid })
+        let savedAssessments = util.get(whereSids: assessmentSids)
         guard !savedAssessments.isEmpty,
             let contextAssessments = savedAssessments
                 .map({ context.object(with: $0.objectID) }) as? [Assessment]
@@ -61,17 +61,17 @@ public class StudentsUtils: EntityUtils {
     }
     
     private func set(
-        instructors: [InstructorFields],
+        instructorSids: [Int],
         of student: Student,
         in context: NSManagedObjectContext) throws
     {
-        guard !instructors.isEmpty else {
+        guard !instructorSids.isEmpty else {
             return
         }
         guard let util = instructorsUtils else {
             throw Errors.noUtils
         }
-        let savedInstructors = util.get(whereSids: instructors.map { $0.sid })
+        let savedInstructors = util.get(whereSids: instructorSids)
         guard !savedInstructors.isEmpty,
             let contextInstructors = savedInstructors
                 .map({ context.object(with: $0.objectID) }) as? [Instructor]

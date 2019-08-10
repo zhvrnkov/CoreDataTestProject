@@ -48,8 +48,8 @@ struct MockStudentMicrotaskGrade: StudentMicrotaskGradeFields {
 struct MockStudentFields: StudentFields {
     var sid: Int
     
-    var assessments: [AssessmentFields]
-    var instructors: [InstructorFields]
+    var assessmentSids: [Int]
+    var instructorSids: [Int]
     var microTaskGrades: [StudentMicrotaskGradeFields]
 }
 
@@ -70,7 +70,7 @@ struct MockMicrotaskFields: MicrotaskFields, Hashable {
     var sid: Int
     
     var skillSet: SkillSetFields
-    var studentMicroTaskGrades: [StudentMicrotaskGrade]
+    var studentMicroTaskGrades: [StudentMicrotaskGradeFields]
 }
 
 struct MockSkillSets: SkillSetFields {
@@ -90,7 +90,7 @@ struct AssessmentUtilsTestMocks {
     lazy var students: [MockStudentFields] = instructors.map { instructor in
         return smallCount.map {
             let sid = (smallCount.max()! + 1) * instructor.sid + $0
-            return MockStudentFields(sid: sid, assessments: [], instructors: [instructor], microTaskGrades: [])
+            return MockStudentFields(sid: sid, assessmentSids: [], instructorSids: [instructor.sid], microTaskGrades: [])
         }
         }.reduce([], { $0 + $1 })
     let rubrics: [MockRubricFields] = count.map {
@@ -122,7 +122,7 @@ struct AssessmentUtilsTestMocks {
     }()
     lazy var assessments: [MockAssessmentFields] = instructors.map { instructor in
         let instructorStudents = students.filter({ student in
-            return student.instructors.contains(where: { $0.sid == instructor.sid })
+            return student.instructorSids.contains(where: { $0 == instructor.sid })
         })
         let rubric = rubrics.randomElement()!
         return MockAssessmentFields(sid: instructor.sid, date: Date(), schoolId: count.randomElement()!, instructor: instructor, rubric: rubric, studentMicrotaskGrades: [], students: instructorStudents)
@@ -156,7 +156,7 @@ struct InstructorUtilsTestMocks {
         MockRubricFields(sid: $0, skillSets: [])
     }
     let students: [MockStudentFields] = count.map {
-        MockStudentFields(sid: $0, assessments: [], instructors: [], microTaskGrades: [])
+        MockStudentFields(sid: $0, assessmentSids: [], instructorSids: [], microTaskGrades: [])
     }
     lazy var instructorsWithAssessments: [MockInstructorFields] = mediumCount.map {
         let partOfStudents = Array(students[(0..<(0..<students.count).randomElement()!)])
@@ -236,7 +236,7 @@ struct StudentMicrotaskGradesUtilsTestMocks {
         }
     }()
     let students: [MockStudentFields] = count.map {
-        MockStudentFields(sid: $0, assessments: [], instructors: [], microTaskGrades: [])
+        MockStudentFields(sid: $0, assessmentSids: [], instructorSids: [], microTaskGrades: [])
     }
     lazy var instructors: [MockInstructorFields] = count.map {
         MockInstructorFields(sid: $0, assessments: [], students: [students[$0]])
@@ -260,7 +260,7 @@ struct StudentMicrotaskGradesUtilsTestMocks {
 
 struct StudentsUtilsTestMocks {
     let emptyStudents: [MockStudentFields] = count.map {
-        MockStudentFields(sid: $0, assessments: [], instructors: [], microTaskGrades: [])
+        MockStudentFields(sid: $0, assessmentSids: [], instructorSids: [], microTaskGrades: [])
     }
     
     let rubrics: [MockRubricFields] = count.map {
@@ -276,7 +276,7 @@ struct StudentsUtilsTestMocks {
     }
     
     lazy var studentsWithRelations: [MockStudentFields] = count.map {
-        MockStudentFields(sid: $0, assessments: [assessments[$0]], instructors: [assessments[$0].instructor], microTaskGrades: [])
+        MockStudentFields(sid: $0, assessmentSids: [assessments[$0].sid], instructorSids: [assessments[$0].instructor.sid], microTaskGrades: [])
     }
 }
 

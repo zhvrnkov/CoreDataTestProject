@@ -8,6 +8,21 @@
 
 import Foundation
 
+public protocol InstructorFields {
+    var sid: Int { get set }
+    
+    var assessments: [AssessmentFields] { get set }
+    var students: [StudentFields] { get set }
+}
+
+public protocol StudentFields {
+    var sid: Int { get set }
+    
+    var assessmentSids: [Int] { get set }
+    var instructorSids: [Int] { get set }
+    var microTaskGrades: [StudentMicrotaskGradeFields] { get set }
+}
+
 public protocol AssessmentFields {
     var sid: Int { get set }
     var date: Date { get set }
@@ -24,18 +39,11 @@ public protocol GradeFields {
     var title: String { get set }
 }
 
-public protocol InstructorFields {
-    var sid: Int { get set }
-    
-    var assessments: [AssessmentFields] { get set }
-    var students: [StudentFields] { get set }
-}
-
 public protocol MicrotaskFields {
     var sid: Int { get set }
     
     var skillSet: SkillSetFields { get set }
-    var studentMicroTaskGrades: [StudentMicrotaskGrade] { get set }
+    var studentMicroTaskGrades: [StudentMicrotaskGradeFields] { get set }
 }
 
 public protocol RubricFields {
@@ -57,12 +65,4 @@ public protocol StudentMicrotaskGradeFields {
     var grade: GradeFields { get set }
     var microTask: MicrotaskFields { get set }
     var student: StudentFields { get set }
-}
-
-public protocol StudentFields {
-    var sid: Int { get set }
-    
-    var assessments: [AssessmentFields] { get set }
-    var instructors: [InstructorFields] { get set }
-    var microTaskGrades: [StudentMicrotaskGradeFields] { get set }
 }
