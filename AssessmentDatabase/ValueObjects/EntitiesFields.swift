@@ -28,22 +28,10 @@ public protocol AssessmentFields {
     var date: Date { get set }
     var schoolId: Int { get set }
     
-    var instructor: InstructorFields { get set }
+    var instructorSid: Int { get set }
     var rubric: RubricFields { get set }
     var studentMicrotaskGrades: [StudentMicrotaskGradeFields] { get set }
     var students: [StudentFields] { get set }
-}
-
-public protocol GradeFields {
-    var sid: Int { get set }
-    var title: String { get set }
-}
-
-public protocol MicrotaskFields {
-    var sid: Int { get set }
-    
-    var skillSet: SkillSetFields { get set }
-    var studentMicroTaskGrades: [StudentMicrotaskGradeFields] { get set }
 }
 
 public protocol RubricFields {
@@ -54,15 +42,27 @@ public protocol RubricFields {
 public protocol SkillSetFields {
     var sid: Int { get set }
     
-    var rubric: RubricFields { get set }
+    var rubricSid: Int { get set }
     var microTasks: [MicrotaskFields] { get set }
+}
+
+public protocol MicrotaskFields {
+    var sid: Int { get set }
+    
+    var skillSetSid: Int { get set }
+    var studentMicroTaskGrades: [StudentMicrotaskGradeFields] { get set }
 }
 
 public protocol StudentMicrotaskGradeFields {
     var sid: Int { get set }
     
-    var assessment: AssessmentFields { get set }
-    var grade: GradeFields { get set }
-    var microTask: MicrotaskFields { get set }
-    var student: StudentFields { get set }
+    var assessmentSid: Int { get set }
+    var gradeSid: GradeFields { get set }
+    var microTaskSid: Int { get set }
+    var studentSid: Int { get set }
+}
+
+public protocol GradeFields {
+    var sid: Int { get set }
+    var title: String { get set }
 }
