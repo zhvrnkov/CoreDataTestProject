@@ -38,7 +38,7 @@ final class SkillSetsUtilsTest: XCTestCase {
     
     func testSaveItem() {
         var item = mocks.skillSets.randomElement()!
-        let itemMicrotasks = mocks.microtasks.filter { $0.skillSet.sid == item.sid }
+        let itemMicrotasks = mocks.microtasks.filter { $0.skillSetSid == item.sid }
         XCTAssertNotNil(try This.util.save(item: item))
         XCTAssertNotNil(try This.microtasksUtils.save(items: itemMicrotasks))
         item.microTasks = itemMicrotasks
@@ -52,7 +52,7 @@ final class SkillSetsUtilsTest: XCTestCase {
         XCTAssertNoThrow(try This.util.save(items: items))
         XCTAssertNoThrow(try This.microtasksUtils.save(items: itemMicrotasks))
         try? items.indices.forEach { index in
-            let microtasks = itemMicrotasks.filter { $0.skillSet.sid == items[index].sid }
+            let microtasks = itemMicrotasks.filter { $0.skillSetSid == items[index].sid }
             items[index].microTasks = microtasks
             XCTAssertNoThrow(try This.util.update(whereSid: items[index].sid, like: items[index]))
         }
@@ -74,7 +74,7 @@ final class SkillSetsUtilsTest: XCTestCase {
     
     private func compareItem(_ item: SkillSetFields, _ entity: SkillSet) {
         XCTAssertEqual(item.sid, Int(entity.sid))
-        XCTAssertEqual(Int64(item.rubric.sid), entity.rubric?.sid)
+        XCTAssertEqual(Int64(item.rubricSid), entity.rubric?.sid)
         compareMicrotasks(of: item, and: entity)
     }
     

@@ -50,14 +50,13 @@ public protocol MicrotaskFields {
     var sid: Int { get set }
     
     var skillSetSid: Int { get set }
-    var studentMicroTaskGrades: [StudentMicrotaskGradeFields] { get set }
 }
 
 public protocol StudentMicrotaskGradeFields {
     var sid: Int { get set }
     
     var assessmentSid: Int { get set }
-    var gradeSid: GradeFields { get set }
+    var grade: GradeFields { get set }
     var microTaskSid: Int { get set }
     var studentSid: Int { get set }
 }

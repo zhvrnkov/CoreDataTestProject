@@ -82,7 +82,7 @@ final class StudentMicrotaskGradesUtilsTest: XCTestCase {
     
     func testSaveItem() {
         let item = mocks.microtaskGrades.randomElement()!
-        var student = item.student
+        var student = mocks.students.first(where: { $0.sid == item.studentSid })!
         student.microTaskGrades.append(item)
         XCTAssertNoThrow(try This.util.save(item: item))
         XCTAssertNoThrow(try This.studentsUtils.update(whereSid: student.sid, like: student))
@@ -92,9 +92,9 @@ final class StudentMicrotaskGradesUtilsTest: XCTestCase {
     func testSaveItems() {
         let items = mocks.microtaskGrades
         XCTAssertNoThrow(try This.util.save(items: items))
-        var students = items.map { $0.student }
+        var students = items.compactMap { grade in mocks.students.first(where: { grade.studentSid == $0.sid }) }
         for index in students.indices {
-            let grades = items.filter { $0.student.sid == students[index].sid }
+            let grades = items.filter { $0.studentSid == students[index].sid }
             students[index].microTaskGrades = grades
             XCTAssertNoThrow(try This.studentsUtils.update(whereSid: students[index].sid, like: students[index]))
         }
@@ -123,9 +123,9 @@ final class StudentMicrotaskGradesUtilsTest: XCTestCase {
         XCTAssertNotNil(entity.grade)
         XCTAssertNotNil(entity.student)
         
-        XCTAssertEqual(entity.assessment?.sid, Int64(item.assessment.sid))
+        XCTAssertEqual(entity.assessment?.sid, Int64(item.assessmentSid))
         XCTAssertEqual(entity.grade?.sid, Int64(item.grade.sid))
-        XCTAssertEqual(entity.student?.sid, Int64(item.student.sid))
+        XCTAssertEqual(entity.student?.sid, Int64(item.studentSid))
     }
     
     private func checkFields(of entity: StudentMicrotaskGrade, source item: StudentMicrotaskGradeFields) {

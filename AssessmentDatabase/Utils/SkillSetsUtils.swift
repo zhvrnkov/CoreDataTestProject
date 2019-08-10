@@ -26,21 +26,21 @@ public class SkillSetsUtils: EntityUtils {
         in context: NSManagedObjectContext) throws
     {
         do {
-            try set(rubric: item.rubric, of: entity, in: context)
+            try set(rubricSid: item.rubricSid, of: entity, in: context)
         } catch {
             throw error
         }
     }
     
     private func set(
-        rubric: RubricFields,
+        rubricSid: Int,
         of skillSet: SkillSet,
         in context: NSManagedObjectContext) throws
     {
         guard let utils = rubricUtils else {
             throw Errors.noUtils
         }
-        guard let savedRubric = utils.get(whereSid: rubric.sid),
+        guard let savedRubric = utils.get(whereSid: rubricSid),
             let contextRubric = context.object(with: savedRubric.objectID) as? Rubric
         else {
             throw Errors.rubricNotFound

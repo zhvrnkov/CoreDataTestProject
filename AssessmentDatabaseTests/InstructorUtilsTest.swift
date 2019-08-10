@@ -78,7 +78,7 @@ final class InstructorUtilsTest: XCTestCase {
     
     func testSaveItemWithAssessments() {
         var item = mocks.instructorsWithAssessments.randomElement()!
-        let assessments = mocks.assessments.filter({ $0.instructor.sid == item.sid })
+        let assessments = mocks.assessments.filter({ $0.instructorSid == item.sid })
         XCTAssertNoThrow(try This.util.save(item: item))
         item.assessments = assessments
         XCTAssertNoThrow(try This.assessmentsUtils.save(items: assessments))
@@ -93,7 +93,7 @@ final class InstructorUtilsTest: XCTestCase {
         XCTAssertNoThrow(try This.assessmentsUtils.save(items: assessments))
         try? assessments.forEach { assessment in
             guard let instructorIndex = items.firstIndex(where: {
-                $0.sid == assessment.instructor.sid
+                $0.sid == assessment.instructorSid
             }) else {
                 XCTFail("no such instructor")
                 return

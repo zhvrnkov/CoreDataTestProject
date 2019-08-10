@@ -29,24 +29,24 @@ public class StudentMicrotaskGradesUtils: EntityUtils {
         in context: NSManagedObjectContext) throws
     {
         do {
-            try set(assessment: item.assessment, of: entity, in: context)
+            try set(assessmentSid: item.assessmentSid, of: entity, in: context)
             try set(grade: item.grade, of: entity, in: context)
-            try set(microTask: item.microTask, of: entity, in: context)
-            try set(student: item.student, of: entity, in: context)
+            try set(microTaskSid: item.microTaskSid, of: entity, in: context)
+            try set(studentSid: item.studentSid, of: entity, in: context)
         } catch {
             throw error
         }
     }
     
     private func set(
-        assessment: AssessmentFields,
+        assessmentSid: Int,
         of entity: StudentMicrotaskGrade,
         in context: NSManagedObjectContext) throws
     {
         guard let utils = assessmentsUtils
             else { throw Errors.noUtils }
         
-        guard let assessment = utils.get(whereSid: assessment.sid),
+        guard let assessment = utils.get(whereSid: assessmentSid),
             let contextAssessment = context.object(with: assessment.objectID) as? Assessment
         else {
             throw Errors.assessmentNotFound
@@ -73,13 +73,13 @@ public class StudentMicrotaskGradesUtils: EntityUtils {
     }
     
     private func set(
-        microTask: MicrotaskFields,
+        microTaskSid: Int,
         of entity: StudentMicrotaskGrade,
         in context: NSManagedObjectContext) throws
     {
         guard let utils = microtasksUtils
             else { throw Errors.noUtils }
-        guard let savedMicrotask = utils.get(whereSid: microTask.sid),
+        guard let savedMicrotask = utils.get(whereSid: microTaskSid),
             let contextMicrotask = context.object(with: savedMicrotask.objectID) as? Microtask
         else {
             throw Errors.microTaskNotFound
@@ -89,13 +89,13 @@ public class StudentMicrotaskGradesUtils: EntityUtils {
     }
     
     private func set(
-        student: StudentFields,
+        studentSid: Int,
         of entity: StudentMicrotaskGrade,
         in context: NSManagedObjectContext) throws
     {
         guard let utils = studentsUtils
             else { throw Errors.noUtils }
-        guard let student = utils.get(whereSid: student.sid),
+        guard let student = utils.get(whereSid: studentSid),
             let contextStudent = context.object(with: student.objectID) as? Student
         else {
             throw Errors.studentNotFound

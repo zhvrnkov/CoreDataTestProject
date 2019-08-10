@@ -46,7 +46,7 @@ final class RubricUtilsTest: XCTestCase {
     func testSaveAndUpdateItemWithRelations() {
         var item = mocks.rubricsWithRelations.randomElement()!
         XCTAssertNoThrow(try This.util.save(item: item))
-        let skillSets = mocks.skillSets.filter { $0.rubric.sid == item.sid }
+        let skillSets = mocks.skillSets.filter { $0.rubricSid == item.sid }
         XCTAssertNoThrow(try This.skillSetsUtils.save(items: skillSets))
         item.skillSets = skillSets
         XCTAssertNoThrow(try This.util.update(whereSid: item.sid, like: item))
@@ -59,7 +59,7 @@ final class RubricUtilsTest: XCTestCase {
         XCTAssertNoThrow(try This.util.save(items: items))
         XCTAssertNoThrow(try This.skillSetsUtils.save(items: skillSets))
         for index in items.indices {
-            let itemSkillSets = skillSets.filter { $0.rubric.sid == items[index].sid }
+            let itemSkillSets = skillSets.filter { $0.rubricSid == items[index].sid }
             items[index].skillSets = itemSkillSets
             XCTAssertNoThrow(try This.util.update(whereSid: items[index].sid, like: items[index]))
         }

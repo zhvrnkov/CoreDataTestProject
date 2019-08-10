@@ -26,21 +26,21 @@ public class MicrotasksUtils: EntityUtils {
         in context: NSManagedObjectContext) throws
     {
         do {
-            try set(skillSet: item.skillSet, of: entity, in: context)
+            try set(skillSetSid: item.skillSetSid, of: entity, in: context)
         } catch {
             throw error
         }
     }
     
     private func set(
-        skillSet: SkillSetFields,
+        skillSetSid: Int,
         of microtask: Microtask,
         in context: NSManagedObjectContext) throws
     {
         guard let utils = skillSetsUtils else {
             throw Errors.noUtils
         }
-        guard let savedSkillSet = utils.get(whereSid: skillSet.sid),
+        guard let savedSkillSet = utils.get(whereSid: skillSetSid),
             let contextSkillSets = context.object(with: savedSkillSet.objectID) as? SkillSet
         else {
             throw Errors.skillSetNotFound

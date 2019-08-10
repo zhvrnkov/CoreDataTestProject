@@ -35,7 +35,7 @@ public class AssessmentsUtils: EntityUtils {
         do {
             try set(rubric: item.rubric, of: entity, in: context)
             try set(students: item.students, of: entity, in: context)
-            try set(instructor: item.instructor, of: entity, in: context)
+            try set(instructorSid: item.instructorSid, of: entity, in: context)
             try set(studentMicrotasksGrades: item.studentMicrotaskGrades, of: entity, in: context)
         } catch {
             throw error
@@ -83,13 +83,13 @@ public class AssessmentsUtils: EntityUtils {
     }
     
     private func set(
-        instructor: InstructorFields,
+        instructorSid: Int,
         of assessment: Assessment,
         in context: NSManagedObjectContext) throws
     {
         guard let utils = instructorsUtils
             else { throw Errors.noUtils }
-        guard let instructor = utils.get(whereSid: instructor.sid),
+        guard let instructor = utils.get(whereSid: instructorSid),
             let contextInstructor = context.object(with: instructor.objectID) as? Instructor
         else {
             throw Errors.instructorNotFound

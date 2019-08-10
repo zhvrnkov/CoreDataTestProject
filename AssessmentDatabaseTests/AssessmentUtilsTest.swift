@@ -94,7 +94,7 @@ final class AssessmentUtilsTest: XCTestCase {
         var item = mocks.assessments.randomElement()!
         XCTAssertNoThrow(try This.util.save(item: item))
         let itemGrades = mocks.microtaskGrades.filter { grade in
-            grade.assessment.sid == item.sid
+            grade.assessmentSid == item.sid
         }
         item.studentMicrotaskGrades = itemGrades
         XCTAssertNoThrow(try This.studentMicrotaskGradesUtils.save(items: itemGrades))
@@ -108,7 +108,7 @@ final class AssessmentUtilsTest: XCTestCase {
         XCTAssertNoThrow(try This.util.save(items: items))
         XCTAssertNoThrow(try This.studentMicrotaskGradesUtils.save(items: grades))
         try? grades.forEach { grade in
-            let assessment = items.first(where: { $0.sid == grade.assessment.sid })!
+            let assessment = items.first(where: { $0.sid == grade.assessmentSid })!
             let index = items.firstIndex(where: { $0.sid == assessment.sid })!
             items[index].studentMicrotaskGrades.append(grade)
             XCTAssertNoThrow(try This.util.update(whereSid: items[index].sid, like: items[index]))
@@ -142,7 +142,7 @@ final class AssessmentUtilsTest: XCTestCase {
         XCTAssertEqual(entity.students?.allObjects.count, item.students.count)
         XCTAssertEqual(item.studentMicrotaskGrades.count, entity.studentMicrotaskGrades?.count)
         XCTAssertEqual(item.students.count, entity.students?.count)
-        XCTAssertEqual(Int64(item.instructor.sid), entity.instructor?.sid)
+        XCTAssertEqual(Int64(item.instructorSid), entity.instructor?.sid)
         XCTAssertEqual(Int64(item.rubric.sid), entity.rubric?.sid)
     }
     
