@@ -10,8 +10,6 @@ public class RubricsUtils: EntityUtils {
         return container.newBackgroundContext()
     }
     
-    public var skillSetsUtils: SkillSetsUtils?
-    
     public init(with container: NSPersistentContainer) {
         self.container = container
     }

@@ -13,7 +13,7 @@ final class StudentMicrotaskGradesUtilsTest: XCTestCase {
     static let container = getMockPersistentContainer()
     static let instructorsUtils: InstructorsUtils = {
         let util = InstructorsUtils(with: container)
-        util.studentsUtils = This.studentsUtils
+//        util.studentsUtils = This.studentsUtils
         return util
     }()
     static let gradesUtils = GradesUtils(with: container)

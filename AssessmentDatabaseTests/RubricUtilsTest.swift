@@ -11,17 +11,11 @@ import XCTest
 final class RubricUtilsTest: XCTestCase {
     typealias This = RubricUtilsTest
     static let container = getMockPersistentContainer()
-    static let skillSetsUtils = SkillSetsUtils(with: container)
-    static let util: RubricsUtils = {
-        let utils = RubricsUtils(with: container)
-        utils.skillSetsUtils = skillSetsUtils
-        return utils
-    }()
+    static let util = RubricsUtils(with: container)
     private var mocks = RubricUtilsTestMocks()
     
     override func setUp() {
         super.setUp()
-        This.skillSetsUtils.rubricUtils = This.util
     }
     
     override func tearDown() {

@@ -12,11 +12,6 @@ final class SkillSetsUtilsTest: XCTestCase {
     typealias This = SkillSetsUtilsTest
     static let container = getMockPersistentContainer()
     static let rubricsUtils = RubricsUtils(with: container)
-    static let microtasksUtils: MicrotasksUtils = {
-        let util = MicrotasksUtils(with: container)
-        util.skillSetsUtils = This.util
-        return util
-    }()
     static let util: SkillSetsUtils = {
         let util = SkillSetsUtils(with: container)
         util.rubricUtils = This.rubricsUtils
