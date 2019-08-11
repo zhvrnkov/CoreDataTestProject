@@ -224,20 +224,12 @@ struct StudentsUtilsTestMocks {
         MockStudentFields(sid: $0, assessmentSids: [], instructorSids: [], microTaskGradesSids: [])
     }
     
-    let rubrics: [MockRubricFields] = count.map {
-        MockRubricFields(sid: $0, skillSets: [])
-    }
-    
     let instructors: [MockInstructorFields] = count.map {
         MockInstructorFields(sid: $0, assessments: [], students: [])
     }
     
-    lazy var assessments: [MockAssessmentFields] = count.map {
-        MockAssessmentFields(sid: $0, date: Date(), schoolId: $0 + 10, instructorSid: instructors[$0].sid, rubric: rubrics[$0], studentMicrotaskGrades: [], students: [])
-    }
-    
-    lazy var studentsWithRelations: [MockStudentFields] = count.map {
-        MockStudentFields(sid: $0, assessmentSids: [assessments[$0].sid], instructorSids: [assessments[$0].instructorSid], microTaskGradesSids: [])
+    lazy var studentsWithInstructor: [MockStudentFields] = count.map {
+        MockStudentFields(sid: $0, assessmentSids: [], instructorSids: [instructors[$0].sid], microTaskGradesSids: [])
     }
 }
 

@@ -50,8 +50,6 @@ final class StudentMicrotaskGradesUtilsTest: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        This.studentsUtils.microtaskGradesUtils = This.util
-        
         XCTAssertNoThrow(try This.gradesUtils.save(items: mocks.grades))
         XCTAssertNoThrow(try This.studentsUtils.save(items: mocks.students))
         XCTAssertNoThrow(try This.instructorsUtils.save(items: mocks.instructors))

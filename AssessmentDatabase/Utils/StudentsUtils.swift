@@ -9,10 +9,7 @@ public class StudentsUtils: EntityUtils {
     public var backgroundContext: NSManagedObjectContext {
         return container.newBackgroundContext()
     }
-    
-    public var assessmentsUtils: AssessmentsUtils?
     public var instructorsUtils: InstructorsUtils?
-    public var microtaskGradesUtils: StudentMicrotaskGradesUtils?
     
     public init(with container: NSPersistentContainer) {
         self.container = container
@@ -28,35 +25,9 @@ public class StudentsUtils: EntityUtils {
         in context: NSManagedObjectContext) throws
     {
         do {
-            try set(assessmentSids: item.assessmentSids, of: entity, in: context)
             try set(instructorSids: item.instructorSids, of: entity, in: context)
-            try set(microtaskGradesSids: item.microTaskGradesSids, of: entity, in: context)
         } catch {
             throw error
-        }
-    }
-    
-    private func set(
-        assessmentSids: [Int],
-        of student: Student,
-        in context: NSManagedObjectContext) throws
-    {
-        guard !assessmentSids.isEmpty else {
-            return
-        }
-        guard let util = assessmentsUtils else {
-            throw Errors.noUtils
-        }
-        let savedAssessments = util.get(whereSids: assessmentSids)
-        guard !savedAssessments.isEmpty,
-            let contextAssessments = savedAssessments
-                .map({ context.object(with: $0.objectID) }) as? [Assessment]
-        else {
-            throw Errors.assessmentsNotFound
-        }
-        contextAssessments.forEach {
-            student.addToAssessments($0)
-            $0.addToStudents(student)
         }
     }
     
@@ -81,30 +52,6 @@ public class StudentsUtils: EntityUtils {
         contextInstructors.forEach {
             student.addToInstructors($0)
             $0.addToStudents(student)
-        }
-    }
-    
-    private func set(
-        microtaskGradesSids: [Int],
-        of student: Student,
-        in context: NSManagedObjectContext) throws
-    {
-        guard !microtaskGradesSids.isEmpty else {
-            return
-        }
-        guard let util = microtaskGradesUtils else {
-            throw Errors.noUtils
-        }
-        let savedMicrotaskGrades = util.get(whereSids: microtaskGradesSids)
-        guard !savedMicrotaskGrades.isEmpty,
-            let contextMicrotaskGrades = savedMicrotaskGrades
-                .map({ context.object(with: $0.objectID) }) as? [StudentMicrotaskGrade]
-        else {
-            throw Errors.microtaskGradesNotFound
-        }
-        contextMicrotaskGrades.forEach {
-            student.addToMicroTaskGrades($0)
-            $0.student = student
         }
     }
     
