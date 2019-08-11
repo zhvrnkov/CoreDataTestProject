@@ -54,6 +54,10 @@ final class AssessmentUtilsTest: XCTestCase {
         compareItems(items, This.util.getAll())
     }
     
+    func testUpdateItem() {
+        XCTFail()
+    }
+    
     func compareItems(_ items: [AssessmentFields], _ entities: [Assessment]) {
         XCTAssertEqual(items.count, entities.count)
         for index in items.indices {

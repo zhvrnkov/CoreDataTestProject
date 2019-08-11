@@ -36,35 +36,19 @@ final class StudentsUtilsTest: XCTestCase {
         XCTAssertTrue(This.instructorsUtils.getAll().isEmpty)
     }
     
-    func testSaveEmptyItem() {
-        let item = mocks.emptyStudents.randomElement()!
+    func testSaveItem() {
+        let item = mocks.students.randomElement()!
         XCTAssertNoThrow(try This.util.save(item: item))
         compareItems([item], This.util.getAll())
     }
     
-    func testSaveEmptyItems() {
-        let items = mocks.emptyStudents
-        XCTAssertNoThrow(try This.util.save(items: items))
-        compareItems(items, This.util.getAll())
-    }
-    
-    func testSaveItemWithInstructor() {
-        let item = mocks.studentsWithInstructor.randomElement()!
-        XCTAssertNoThrow(try This.util.save(item: item))
-        compareItems([item], This.util.getAll())
-    }
-    
-    func testSaveItemsWithInstructors() {
-        let items = mocks.studentsWithInstructor
+    func testSaveItems() {
+        let items = mocks.students
         XCTAssertNoThrow(try This.util.save(items: items))
         compareItems(items, This.util.getAll())
     }
     
     func testUpdateItemWithInstructor() {
-        XCTFail("nothing is here")
-    }
-    
-    func testUpdateItemsWithInstructors() {
         XCTFail("nothing is here")
     }
     
