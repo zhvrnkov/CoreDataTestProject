@@ -25,34 +25,7 @@ public class RubricsUtils: EntityUtils {
         of entity: Rubric,
         in context: NSManagedObjectContext) throws
     {
-        do {
-            try set(skillSets: item.skillSets, of: entity, in: context)
-        } catch {
-            throw error
-        }
-    }
-    
-    private func set(
-        skillSets: [SkillSetFields],
-        of rubric: Rubric,
-        in context: NSManagedObjectContext) throws
-    {
-        guard !skillSets.isEmpty else {
-            return
-        }
-        guard let utils = skillSetsUtils
-            else { throw Errors.noUtils }
-        let savedSkillSets = utils.get(whereSids: skillSets.map { $0.sid })
-        guard !savedSkillSets.isEmpty,
-            let contextSkillSets = savedSkillSets
-                .map({ context.object(with: $0.objectID )}) as? [SkillSet]
-        else {
-            throw Errors.skillSetsNotFound
-        }
-        contextSkillSets.forEach {
-            rubric.addToSkillSets($0)
-            $0.rubric = rubric
-        }
+        #warning("Nothing is here")
     }
     
     public enum Errors: Error {

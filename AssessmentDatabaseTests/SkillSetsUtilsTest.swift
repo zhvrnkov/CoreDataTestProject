@@ -37,25 +37,14 @@ final class SkillSetsUtilsTest: XCTestCase {
     }
     
     func testSaveItem() {
-        var item = mocks.skillSets.randomElement()!
-        let itemMicrotasks = mocks.microtasks.filter { $0.skillSetSid == item.sid }
+        let item = mocks.skillSets.randomElement()!
         XCTAssertNotNil(try This.util.save(item: item))
-        XCTAssertNotNil(try This.microtasksUtils.save(items: itemMicrotasks))
-        item.microTasks = itemMicrotasks
-        XCTAssertNoThrow(try This.util.update(whereSid: item.sid, like: item))
         compareItems([item], This.util.getAll())
     }
     
     func testSaveItems() {
-        var items = mocks.skillSets
-        let itemMicrotasks = mocks.microtasks
+        let items = mocks.skillSets
         XCTAssertNoThrow(try This.util.save(items: items))
-        XCTAssertNoThrow(try This.microtasksUtils.save(items: itemMicrotasks))
-        try? items.indices.forEach { index in
-            let microtasks = itemMicrotasks.filter { $0.skillSetSid == items[index].sid }
-            items[index].microTasks = microtasks
-            XCTAssertNoThrow(try This.util.update(whereSid: items[index].sid, like: items[index]))
-        }
         compareItems(items, This.util.getAll())
     }
     
@@ -75,17 +64,5 @@ final class SkillSetsUtilsTest: XCTestCase {
     private func compareItem(_ item: SkillSetFields, _ entity: SkillSet) {
         XCTAssertEqual(item.sid, Int(entity.sid))
         XCTAssertEqual(Int64(item.rubricSid), entity.rubric?.sid)
-        compareMicrotasks(of: item, and: entity)
-    }
-    
-    private func compareMicrotasks(of item: SkillSetFields, and entity: SkillSet) {
-        item.microTasks.forEach { microtask in
-            guard ((entity.microTasks?.allObjects as? [Microtask])?.first(where: { $0.sid == microtask.sid })) != nil
-            else {
-                // TODO: Because of Merge Conflicts
-                XCTFail("no such microtask")
-                return
-            }
-        }
     }
 }

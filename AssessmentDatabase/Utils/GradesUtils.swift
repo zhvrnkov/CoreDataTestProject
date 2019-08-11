@@ -24,6 +24,6 @@ public class GradesUtils: EntityUtils {
         of entity: Grade,
         in context: NSManagedObjectContext) throws
     {
-        #warning("Nothing is implemented")
+        #warning("Nothing is here")
     }
 }

@@ -43,29 +43,6 @@ final class RubricUtilsTest: XCTestCase {
         compareItems(items, This.util.getAll())
     }
     
-    func testSaveAndUpdateItemWithRelations() {
-        var item = mocks.rubricsWithRelations.randomElement()!
-        XCTAssertNoThrow(try This.util.save(item: item))
-        let skillSets = mocks.skillSets.filter { $0.rubricSid == item.sid }
-        XCTAssertNoThrow(try This.skillSetsUtils.save(items: skillSets))
-        item.skillSets = skillSets
-        XCTAssertNoThrow(try This.util.update(whereSid: item.sid, like: item))
-        compareItems([item], This.util.getAll())
-    }
-
-    func testSaveItemsWithRelations() {
-        var items = mocks.rubricsWithRelations
-        let skillSets = mocks.skillSets
-        XCTAssertNoThrow(try This.util.save(items: items))
-        XCTAssertNoThrow(try This.skillSetsUtils.save(items: skillSets))
-        for index in items.indices {
-            let itemSkillSets = skillSets.filter { $0.rubricSid == items[index].sid }
-            items[index].skillSets = itemSkillSets
-            XCTAssertNoThrow(try This.util.update(whereSid: items[index].sid, like: items[index]))
-        }
-        compareItems(items, This.util.getAll())
-    }
-    
     private func compareItems(
         _ items: [MockRubricFields],
         _ entities: [Rubric]
@@ -83,18 +60,6 @@ final class RubricUtilsTest: XCTestCase {
     }
     
     private func compareItem(_ item: MockRubricFields, _ entity: Rubric) {
-        XCTAssertEqual(item.skillSets.count, entity.skillSets?.count)
-        compareSkillSets(of: item, and: entity)
-    }
-    
-    private func compareSkillSets(of item: MockRubricFields, and entity: Rubric) {
-        item.skillSets.forEach { skillSet in
-            guard let entitySkillSets = (entity.skillSets?.allObjects as? [SkillSet])?.first(where: { $0.sid == Int64(skillSet.sid) })
-            else {
-                XCTFail("no such skillSet")
-                return
-            }
-            XCTAssertEqual(entitySkillSets.sid, Int64(skillSet.sid))
-        }
+        XCTAssertEqual(item.sid, Int(entity.sid))
     }
 }
