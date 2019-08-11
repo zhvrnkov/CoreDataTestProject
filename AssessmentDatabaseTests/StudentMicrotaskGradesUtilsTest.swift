@@ -37,7 +37,6 @@ final class StudentMicrotaskGradesUtilsTest: XCTestCase {
         utils.studentsUtils = StudentsUtils(with: container)
         utils.rubricsUtils = rubricsUtils
         utils.instructorsUtils = instructorsUtils
-        utils.studentMicrotaskGradesUtils = StudentMicrotaskGradesUtils(with: container)
         return utils
     }()
     

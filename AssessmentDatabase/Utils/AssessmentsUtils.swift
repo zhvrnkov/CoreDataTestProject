@@ -13,7 +13,6 @@ public class AssessmentsUtils: EntityUtils {
     public var studentsUtils: StudentsUtils?
     public var rubricsUtils: RubricsUtils?
     public var instructorsUtils: InstructorsUtils?
-    public var studentMicrotaskGradesUtils: StudentMicrotaskGradesUtils?
     
     public init(
         container: NSPersistentContainer
@@ -36,7 +35,6 @@ public class AssessmentsUtils: EntityUtils {
             try set(rubric: item.rubric, of: entity, in: context)
             try set(students: item.students, of: entity, in: context)
             try set(instructorSid: item.instructorSid, of: entity, in: context)
-            try set(studentMicrotasksGrades: item.studentMicrotaskGrades, of: entity, in: context)
         } catch {
             throw error
         }
@@ -97,32 +95,6 @@ public class AssessmentsUtils: EntityUtils {
         }
         contextInstructor.addToAssessments(assessment)
         assessment.instructor = contextInstructor
-    }
-    
-    private func set(
-        studentMicrotasksGrades: [StudentMicrotaskGradeFields],
-        of assessment: Assessment,
-        in context: NSManagedObjectContext) throws
-    {
-        guard !studentMicrotasksGrades.isEmpty else {
-            return
-        }
-        guard let utils = studentMicrotaskGradesUtils else {
-            throw Errors.noUtils
-        }
-        let savedStudentMicrotasksGrades = utils
-            .get(whereSids: studentMicrotasksGrades.map { $0.sid })
-        guard !savedStudentMicrotasksGrades.isEmpty,
-            let contextGrades = savedStudentMicrotasksGrades
-                .map({ context.object(with: $0.objectID) }) as? [StudentMicrotaskGrade]
-        else {
-            throw Errors.studentMicrotasksGradesNotFound
-        }
-//        assessment.studentMicrotaskGrades = NSSet(array: [])
-        contextGrades.forEach {
-            assessment.addToStudentMicrotaskGrades($0)
-            $0.assessment = assessment
-        }
     }
     
     public enum Errors: Error {

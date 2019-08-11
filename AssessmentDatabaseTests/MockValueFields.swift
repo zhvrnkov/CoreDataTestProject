@@ -80,58 +80,27 @@ struct MockSkillSets: SkillSetFields {
 }
 
 struct AssessmentUtilsTestMocks {
-    lazy var emptyAssessments: [MockAssessmentFields] = count.map {
-        MockAssessmentFields(sid: $0, date: Date(), schoolId: $0 + 10, instructorSid: instructors[$0].sid, rubric: rubrics[$0], studentMicrotaskGrades: [], students: [])
+    let rubrics: [MockRubricFields] = count.map {
+        MockRubricFields(sid: $0, skillSets: [])
     }
+    
     let instructors: [MockInstructorFields] = count.map {
         MockInstructorFields(sid: $0, assessments: [], students: [])
     }
+    
     lazy var students: [MockStudentFields] = instructors.map { instructor in
         return smallCount.map {
             let sid = (smallCount.max()! + 1) * instructor.sid + $0
             return MockStudentFields(sid: sid, assessmentSids: [], instructorSids: [instructor.sid], microTaskGradesSids: [])
         }
-        }.reduce([], { $0 + $1 })
-    let rubrics: [MockRubricFields] = count.map {
-        MockRubricFields(sid: $0, skillSets: [])
-    }
-    lazy var skillSets: [MockSkillSets] = rubrics.map { rubric in
-        return smallCount.map {
-            let sid = (smallCount.max()! + 1) * rubric.sid + $0
-            return MockSkillSets(sid: sid, rubricSid: rubric.sid, microTasks: [])
-        }
-        }.reduce([], { $0 + $1 })
-    lazy var microtasks: [MockMicrotaskFields] = skillSets.map { skillSet in
-            return smallCount.map {
-                let sid = (smallCount.max()! + 1) * skillSet.sid + $0
-                return MockMicrotaskFields(sid: sid, skillSetSid: skillSet.sid)
-            }
-        }.reduce([], { $0 + $1 })
-    let grades: [MockGradeFields] = {
-        let gradesTitles: [String] = [
-            "Excellent",
-            "Good",
-            "Common",
-            "Bad",
-            "Fuck you"
-        ]
-        return mediumCount.map {
-            MockGradeFields(sid: $0, title: gradesTitles[$0])
-        }
-    }()
+    }.reduce([], { $0 + $1 })
+    
     lazy var assessments: [MockAssessmentFields] = instructors.map { instructor in
         let instructorStudents = students.filter({ student in
             return student.instructorSids.contains(where: { $0 == instructor.sid })
         })
         let rubric = rubrics.randomElement()!
         return MockAssessmentFields(sid: instructor.sid, date: Date(), schoolId: count.randomElement()!, instructorSid: instructor.sid, rubric: rubric, studentMicrotaskGrades: [], students: instructorStudents)
-    }
-    lazy var microtaskGrades: [MockStudentMicrotaskGrade] = students.map { student in
-        let microtask = microtasks.randomElement()!
-        let studentAssessment = assessments.filter { assessment in
-            return assessment.students.contains(where: { $0.sid == student.sid })
-        }.randomElement()!
-        return MockStudentMicrotaskGrade(sid: student.sid, assessmentSid: studentAssessment.sid, grade: grades.randomElement()!, microTaskSid: microtask.sid, studentSid: student.sid)
     }
 }
 

@@ -13,28 +13,14 @@ final class AssessmentUtilsTest: XCTestCase {
     typealias This = AssessmentUtilsTest
     static let container = getMockPersistentContainer()
     static let rubricsUtil = RubricsUtils(with: container)
-    static let skillSetsUtils: SkillSetsUtils = {
-        let util = SkillSetsUtils(with: container)
-        util.rubricUtils = This.rubricsUtil
-        return util
-    }()
-    static let microtasksUtils: MicrotasksUtils = {
-        let util = MicrotasksUtils(with: container)
-        util.skillSetsUtils = This.skillSetsUtils
-        return util
-    }()
     static let studentsUtil = StudentsUtils(with: container)
     static let instructorsUtil = InstructorsUtils(with: container)
-    static let studentMicrotaskGradesUtils = StudentMicrotaskGradesUtils(with: container)
-    static let gradesUtils = GradesUtils(with: container)
     
-
     static let util: AssessmentsUtils = {
         let utils = AssessmentsUtils(container: container)
         utils.studentsUtils = studentsUtil
         utils.rubricsUtils = rubricsUtil
         utils.instructorsUtils = instructorsUtil
-        utils.studentMicrotaskGradesUtils = studentMicrotaskGradesUtils
         return utils
     }()
     
@@ -42,82 +28,30 @@ final class AssessmentUtilsTest: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        This.studentMicrotaskGradesUtils.assessmentsUtils = This.util
-        This.studentMicrotaskGradesUtils.studentsUtils = This.studentsUtil
-        This.studentMicrotaskGradesUtils.gradesUtils = This.gradesUtils
-        This.studentMicrotaskGradesUtils.microtasksUtils = This.microtasksUtils
         
         This.studentsUtil.instructorsUtils = This.instructorsUtil
         
         XCTAssertNoThrow(try This.instructorsUtil.save(items: mocks.instructors))
         XCTAssertNoThrow(try This.studentsUtil.save(items: mocks.students))
         XCTAssertNoThrow(try This.rubricsUtil.save(items: mocks.rubrics))
-        XCTAssertNoThrow(try This.skillSetsUtils.save(items: mocks.skillSets))
-        XCTAssertNoThrow(try This.microtasksUtils.save(items: mocks.microtasks))
-        XCTAssertNoThrow(try This.gradesUtils.save(items: mocks.grades))
     }
    
     override func tearDown() {
         super.tearDown()
-        This.instructorsUtil.deleteAll()
-        This.studentsUtil.deleteAll()
-        This.rubricsUtil.deleteAll()
-        This.skillSetsUtils.deleteAll()
-        This.microtasksUtils.deleteAll()
-        This.gradesUtils.deleteAll()
-        This.studentMicrotaskGradesUtils.deleteAll()
-        This.util.deleteAll()
-        
-        XCTAssertTrue(This.instructorsUtil.getAll().isEmpty)
-        XCTAssertTrue(This.studentsUtil.getAll().isEmpty)
-        XCTAssertTrue(This.rubricsUtil.getAll().isEmpty)
-        XCTAssertTrue(This.skillSetsUtils.getAll().isEmpty)
-        XCTAssertTrue(This.microtasksUtils.getAll().isEmpty)
-        XCTAssertTrue(This.gradesUtils.getAll().isEmpty)
-        XCTAssertTrue(This.studentMicrotaskGradesUtils.getAll().isEmpty)
-        XCTAssertTrue(This.util.getAll().isEmpty)
+        deleteAll()
+        checkAll()
     }
     
-    func testSaveEmptyItem() {
-        let item = mocks.emptyAssessments.randomElement()!
+    func testSaveItem() {
+        let item = mocks.assessments.randomElement()!
         XCTAssertNoThrow(try This.util.save(item: item))
         compareItems([item], This.util.getAll())
     }
     
-    func testSaveEmptyItems() {
-        let items = mocks.emptyAssessments
+    func testSaveItems() {
+        let items = mocks.assessments
         XCTAssertNoThrow(try This.util.save(items: items))
         compareItems(items, This.util.getAll())
-    }
-    
-    func testSaveItemWithRelations() {
-        var item = mocks.assessments.randomElement()!
-        XCTAssertNoThrow(try This.util.save(item: item))
-        let itemGrades = mocks.microtaskGrades.filter { grade in
-            grade.assessmentSid == item.sid
-        }
-        item.studentMicrotaskGrades = itemGrades
-        XCTAssertNoThrow(try This.studentMicrotaskGradesUtils.save(items: itemGrades))
-        XCTAssertNoThrow(try This.util.update(whereSid: item.sid, like: item))
-        compareItems([item], This.util.getAll())
-    }
-
-    func testSaveItemsWithRelations() {
-        var items = mocks.assessments
-        let grades = mocks.microtaskGrades
-        XCTAssertNoThrow(try This.util.save(items: items))
-        XCTAssertNoThrow(try This.studentMicrotaskGradesUtils.save(items: grades))
-        try? grades.forEach { grade in
-            let assessment = items.first(where: { $0.sid == grade.assessmentSid })!
-            let index = items.firstIndex(where: { $0.sid == assessment.sid })!
-            items[index].studentMicrotaskGrades.append(grade)
-            XCTAssertNoThrow(try This.util.update(whereSid: items[index].sid, like: items[index]))
-        }
-        compareItems(items, This.util.getAll())
-    }
-    
-    func testUpdateItemWithRelations() {
-        
     }
     
     func compareItems(_ items: [AssessmentFields], _ entities: [Assessment]) {
@@ -154,5 +88,19 @@ final class AssessmentUtilsTest: XCTestCase {
         XCTAssertEqual(item.sid, Int(entity.sid))
         XCTAssertEqual(item.schoolId, Int(entity.schoolId))
         XCTAssertEqual(item.date, entity.date)
+    }
+    
+    private func deleteAll() {
+        This.instructorsUtil.deleteAll()
+        This.studentsUtil.deleteAll()
+        This.rubricsUtil.deleteAll()
+        This.util.deleteAll()
+    }
+    
+    private func checkAll() {
+        XCTAssertTrue(This.instructorsUtil.getAll().isEmpty)
+        XCTAssertTrue(This.studentsUtil.getAll().isEmpty)
+        XCTAssertTrue(This.rubricsUtil.getAll().isEmpty)
+        XCTAssertTrue(This.util.getAll().isEmpty)
     }
 }

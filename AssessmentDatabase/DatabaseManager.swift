@@ -52,6 +52,5 @@ final public class DatabaseManager {
         assessments.studentsUtils = students
         assessments.rubricsUtils = rubrics
         assessments.instructorsUtils = instructors
-        assessments.studentMicrotaskGradesUtils = studentMicrotaskGrades
     }
 }
