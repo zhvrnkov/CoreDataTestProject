@@ -30,7 +30,7 @@ public class StudentsUtils: EntityUtils {
         do {
             try set(assessmentSids: item.assessmentSids, of: entity, in: context)
             try set(instructorSids: item.instructorSids, of: entity, in: context)
-            try set(microtaskGrades: item.microTaskGrades, of: entity, in: context)
+            try set(microtaskGradesSids: item.microTaskGradesSids, of: entity, in: context)
         } catch {
             throw error
         }
@@ -85,17 +85,17 @@ public class StudentsUtils: EntityUtils {
     }
     
     private func set(
-        microtaskGrades: [StudentMicrotaskGradeFields],
+        microtaskGradesSids: [Int],
         of student: Student,
         in context: NSManagedObjectContext) throws
     {
-        guard !microtaskGrades.isEmpty else {
+        guard !microtaskGradesSids.isEmpty else {
             return
         }
         guard let util = microtaskGradesUtils else {
             throw Errors.noUtils
         }
-        let savedMicrotaskGrades = util.get(whereSids: microtaskGrades.map { $0.sid })
+        let savedMicrotaskGrades = util.get(whereSids: microtaskGradesSids)
         guard !savedMicrotaskGrades.isEmpty,
             let contextMicrotaskGrades = savedMicrotaskGrades
                 .map({ context.object(with: $0.objectID) }) as? [StudentMicrotaskGrade]

@@ -60,6 +60,7 @@ public class AssessmentsUtils: EntityUtils {
         else {
             throw Errors.studentsNotFound
         }
+//        assessment.students = NSSet(array: [])
         contextStudents.forEach {
             assessment.addToStudents($0)
             $0.addToAssessments(assessment)
@@ -117,6 +118,7 @@ public class AssessmentsUtils: EntityUtils {
         else {
             throw Errors.studentMicrotasksGradesNotFound
         }
+//        assessment.studentMicrotaskGrades = NSSet(array: [])
         contextGrades.forEach {
             assessment.addToStudentMicrotaskGrades($0)
             $0.assessment = assessment

@@ -9,6 +9,11 @@
 import Foundation
 import CoreData
 
+public struct FilterOutput<Item: Sidable> {
+    let toDelete: [Item]
+    let toSave: [Item]
+}
+
 public protocol EntityUtils: class {
     associatedtype EntityType: NSManagedObject
     associatedtype EntityValueFields
@@ -259,5 +264,12 @@ public extension EntityUtils {
         if let error = error {
             throw error
         }
+    }
+    
+    func filter<Entity: Sidable>(saved: [Entity], new: [Entity]) -> FilterOutput<Entity> {
+        let toDelete = saved.filter { savedItem in !new.contains(where: { $0.sid == savedItem.sid })}
+        let toSave = new.filter { newItem in !saved.contains(where: { $0.sid == newItem.sid })}
+        
+        return FilterOutput(toDelete: toDelete, toSave: toSave)
     }
 }

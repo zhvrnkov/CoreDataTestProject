@@ -8,23 +8,22 @@
 
 import Foundation
 
-public protocol InstructorFields {
+public protocol Sidable {
     var sid: Int { get set }
-    
+}
+
+public protocol InstructorFields: Sidable {
     var assessments: [AssessmentFields] { get set }
     var students: [StudentFields] { get set }
 }
 
-public protocol StudentFields {
-    var sid: Int { get set }
-    
+public protocol StudentFields: Sidable {
     var assessmentSids: [Int] { get set }
     var instructorSids: [Int] { get set }
-    var microTaskGrades: [StudentMicrotaskGradeFields] { get set }
+    var microTaskGradesSids: [Int] { get set }
 }
 
-public protocol AssessmentFields {
-    var sid: Int { get set }
+public protocol AssessmentFields: Sidable {
     var date: Date { get set }
     var schoolId: Int { get set }
     
@@ -34,34 +33,26 @@ public protocol AssessmentFields {
     var students: [StudentFields] { get set }
 }
 
-public protocol RubricFields {
-    var sid: Int { get set }
+public protocol RubricFields: Sidable {
     var skillSets: [SkillSetFields] { get set }
 }
 
-public protocol SkillSetFields {
-    var sid: Int { get set }
-    
+public protocol SkillSetFields: Sidable {
     var rubricSid: Int { get set }
     var microTasks: [MicrotaskFields] { get set }
 }
 
-public protocol MicrotaskFields {
-    var sid: Int { get set }
-    
+public protocol MicrotaskFields: Sidable {
     var skillSetSid: Int { get set }
 }
 
-public protocol StudentMicrotaskGradeFields {
-    var sid: Int { get set }
-    
+public protocol StudentMicrotaskGradeFields: Sidable {
     var assessmentSid: Int { get set }
     var grade: GradeFields { get set }
     var microTaskSid: Int { get set }
     var studentSid: Int { get set }
 }
 
-public protocol GradeFields {
-    var sid: Int { get set }
+public protocol GradeFields: Sidable {
     var title: String { get set }
 }

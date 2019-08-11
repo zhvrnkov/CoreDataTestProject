@@ -83,7 +83,7 @@ final class StudentMicrotaskGradesUtilsTest: XCTestCase {
     func testSaveItem() {
         let item = mocks.microtaskGrades.randomElement()!
         var student = mocks.students.first(where: { $0.sid == item.studentSid })!
-        student.microTaskGrades.append(item)
+        student.microTaskGradesSids.append(item.sid)
         XCTAssertNoThrow(try This.util.save(item: item))
         XCTAssertNoThrow(try This.studentsUtils.update(whereSid: student.sid, like: student))
         compareItems([item], This.util.getAll())
@@ -95,7 +95,7 @@ final class StudentMicrotaskGradesUtilsTest: XCTestCase {
         var students = items.compactMap { grade in mocks.students.first(where: { grade.studentSid == $0.sid }) }
         for index in students.indices {
             let grades = items.filter { $0.studentSid == students[index].sid }
-            students[index].microTaskGrades = grades
+            students[index].microTaskGradesSids = grades.map { $0.sid }
             XCTAssertNoThrow(try This.studentsUtils.update(whereSid: students[index].sid, like: students[index]))
         }
         compareItems(items, This.util.getAll())

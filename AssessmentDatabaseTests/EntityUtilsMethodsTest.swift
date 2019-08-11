@@ -13,7 +13,8 @@ final class EntityUtilsMethodsTest: XCTestCase {
     typealias This = EntityUtilsMethodsTest
     static var utils: GradesUtils = .init(with: getMockPersistentContainer())
     static let context = This.utils.container.viewContext
-    private let mockGrades = EntityUtilsMethodsTestMocks().mockGrades
+    private let mocks = EntityUtilsMethodsTestMocks()
+    private lazy var mockGrades = mocks.mockGrades
     
     override func setUp() {
         super.setUp()
@@ -151,6 +152,41 @@ final class EntityUtilsMethodsTest: XCTestCase {
         compareItem(toUpdate, entity)
     }
     
+    func testFilterWithEmptyNew() {
+        let saved = mocks.savedItems
+        let new: [MockGradeFields] = []
+        let output = This.utils.filter(saved: saved, new: new)
+        XCTAssertEqual(saved.count, output.toDelete.count)
+        XCTAssertEqual(output.toSave.count, 0)
+        compareFilterItems(saved, output.toDelete)
+    }
+    
+    func testFilterWithNewThatNotInSaved() {
+        let saved = mocks.savedItems
+        let new = (saved.count..<saved.count + 10)
+            .map { MockGradeFields(sid: $0, title: "") }
+        let output = This.utils.filter(saved: saved, new: new)
+        XCTAssertEqual(new.count, output.toSave.count)
+        XCTAssertEqual(saved.count, output.toDelete.count)
+        compareFilterItems(new, output.toSave)
+        compareFilterItems(saved, output.toDelete)
+    }
+    
+    func testFilterWithHalfInSavedAndHalfDont() {
+        let saved = mocks.savedItems
+        let new = ((saved.count/2)..<(saved.count))
+            .map { MockGradeFields(sid: $0, title: "") }
+        let toDelete = (0..<(saved.count/2))
+            .map { MockGradeFields(sid: $0, title: "") }
+        let toSave = ((saved.count)..<(saved.count/2 + saved.count))
+            .map { MockGradeFields(sid: $0, title: "") }
+        let output = This.utils.filter(saved: saved, new: new + toSave)
+        XCTAssertEqual(toDelete.count, output.toDelete.count)
+        XCTAssertEqual(toSave.count, output.toSave.count)
+        compareFilterItems(toDelete, output.toDelete)
+        compareFilterItems(toSave, output.toSave)
+    }
+    
     func compareItems(_ items: [MockGradeFields], _ entities: [Grade]) {
         XCTAssertEqual(items.count, entities.count)
         for index in items.indices {
@@ -166,5 +202,15 @@ final class EntityUtilsMethodsTest: XCTestCase {
     func compareItem(_ item: MockGradeFields, _ entity: Grade) {
         XCTAssertEqual(item.sid, Int(entity.sid))
         XCTAssertEqual(item.title, entity.title)
+    }
+    
+    func compareFilterItems(_ saved: [MockGradeFields], _ new: [MockGradeFields]) {
+        saved.forEach { item in
+            guard let toDelete = new.first(where: { $0.sid == item.sid }) else {
+                XCTFail()
+                return
+            }
+            XCTAssertEqual(toDelete.sid, item.sid)
+        }
     }
 }

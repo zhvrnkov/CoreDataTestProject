@@ -50,7 +50,7 @@ struct MockStudentFields: StudentFields {
     
     var assessmentSids: [Int]
     var instructorSids: [Int]
-    var microTaskGrades: [StudentMicrotaskGradeFields]
+    var microTaskGradesSids: [Int]
 }
 
 struct MockGradeFields: GradeFields {
@@ -89,7 +89,7 @@ struct AssessmentUtilsTestMocks {
     lazy var students: [MockStudentFields] = instructors.map { instructor in
         return smallCount.map {
             let sid = (smallCount.max()! + 1) * instructor.sid + $0
-            return MockStudentFields(sid: sid, assessmentSids: [], instructorSids: [instructor.sid], microTaskGrades: [])
+            return MockStudentFields(sid: sid, assessmentSids: [], instructorSids: [instructor.sid], microTaskGradesSids: [])
         }
         }.reduce([], { $0 + $1 })
     let rubrics: [MockRubricFields] = count.map {
@@ -155,7 +155,7 @@ struct InstructorUtilsTestMocks {
         MockRubricFields(sid: $0, skillSets: [])
     }
     let students: [MockStudentFields] = count.map {
-        MockStudentFields(sid: $0, assessmentSids: [], instructorSids: [], microTaskGrades: [])
+        MockStudentFields(sid: $0, assessmentSids: [], instructorSids: [], microTaskGradesSids: [])
     }
     lazy var instructorsWithAssessments: [MockInstructorFields] = mediumCount.map {
         let partOfStudents = Array(students[(0..<(0..<students.count).randomElement()!)])
@@ -235,7 +235,7 @@ struct StudentMicrotaskGradesUtilsTestMocks {
         }
     }()
     let students: [MockStudentFields] = count.map {
-        MockStudentFields(sid: $0, assessmentSids: [], instructorSids: [], microTaskGrades: [])
+        MockStudentFields(sid: $0, assessmentSids: [], instructorSids: [], microTaskGradesSids: [])
     }
     lazy var instructors: [MockInstructorFields] = count.map {
         MockInstructorFields(sid: $0, assessments: [], students: [students[$0]])
@@ -259,7 +259,7 @@ struct StudentMicrotaskGradesUtilsTestMocks {
 
 struct StudentsUtilsTestMocks {
     let emptyStudents: [MockStudentFields] = count.map {
-        MockStudentFields(sid: $0, assessmentSids: [], instructorSids: [], microTaskGrades: [])
+        MockStudentFields(sid: $0, assessmentSids: [], instructorSids: [], microTaskGradesSids: [])
     }
     
     let rubrics: [MockRubricFields] = count.map {
@@ -275,12 +275,16 @@ struct StudentsUtilsTestMocks {
     }
     
     lazy var studentsWithRelations: [MockStudentFields] = count.map {
-        MockStudentFields(sid: $0, assessmentSids: [assessments[$0].sid], instructorSids: [assessments[$0].instructorSid], microTaskGrades: [])
+        MockStudentFields(sid: $0, assessmentSids: [assessments[$0].sid], instructorSids: [assessments[$0].instructorSid], microTaskGradesSids: [])
     }
 }
 
 struct EntityUtilsMethodsTestMocks {
     var mockGrades: [MockGradeFields] = count.map {
         MockGradeFields(sid: $0, title: "Lorem Ipsum")
+    }
+    
+    var savedItems: [MockGradeFields] = count.map {
+        MockGradeFields(sid: $0, title: "")
     }
 }
