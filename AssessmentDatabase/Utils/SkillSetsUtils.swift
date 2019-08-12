@@ -33,7 +33,7 @@ public class SkillSetsUtils: EntityUtils {
     }
     
     private func set(
-        rubricSid: Int,
+        rubricSid: Int64,
         of skillSet: SkillSet,
         in context: NSManagedObjectContext) throws
     {

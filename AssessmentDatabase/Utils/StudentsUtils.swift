@@ -32,7 +32,7 @@ public class StudentsUtils: EntityUtils {
     }
     
     private func set(
-        instructorSids: [Int],
+        instructorSids: [Int64],
         of student: Student,
         in context: NSManagedObjectContext) throws
     {

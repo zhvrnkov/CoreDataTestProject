@@ -23,7 +23,7 @@ public class AssessmentsUtils: EntityUtils {
     public func copyFields(from item: AssessmentFields, to entity: Assessment) {
         entity.sid = Int64(item.sid)
         entity.schoolId = Int64(item.schoolId)
-        entity.date = item.date
+        entity.date = item.date as NSDate
     }
     
     public func setRelations(

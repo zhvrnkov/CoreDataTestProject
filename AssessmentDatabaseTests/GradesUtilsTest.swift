@@ -44,7 +44,7 @@ final class GradesUtilsTest: XCTestCase {
     }
     
     private func compareItem(_ item: GradeFields, _ entity: Grade) {
-        XCTAssertEqual(item.sid, Int(entity.sid))
+        XCTAssertEqual(item.sid, entity.sid)
         XCTAssertEqual(item.title, entity.title)
     }
 }

@@ -39,7 +39,7 @@ public class StudentMicrotaskGradesUtils: EntityUtils {
     }
     
     private func set(
-        assessmentSid: Int,
+        assessmentSid: Int64,
         of entity: StudentMicrotaskGrade,
         in context: NSManagedObjectContext) throws
     {
@@ -73,7 +73,7 @@ public class StudentMicrotaskGradesUtils: EntityUtils {
     }
     
     private func set(
-        microTaskSid: Int,
+        microTaskSid: Int64,
         of entity: StudentMicrotaskGrade,
         in context: NSManagedObjectContext) throws
     {
@@ -89,7 +89,7 @@ public class StudentMicrotaskGradesUtils: EntityUtils {
     }
     
     private func set(
-        studentSid: Int,
+        studentSid: Int64,
         of entity: StudentMicrotaskGrade,
         in context: NSManagedObjectContext) throws
     {

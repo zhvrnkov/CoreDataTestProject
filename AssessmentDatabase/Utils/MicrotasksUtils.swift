@@ -33,7 +33,7 @@ public class MicrotasksUtils: EntityUtils {
     }
     
     private func set(
-        skillSetSid: Int,
+        skillSetSid: Int64,
         of microtask: Microtask,
         in context: NSManagedObjectContext) throws
     {
