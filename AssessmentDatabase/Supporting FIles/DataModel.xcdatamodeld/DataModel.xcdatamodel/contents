@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.98" systemVersion="18E226" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14492.1" systemVersion="18G87" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Assessment" representedClassName=".Assessment" syncable="YES">
         <attribute name="date" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="schoolId" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -15,7 +15,26 @@
         <relationship name="studentMicrotaskGrades" toMany="YES" deletionRule="Cascade" destinationEntity="StudentMicrotaskGrade" inverseName="grade" inverseEntity="StudentMicrotaskGrade" syncable="YES"/>
     </entity>
     <entity name="Instructor" representedClassName=".Instructor" syncable="YES">
+        <attribute name="address" attributeType="String" syncable="YES"/>
+        <attribute name="address2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="avatar" attributeType="String" syncable="YES"/>
+        <attribute name="city" attributeType="String" syncable="YES"/>
+        <attribute name="country" attributeType="String" syncable="YES"/>
+        <attribute name="credentials" attributeType="String" syncable="YES"/>
+        <attribute name="depiction" attributeType="String" syncable="YES"/>
+        <attribute name="email" attributeType="String" syncable="YES"/>
+        <attribute name="fbid" attributeType="Transformable" syncable="YES"/>
+        <attribute name="firstName" attributeType="String" syncable="YES"/>
+        <attribute name="flags" attributeType="Transformable" syncable="YES"/>
+        <attribute name="lang" attributeType="String" syncable="YES"/>
+        <attribute name="lastName" attributeType="String" syncable="YES"/>
+        <attribute name="loginUsername" attributeType="String" syncable="YES"/>
+        <attribute name="phone" attributeType="String" syncable="YES"/>
+        <attribute name="phoneStudent" attributeType="String" syncable="YES"/>
+        <attribute name="schools" attributeType="Transformable" syncable="YES"/>
         <attribute name="sid" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="state" attributeType="String" syncable="YES"/>
+        <attribute name="zip" attributeType="String" syncable="YES"/>
         <relationship name="assessments" toMany="YES" deletionRule="Cascade" destinationEntity="Assessment" inverseName="instructor" inverseEntity="Assessment" syncable="YES"/>
         <relationship name="students" toMany="YES" deletionRule="Cascade" destinationEntity="Student" inverseName="instructors" inverseEntity="Student" syncable="YES"/>
     </entity>
@@ -50,7 +69,7 @@
     <elements>
         <element name="Assessment" positionX="-525.5" positionY="-28.609375" width="128" height="150"/>
         <element name="Grade" positionX="206.83203125" positionY="-147.3828125" width="128" height="90"/>
-        <element name="Instructor" positionX="-282.92578125" positionY="-167.46484375" width="128" height="90"/>
+        <element name="Instructor" positionX="-282.92578125" positionY="-167.46484375" width="128" height="375"/>
         <element name="Microtask" positionX="88.8359375" positionY="322.8125" width="128" height="90"/>
         <element name="Rubric" positionX="-291.74609375" positionY="173.453125" width="128" height="90"/>
         <element name="SkillSet" positionX="-293.2109375" positionY="296.1328125" width="128" height="90"/>

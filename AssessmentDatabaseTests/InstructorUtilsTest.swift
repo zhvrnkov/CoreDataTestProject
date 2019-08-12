@@ -52,7 +52,7 @@ final class InstructorUtilsTest: XCTestCase {
     
     func compareItem(_ item: InstructorFields, _ entity: Instructor) {
         XCTAssertEqual(Int64(item.sid), entity.sid)
-        XCTAssertEqual(item.assessments.count, entity.assessments?.count)
-        XCTAssertEqual(item.students.count, entity.students?.count)
+        XCTAssertEqual(item.assessments.count, entity.assessments.count)
+        XCTAssertEqual(item.students.count, entity.students.count)
     }
 }

@@ -2,7 +2,7 @@
 //  Instructor+CoreDataProperties.swift
 //  
 //
-//  Created by Vlad Zhavoronkov  on 8/12/19.
+//  Created by Vlad Zhavoronkov on 8/12/19.
 //
 //
 
@@ -17,8 +17,27 @@ extension Instructor: Sidable {
     }
 
     @NSManaged public var sid: Int64
-    @NSManaged public var assessments: NSSet?
-    @NSManaged public var students: NSSet?
+    @NSManaged public var loginUsername: String
+    @NSManaged public var firstName: String
+    @NSManaged public var lastName: String
+    @NSManaged public var avatar: String
+    @NSManaged public var email: String
+    @NSManaged public var phone: String
+    @NSManaged public var phoneStudent: String
+    @NSManaged public var address: String
+    @NSManaged public var address2: String
+    @NSManaged public var city: String
+    @NSManaged public var state: String
+    @NSManaged public var zip: String
+    @NSManaged public var country: String
+    @NSManaged public var credentials: String
+    @NSManaged public var depiction: String
+    @NSManaged public var fbid: [String]
+    @NSManaged public var lang: String
+    @NSManaged public var flags: [String]
+    @NSManaged public var schools: [NSObject]
+    @NSManaged public var assessments: NSSet
+    @NSManaged public var students: NSSet
 
 }
 
