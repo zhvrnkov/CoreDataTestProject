@@ -49,7 +49,12 @@ final class StudentsUtilsTest: XCTestCase {
     }
     
     func testUpdateItemWithInstructor() {
-        XCTFail("nothing is here")
+        var item = mocks.students.randomElement()!
+        let newInstructor = mocks.instructors.first(where: { $0.sid != item.instructorSids.first })!
+        XCTAssertNoThrow(try This.util.save(item: item))
+        item.instructorSids.append(newInstructor.sid)
+        XCTAssertNoThrow(try This.util.update(whereSid: item.sid, like: item))
+        compareItems([item], This.util.getAll())
     }
     
     private func compareItems(_ items: [MockStudentFields], _ entities: [Student]) {
