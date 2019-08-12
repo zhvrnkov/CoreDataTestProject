@@ -54,8 +54,21 @@ final class AssessmentUtilsTest: XCTestCase {
         compareItems(items, This.util.getAll())
     }
     
-    func testUpdateItem() {
-        XCTFail()
+    func testAddStudentsToAssessment() {
+        var item = mocks.assessments.randomElement()!
+        let newStudents = mocks.students.filter { student in !item.students.contains(where: { $0.sid == student.sid })}
+        XCTAssertNoThrow(try This.util.save(item: item))
+        item.students += newStudents
+        XCTAssertNoThrow(try This.util.update(whereSid: item.sid, like: item))
+        compareItems([item], This.util.getAll())
+    }
+    
+    func testRemoveStudentsFromAssessment() {
+        var item = mocks.assessments.randomElement()!
+        XCTAssertNoThrow(try This.util.save(item: item))
+        item.students = []
+        XCTAssertNoThrow(try This.util.update(whereSid: item.sid, like: item))
+        compareItems([item], This.util.getAll())
     }
     
     func compareItems(_ items: [AssessmentFields], _ entities: [Assessment]) {
@@ -78,20 +91,19 @@ final class AssessmentUtilsTest: XCTestCase {
     func checkRelations(of entity: Assessment, source item: AssessmentFields) {
         XCTAssertNotNil(entity.instructor)
         XCTAssertNotNil(entity.rubric)
-        XCTAssertNotNil(entity.studentMicrotaskGrades?.allObjects as? [StudentMicrotaskGrade])
-        XCTAssertNotNil(entity.students?.allObjects as? [Student])
-        XCTAssertEqual(entity.studentMicrotaskGrades?.allObjects.count, item.studentMicrotaskGrades.count)
-        XCTAssertEqual(entity.students?.allObjects.count, item.students.count)
-        XCTAssertEqual(item.studentMicrotaskGrades.count, entity.studentMicrotaskGrades?.count)
-        XCTAssertEqual(item.students.count, entity.students?.count)
-        XCTAssertEqual(Int64(item.instructorSid), entity.instructor?.sid)
-        XCTAssertEqual(Int64(item.rubric.sid), entity.rubric?.sid)
+        XCTAssertNotNil(entity.studentMicrotaskGrades.allObjects as? [StudentMicrotaskGrade])
+        XCTAssertNotNil(entity.students.allObjects as? [Student])
+        XCTAssertEqual(entity.studentMicrotaskGrades.allObjects.count, item.studentMicrotaskGrades.count)
+        XCTAssertEqual(item.studentMicrotaskGrades.count, entity.studentMicrotaskGrades.count)
+        XCTAssertEqual(item.students.count, entity.students.count)
+        XCTAssertEqual(Int64(item.instructorSid), entity.instructor.sid)
+        XCTAssertEqual(Int64(item.rubric.sid), entity.rubric.sid)
     }
     
     func checkFields(of entity: Assessment, source item: AssessmentFields) {
-        XCTAssertEqual(item.sid, Int(entity.sid))
-        XCTAssertEqual(item.schoolId, Int(entity.schoolId))
-        XCTAssertEqual(item.date, entity.date)
+        XCTAssertEqual(item.sid, entity.sid)
+        XCTAssertEqual(item.schoolId, entity.schoolId)
+        XCTAssertEqual(item.date.timeIntervalSince1970, entity.date.timeIntervalSince1970)
     }
     
     private func deleteAll() {
