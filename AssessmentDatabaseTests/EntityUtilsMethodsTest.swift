@@ -160,7 +160,7 @@ final class EntityUtilsMethodsTest: XCTestCase {
         let new: [MockGradeFields] = []
         let output = This.utils.filter(saved: saved.map { $0.sid }, new: new.map { $0.sid })
         XCTAssertEqual(saved.count, output.toDelete.count)
-        XCTAssertEqual(output.toSave.count, 0)
+        XCTAssertEqual(output.toAdd.count, 0)
         let itemsToDelete = output.toDelete.compactMap { sid in saved.first(where: { $0.sid == sid })}
         compareFilterItems(saved, itemsToDelete)
     }
@@ -170,9 +170,9 @@ final class EntityUtilsMethodsTest: XCTestCase {
         let new = (Int64(saved.count)..<Int64(saved.count + 10))
             .map { MockGradeFields(sid: $0, title: "") }
         let output = This.utils.filter(saved: saved.map { $0.sid }, new: new.map { $0.sid })
-        XCTAssertEqual(new.count, output.toSave.count)
+        XCTAssertEqual(new.count, output.toAdd.count)
         XCTAssertEqual(saved.count, output.toDelete.count)
-        let itemsToSave = output.toSave.compactMap { sid in new.first(where: { $0.sid == sid })}
+        let itemsToSave = output.toAdd.compactMap { sid in new.first(where: { $0.sid == sid })}
         let itemsToDelete = output.toDelete.compactMap { sid in saved.first(where: { $0.sid == sid })}
         compareFilterItems(new, itemsToSave)
         compareFilterItems(saved, itemsToDelete)
@@ -188,9 +188,9 @@ final class EntityUtilsMethodsTest: XCTestCase {
             .map { MockGradeFields(sid: $0, title: "") }
         let output = This.utils.filter(saved: saved.map { $0.sid }, new: (new + toSave).map { $0.sid })
         XCTAssertEqual(toDelete.count, output.toDelete.count)
-        XCTAssertEqual(toSave.count, output.toSave.count)
+        XCTAssertEqual(toSave.count, output.toAdd.count)
         let itemsToDelete = output.toDelete.compactMap{ sid in saved.first { $0.sid == sid }}
-        let itemsToSave = output.toSave.compactMap { sid in toSave.first { $0.sid == sid }}
+        let itemsToSave = output.toAdd.compactMap { sid in toSave.first { $0.sid == sid }}
         compareFilterItems(toDelete, itemsToDelete)
         compareFilterItems(toSave, itemsToSave)
     }

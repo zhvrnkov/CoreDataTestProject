@@ -11,7 +11,7 @@ import CoreData
 
 public struct FilterOutput {
     let toDelete: [Int64]
-    let toSave: [Int64]
+    let toAdd: [Int64]
 }
 
 public protocol EntityUtils: class {
@@ -270,6 +270,6 @@ public extension EntityUtils {
         let toDelete = saved.filter { savedSid in !new.contains(savedSid)}
         let toSave = new.filter { newSid in !saved.contains(newSid)}
         
-        return FilterOutput(toDelete: toDelete, toSave: toSave)
+        return FilterOutput(toDelete: toDelete, toAdd: toSave)
     }
 }

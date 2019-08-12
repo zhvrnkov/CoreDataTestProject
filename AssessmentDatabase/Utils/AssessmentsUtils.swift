@@ -45,23 +45,28 @@ public class AssessmentsUtils: EntityUtils {
         of assessment: Assessment,
         in context: NSManagedObjectContext) throws
     {
-        guard !students.isEmpty else {
-            return
-        }
         guard let utils = studentsUtils else {
             throw Errors.noUtils
         }
         let savedStudents = utils.get(whereSids: students.map { $0.sid })
-        guard !savedStudents.isEmpty,
-            let contextStudents = savedStudents
-                .map({ context.object(with: $0.objectID) }) as? [Student]
-        else {
+        if students.count != savedStudents.count {
             throw Errors.studentsNotFound
         }
-//        assessment.students = NSSet(array: [])
-        contextStudents.forEach {
-            assessment.addToStudents($0)
-            $0.addToAssessments(assessment)
+        guard let assessmentStudents = assessment.students.allObjects as? [Student],
+            let contextStudents = savedStudents.map({ context.object(with: $0.objectID) }) as? [Student]
+        else {
+            throw Errors.badCasting
+        }
+        let filterOutput = filter(saved: assessmentStudents.map { $0.sid }, new: students.map { $0.sid })
+        filterOutput.toAdd.forEach { sidToAdd in
+            if let studentToAdd = contextStudents.first(where: { $0.sid == sidToAdd }) {
+                assessment.addToStudents(studentToAdd)
+            }
+        }
+        filterOutput.toDelete.forEach { sidToDelete in
+            if let studentToDelete = assessmentStudents.first(where: { $0.sid == sidToDelete }) {
+                assessment.removeFromStudents(studentToDelete)
+            }
         }
     }
     
@@ -82,7 +87,7 @@ public class AssessmentsUtils: EntityUtils {
     }
     
     private func set(
-        instructorSid: Int,
+        instructorSid: Int64,
         of assessment: Assessment,
         in context: NSManagedObjectContext) throws
     {
@@ -99,6 +104,7 @@ public class AssessmentsUtils: EntityUtils {
     
     public enum Errors: Error {
         case noUtils
+        case badCasting
         
         case studentsNotFound
         case rubricNotFound

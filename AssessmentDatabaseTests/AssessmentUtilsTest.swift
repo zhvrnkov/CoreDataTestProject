@@ -71,6 +71,15 @@ final class AssessmentUtilsTest: XCTestCase {
         compareItems([item], This.util.getAll())
     }
     
+    func testChangeRubricOfAssessment() {
+        var item = mocks.assessments.randomElement()!
+        XCTAssertNoThrow(try This.util.save(item: item))
+        let newRubric = mocks.rubrics.first(where: { $0.sid != item.rubric.sid })!
+        item.rubric = newRubric
+        XCTAssertNoThrow(try This.util.update(whereSid: item.sid, like: item))
+        compareItems([item], This.util.getAll())
+    }
+    
     func compareItems(_ items: [AssessmentFields], _ entities: [Assessment]) {
         XCTAssertEqual(items.count, entities.count)
         for index in items.indices {
