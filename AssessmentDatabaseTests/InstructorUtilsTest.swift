@@ -51,7 +51,27 @@ final class InstructorUtilsTest: XCTestCase {
     }
     
     func compareItem(_ item: InstructorFields, _ entity: Instructor) {
-        XCTAssertEqual(Int64(item.sid), entity.sid)
+        XCTAssertTrue(item.sid == Int(entity.sid))
+        XCTAssertTrue(item.loginUsername == entity.loginUsername)
+        XCTAssertTrue(item.firstName == entity.firstName)
+        XCTAssertTrue(item.lastName == entity.lastName)
+        XCTAssertTrue(item.avatar == entity.avatar)
+        XCTAssertTrue(item.email == entity.email)
+        XCTAssertTrue(item.phone == entity.phone)
+        XCTAssertTrue(item.phoneStudent == entity.phoneStudent)
+        XCTAssertTrue(item.address == entity.address)
+        XCTAssertTrue(item.address2 == entity.address2)
+        XCTAssertTrue(item.city == entity.city)
+        XCTAssertTrue(item.state == entity.state)
+        XCTAssertTrue(item.zip == entity.zip)
+        XCTAssertTrue(item.country == entity.country)
+        XCTAssertTrue(item.credentials == entity.credentials)
+        XCTAssertTrue(item.depiction == entity.depiction)
+        XCTAssertTrue(item.fbid == entity.fbid)
+        XCTAssertTrue(item.lang == entity.lang)
+        XCTAssertTrue(item.flags == entity.flags)
+        XCTAssertTrue(item.schools.count == entity.schools.count)
+        
         XCTAssertEqual(item.assessments.count, entity.assessments.count)
         XCTAssertEqual(item.students.count, entity.students.count)
     }

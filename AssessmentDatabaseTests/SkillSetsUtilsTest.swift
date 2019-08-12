@@ -52,12 +52,12 @@ final class SkillSetsUtilsTest: XCTestCase {
                 return
             }
             compareItem(item, entity)
-            XCTAssertTrue((entity.rubric?.skillSets?.allObjects as? [SkillSet])?.contains(where: { $0.sid == Int(item.sid)}) ?? false)
+            XCTAssertTrue((entity.rubric.skillSets?.allObjects as? [SkillSet])?.contains(where: { $0.sid == Int(item.sid)}) ?? false)
         }
     }
     
     private func compareItem(_ item: SkillSetFields, _ entity: SkillSet) {
         XCTAssertEqual(item.sid, entity.sid)
-        XCTAssertEqual(Int64(item.rubricSid), entity.rubric?.sid)
+        XCTAssertEqual(Int64(item.rubricSid), entity.rubric.sid)
     }
 }

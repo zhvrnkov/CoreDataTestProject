@@ -17,8 +17,8 @@ extension SkillSet: Sidable {
     }
 
     @NSManaged public var sid: Int64
-    @NSManaged public var microTasks: NSSet?
-    @NSManaged public var rubric: Rubric?
+    @NSManaged public var microTasks: NSSet
+    @NSManaged public var rubric: Rubric
 
 }
 

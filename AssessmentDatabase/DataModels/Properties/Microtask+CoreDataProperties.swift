@@ -17,8 +17,8 @@ extension Microtask: Sidable {
     }
 
     @NSManaged public var sid: Int64
-    @NSManaged public var skillSet: SkillSet?
-    @NSManaged public var studentMicroTaskGrades: NSSet?
+    @NSManaged public var skillSet: SkillSet
+    @NSManaged public var studentMicroTaskGrades: NSSet
 
 }
 

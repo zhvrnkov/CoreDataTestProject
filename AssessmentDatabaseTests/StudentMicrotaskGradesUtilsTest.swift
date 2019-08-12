@@ -110,9 +110,9 @@ final class StudentMicrotaskGradesUtilsTest: XCTestCase {
         XCTAssertNotNil(entity.grade)
         XCTAssertNotNil(entity.student)
         
-        XCTAssertEqual(entity.assessment?.sid, Int64(item.assessmentSid))
-        XCTAssertEqual(entity.grade?.sid, Int64(item.grade.sid))
-        XCTAssertEqual(entity.student?.sid, Int64(item.studentSid))
+        XCTAssertEqual(entity.assessment.sid, Int64(item.assessmentSid))
+        XCTAssertEqual(entity.grade.sid, Int64(item.grade.sid))
+        XCTAssertEqual(entity.student.sid, Int64(item.studentSid))
     }
     
     private func checkFields(of entity: StudentMicrotaskGrade, source item: StudentMicrotaskGradeFields) {

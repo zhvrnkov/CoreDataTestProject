@@ -17,9 +17,9 @@ extension StudentMicrotaskGrade: Sidable {
     }
 
     @NSManaged public var sid: Int64
-    @NSManaged public var assessment: Assessment?
-    @NSManaged public var grade: Grade?
-    @NSManaged public var microTask: Microtask?
-    @NSManaged public var student: Student?
+    @NSManaged public var assessment: Assessment
+    @NSManaged public var grade: Grade
+    @NSManaged public var microTask: Microtask
+    @NSManaged public var student: Student
 
 }

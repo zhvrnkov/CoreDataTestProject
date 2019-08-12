@@ -17,8 +17,8 @@ extension Grade: Sidable {
     }
 
     @NSManaged public var sid: Int64
-    @NSManaged public var title: String?
-    @NSManaged public var studentMicrotaskGrades: NSSet?
+    @NSManaged public var title: String
+    @NSManaged public var studentMicrotaskGrades: NSSet
 
 }
 

@@ -65,12 +65,12 @@ final class MicrotaskUtilsTest: XCTestCase {
                 return
             }
             compareItem(item, entity)
-            XCTAssertTrue((entity.skillSet?.microTasks?.allObjects as? [Microtask])?.contains(where: { $0.sid == Int(item.sid) }) ?? false)
+            XCTAssertTrue((entity.skillSet.microTasks.allObjects as? [Microtask])?.contains(where: { $0.sid == Int(item.sid) }) ?? false)
         }
     }
     
     private func compareItem(_ item: MicrotaskFields, _ entity: Microtask) {
         XCTAssertEqual(item.sid, entity.sid)
-        XCTAssertEqual(Int64(item.skillSetSid), entity.skillSet?.sid)
+        XCTAssertEqual(Int64(item.skillSetSid), entity.skillSet.sid)
     }
 }
