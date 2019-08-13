@@ -30,7 +30,7 @@ public class StudentMicrotaskGradesUtils: EntityUtils {
     {
         do {
             try set(assessmentSid: item.assessmentSid, of: entity, in: context)
-            try set(grade: item.grade, of: entity, in: context)
+            try set(gradeSid: item.gradeSid, of: entity, in: context)
             try set(microTaskSid: item.microTaskSid, of: entity, in: context)
             try set(studentSid: item.studentSid, of: entity, in: context)
         } catch {
@@ -57,13 +57,13 @@ public class StudentMicrotaskGradesUtils: EntityUtils {
     }
     
     private func set(
-        grade: GradeFields,
+        gradeSid: Int64,
         of entity: StudentMicrotaskGrade,
         in context: NSManagedObjectContext) throws
     {
         guard let utils = gradesUtils
             else { throw Errors.noUtils }
-        guard let grade = utils.get(whereSid: grade.sid),
+        guard let grade = utils.get(whereSid: gradeSid),
             let contextGrade = context.object(with: grade.objectID) as? Grade
         else {
             throw Errors.gradeNotFound

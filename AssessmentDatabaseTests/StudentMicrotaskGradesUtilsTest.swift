@@ -81,9 +81,9 @@ final class StudentMicrotaskGradesUtilsTest: XCTestCase {
     
     func testUpdateGrade() {
         var item = mocks.microtaskGrades.randomElement()!
-        let newGrade = mocks.grades.first(where: { $0.sid != item.grade.sid })!
+        let newGrade = mocks.grades.first(where: { $0.sid != item.gradeSid })!
         XCTAssertNoThrow(try This.util.save(item: item))
-        item.grade = newGrade
+        item.gradeSid = newGrade.sid
         XCTAssertNoThrow(try This.util.update(whereSid: item.sid, like: item))
         compareItems([item], This.util.getAll())
     }
@@ -111,7 +111,7 @@ final class StudentMicrotaskGradesUtilsTest: XCTestCase {
         XCTAssertNotNil(entity.student)
         
         XCTAssertEqual(entity.assessment.sid, Int64(item.assessmentSid))
-        XCTAssertEqual(entity.grade.sid, Int64(item.grade.sid))
+        XCTAssertEqual(entity.grade.sid, Int64(item.gradeSid))
         XCTAssertEqual(entity.student.sid, Int64(item.studentSid))
     }
     

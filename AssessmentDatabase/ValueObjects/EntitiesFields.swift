@@ -68,7 +68,7 @@ public protocol MicrotaskFields: Sidable {
 
 public protocol StudentMicrotaskGradeFields: Sidable {
     var assessmentSid: Int64 { get set }
-    var grade: GradeFields { get set }
+    var gradeSid: Int64 { get set }
     var microTaskSid: Int64 { get set }
     var studentSid: Int64 { get set }
 }

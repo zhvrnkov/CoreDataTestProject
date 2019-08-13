@@ -31,6 +31,7 @@ final public class DatabaseManager {
     
     private init() {
         setAssessmentsUtils()
+        setSkillSetsUtils()
     }
     
     public static func getInitializedPersistentContainer(named name: String = "DataModel") throws -> PersistentContainer {
@@ -52,5 +53,9 @@ final public class DatabaseManager {
         assessments.studentsUtils = students
         assessments.rubricsUtils = rubrics
         assessments.instructorsUtils = instructors
+    }
+    
+    private func setSkillSetsUtils() {
+        skillSets.rubricUtils = rubrics
     }
 }

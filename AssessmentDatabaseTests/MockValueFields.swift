@@ -63,7 +63,7 @@ struct MockStudentMicrotaskGrade: StudentMicrotaskGradeFields {
     var sid: Int64
     
     var assessmentSid: Int64
-    var grade: GradeFields
+    var gradeSid: Int64
     var microTaskSid: Int64
     var studentSid: Int64
 }
@@ -209,7 +209,7 @@ struct StudentMicrotaskGradesUtilsTestMocks {
         return MockAssessmentFields(sid: rubric.sid, date: Date(), schoolId: rubric.sid + 1, instructorSid: instructors[Int(rubric.sid)].sid, rubric: rubric, studentMicrotaskGrades: [], students: assessmentStudents)
     }
     lazy var microtaskGrades: [MockStudentMicrotaskGrade] = count.map {
-        MockStudentMicrotaskGrade(sid: $0, assessmentSid: assessments[Int($0)].sid, grade: grades.randomElement()!, microTaskSid: microTasks[Int($0)].sid, studentSid: assessments[Int($0)].students.first!.sid)
+        MockStudentMicrotaskGrade(sid: $0, assessmentSid: assessments[Int($0)].sid, gradeSid: (grades.randomElement()!).sid, microTaskSid: microTasks[Int($0)].sid, studentSid: assessments[Int($0)].students.first!.sid)
     }
 }
 
