@@ -17,6 +17,11 @@ extension Microtask: Sidable {
     }
 
     @NSManaged public var sid: Int
+    @NSManaged public var isActive: Bool
+    @NSManaged public var critical: Int
+    @NSManaged public var depiction: String
+    @NSManaged public var title: String
+    @NSManaged public var weight: Int
     @NSManaged public var skillSet: SkillSet
     @NSManaged public var studentMicroTaskGrades: NSSet
 

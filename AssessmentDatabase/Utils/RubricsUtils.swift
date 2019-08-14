@@ -18,7 +18,7 @@ public class RubricsUtils: EntityUtils {
         entity.sid = item.sid
         entity.title = item.title
         entity.weight = item.weight
-        entity.lastUpdate = item.lastUpdated
+        entity.lastUpdate = item.lastUpdate
         entity.isActive = item.isActive
     }
     

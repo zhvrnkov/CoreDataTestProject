@@ -18,6 +18,11 @@ public class MicrotasksUtils: EntityUtils {
     
     public func copyFields(from item: MicrotaskFields, to entity: Microtask) {
         entity.sid = item.sid
+        entity.isActive = item.isActive
+        entity.weight = item.weight
+        entity.title = item.title
+        entity.depiction = item.depiction
+        entity.critical = item.critical
     }
     
     public func setRelations(

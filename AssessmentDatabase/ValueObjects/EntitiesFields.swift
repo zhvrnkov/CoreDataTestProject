@@ -56,7 +56,7 @@ public protocol AssessmentFields: Sidable {
 
 public protocol RubricFields: Sidable {
     var title: String { get set }
-    var lastUpdated: Int { get set }
+    var lastUpdate: Int { get set }
     var weight: Int { get set }
     var isActive: Bool { get set }
     var skillSets: [SkillSetFields] { get set }
@@ -64,10 +64,18 @@ public protocol RubricFields: Sidable {
 
 public protocol SkillSetFields: Sidable {
     var rubricSid: Int { get set }
+    var title: String { get set }
+    var weight: Int { get set }
+    var isActive: Bool { get set }
     var microTasks: [MicrotaskFields] { get set }
 }
 
 public protocol MicrotaskFields: Sidable {
+    var isActive: Bool { get set }
+    var critical: Int { get set }
+    var depiction: String { get set }
+    var title: String { get set }
+    var weight: Int { get set }
     var skillSetSid: Int { get set }
 }
 

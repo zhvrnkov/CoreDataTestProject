@@ -18,6 +18,9 @@ public class SkillSetsUtils: EntityUtils {
     
     public func copyFields(from item: SkillSetFields, to entity: SkillSet) {
         entity.sid = item.sid
+        entity.title = item.title
+        entity.weight = item.weight
+        entity.isActive = item.isActive
     }
     
     public func setRelations(
