@@ -79,6 +79,8 @@
     </entity>
     <entity name="StudentMicrotaskGrade" representedClassName=".StudentMicrotaskGrade" syncable="YES">
         <attribute name="isSynced" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="lastUpdated" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="passed" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="sid" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="assessment" maxCount="1" deletionRule="Nullify" destinationEntity="Assessment" inverseName="studentMicrotaskGrades" inverseEntity="Assessment" syncable="YES"/>
         <relationship name="grade" maxCount="1" deletionRule="Nullify" destinationEntity="Grade" inverseName="studentMicrotaskGrades" inverseEntity="Grade" syncable="YES"/>
@@ -93,6 +95,6 @@
         <element name="Rubric" positionX="-291.74609375" positionY="173.453125" width="128" height="150"/>
         <element name="SkillSet" positionX="-293.2109375" positionY="296.1328125" width="128" height="135"/>
         <element name="Student" positionX="-52.90234375" positionY="-152.33984375" width="128" height="150"/>
-        <element name="StudentMicrotaskGrade" positionX="40.56640625" positionY="-9.375" width="128" height="135"/>
+        <element name="StudentMicrotaskGrade" positionX="40.56640625" positionY="-9.375" width="128" height="30"/>
     </elements>
 </model>

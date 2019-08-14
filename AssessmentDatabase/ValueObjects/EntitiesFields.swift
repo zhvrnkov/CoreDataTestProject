@@ -88,6 +88,8 @@ public protocol MicrotaskFields: Sidable {
 
 public protocol StudentMicrotaskGradeFields: Sidable {
     var isSynced: Bool { get set }
+    var lastUpdated: Int { get set }
+    var passed: Bool { get set }
 
     var assessmentSid: Int { get set }
     var gradeSid: Int { get set }
