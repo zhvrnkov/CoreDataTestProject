@@ -38,6 +38,10 @@ public protocol InstructorFields: Sidable {
 }
 
 public protocol StudentFields: Sidable {
+    var name: String { get set }
+    var email: String { get set }
+    var logbookPass: String { get set }
+    
     var assessmentSids: [Int] { get set }
     var instructorSids: [Int] { get set }
     var microTaskGradesSids: [Int] { get set }
@@ -59,6 +63,7 @@ public protocol RubricFields: Sidable {
     var lastUpdate: Int { get set }
     var weight: Int { get set }
     var isActive: Bool { get set }
+    
     var skillSets: [SkillSetFields] { get set }
 }
 
@@ -67,6 +72,7 @@ public protocol SkillSetFields: Sidable {
     var title: String { get set }
     var weight: Int { get set }
     var isActive: Bool { get set }
+    
     var microTasks: [MicrotaskFields] { get set }
 }
 
@@ -76,6 +82,7 @@ public protocol MicrotaskFields: Sidable {
     var depiction: String { get set }
     var title: String { get set }
     var weight: Int { get set }
+    
     var skillSetSid: Int { get set }
 }
 

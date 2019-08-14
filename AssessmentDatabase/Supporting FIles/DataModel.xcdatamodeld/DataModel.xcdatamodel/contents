@@ -67,6 +67,9 @@
         <relationship name="rubric" maxCount="1" deletionRule="Nullify" destinationEntity="Rubric" inverseName="skillSets" inverseEntity="Rubric" syncable="YES"/>
     </entity>
     <entity name="Student" representedClassName=".Student" syncable="YES">
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="logbookPass" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sid" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="assessments" toMany="YES" deletionRule="Nullify" destinationEntity="Assessment" inverseName="students" inverseEntity="Assessment" syncable="YES"/>
         <relationship name="instructors" toMany="YES" deletionRule="Deny" destinationEntity="Instructor" inverseName="students" inverseEntity="Instructor" syncable="YES"/>
@@ -87,7 +90,7 @@
         <element name="Microtask" positionX="88.8359375" positionY="322.8125" width="128" height="165"/>
         <element name="Rubric" positionX="-291.74609375" positionY="173.453125" width="128" height="150"/>
         <element name="SkillSet" positionX="-293.2109375" positionY="296.1328125" width="128" height="135"/>
-        <element name="Student" positionX="-52.90234375" positionY="-152.33984375" width="128" height="105"/>
+        <element name="Student" positionX="-52.90234375" positionY="-152.33984375" width="128" height="150"/>
         <element name="StudentMicrotaskGrade" positionX="40.56640625" positionY="-9.375" width="128" height="135"/>
     </elements>
 </model>

@@ -70,8 +70,12 @@ final class StudentsUtilsTest: XCTestCase {
     }
     
     private func compareItem(_ item: MockStudentFields, _ entity: Student) {
-        XCTAssertEqual(item.assessmentSids.count, entity.assessments?.count)
-        XCTAssertEqual(item.instructorSids.count, entity.instructors?.count)
-        XCTAssertEqual(item.microTaskGradesSids.count, entity.microTaskGrades?.count)
+        XCTAssertEqual(item.sid, entity.sid)
+        XCTAssertEqual(item.name, entity.name)
+        XCTAssertEqual(item.email, entity.email)
+        XCTAssertEqual(item.logbookPass, entity.logbookPass)
+        XCTAssertEqual(item.assessmentSids.count, entity.assessments.count)
+        XCTAssertEqual(item.instructorSids.count, entity.instructors.count)
+        XCTAssertEqual(item.microTaskGradesSids.count, entity.microTaskGrades.count)
     }
 }

@@ -17,6 +17,9 @@ public class StudentsUtils: EntityUtils {
     
     public func copyFields(from item: StudentFields, to entity: Student) {
         entity.sid = item.sid
+        entity.name = item.name
+        entity.email = item.email
+        entity.logbookPass = item.logbookPass
     }
     
     public func setRelations(

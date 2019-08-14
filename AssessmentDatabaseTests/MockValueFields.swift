@@ -78,7 +78,13 @@ struct MockStudentMicrotaskGrade: StudentMicrotaskGradeFields {
 }
 
 struct MockStudentFields: StudentFields {
+    static func mock(sid: Int) -> MockStudentFields {
+        return .init(sid: sid, name: "Vlad Zhavoronkov", email: "lorem@ipsum.com", logbookPass: "sakha", assessmentSids: [], instructorSids: [], microTaskGradesSids: [])
+    }
     var sid: Int
+    var name: String
+    var email: String
+    var logbookPass: String
     
     var assessmentSids: [Int]
     var instructorSids: [Int]
@@ -139,7 +145,9 @@ struct AssessmentUtilsTestMocks {
     lazy var students: [MockStudentFields] = instructors.map { instructor in
         return smallCount.map {
             let sid = (smallCount.max()! + 1) * instructor.sid + $0
-            return MockStudentFields(sid: sid, assessmentSids: [], instructorSids: [instructor.sid], microTaskGradesSids: [])
+            var temp = MockStudentFields.mock(sid: sid)
+            temp.instructorSids.append(instructor.sid)
+            return temp
         }
     }.reduce([], { $0 + $1 })
     
@@ -217,7 +225,9 @@ struct StudentMicrotaskGradesUtilsTestMocks {
         return getInstructor($0)
     }
     lazy var students: [MockStudentFields] = count.map {
-        MockStudentFields(sid: $0, assessmentSids: [], instructorSids: [instructors[Int($0)].sid], microTaskGradesSids: [])
+        var temp = MockStudentFields.mock(sid: $0)
+        temp.instructorSids.append(instructors[Int($0)].sid)
+        return temp
     }
     let rubrics: [MockRubricFields] = count.map {
         MockRubricFields.mock(sid: $0)
@@ -244,7 +254,9 @@ struct StudentsUtilsTestMocks {
     }
     
     lazy var students: [MockStudentFields] = count.map {
-        MockStudentFields(sid: $0, assessmentSids: [], instructorSids: [instructors[Int($0)].sid], microTaskGradesSids: [])
+        var temp = MockStudentFields.mock(sid: $0)
+        temp.instructorSids.append(instructors[Int($0)].sid)
+        return temp
     }
 }
 

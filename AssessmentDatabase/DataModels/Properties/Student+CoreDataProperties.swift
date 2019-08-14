@@ -11,15 +11,18 @@ import CoreData
 
 
 extension Student: Sidable {
-
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Student> {
         return NSFetchRequest<Student>(entityName: "Student")
     }
 
     @NSManaged public var sid: Int
-    @NSManaged public var assessments: NSSet?
-    @NSManaged public var instructors: NSSet?
-    @NSManaged public var microTaskGrades: NSSet?
+    @NSManaged public var name: String
+    @NSManaged public var email: String
+    @NSManaged public var logbookPass: String
+    
+    @NSManaged public var assessments: NSSet
+    @NSManaged public var instructors: NSSet
+    @NSManaged public var microTaskGrades: NSSet
 
 }
 
