@@ -46,6 +46,7 @@ public protocol StudentFields: Sidable {
 public protocol AssessmentFields: Sidable {
     var date: Date { get set }
     var schoolId: Int64 { get set }
+    var isSynced: Bool { get set }
     
     var instructorSid: Int64 { get set }
     var rubric: RubricFields { get set }
@@ -67,6 +68,8 @@ public protocol MicrotaskFields: Sidable {
 }
 
 public protocol StudentMicrotaskGradeFields: Sidable {
+    var isSynced: Bool { get set }
+
     var assessmentSid: Int64 { get set }
     var gradeSid: Int64 { get set }
     var microTaskSid: Int64 { get set }

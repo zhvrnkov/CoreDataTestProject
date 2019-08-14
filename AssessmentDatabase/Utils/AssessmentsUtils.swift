@@ -24,6 +24,7 @@ public class AssessmentsUtils: EntityUtils {
         entity.sid = Int64(item.sid)
         entity.schoolId = Int64(item.schoolId)
         entity.date = item.date as NSDate
+        entity.isSynced = item.isSynced
     }
     
     public func setRelations(

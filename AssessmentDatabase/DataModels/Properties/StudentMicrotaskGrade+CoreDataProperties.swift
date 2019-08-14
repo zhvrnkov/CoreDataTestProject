@@ -17,6 +17,7 @@ extension StudentMicrotaskGrade: Sidable {
     }
 
     @NSManaged public var sid: Int64
+    @NSManaged public var isSynced: Bool
     @NSManaged public var assessment: Assessment
     @NSManaged public var grade: Grade
     @NSManaged public var microTask: Microtask

@@ -21,6 +21,7 @@ public class StudentMicrotaskGradesUtils: EntityUtils {
     
     public func copyFields(from item: StudentMicrotaskGradeFields, to entity: StudentMicrotaskGrade) {
         entity.sid = Int64(item.sid)
+        entity.isSynced = item.isSynced
     }
     
     public func setRelations(

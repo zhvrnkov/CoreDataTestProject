@@ -16,6 +16,7 @@ extension Assessment: Sidable {
         return NSFetchRequest<Assessment>(entityName: "Assessment")
     }
 
+    @NSManaged public var isSynced: Bool
     @NSManaged public var date: NSDate
     @NSManaged public var schoolId: Int64
     @NSManaged public var sid: Int64
