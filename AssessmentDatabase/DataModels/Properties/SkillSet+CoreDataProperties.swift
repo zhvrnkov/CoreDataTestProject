@@ -16,7 +16,7 @@ extension SkillSet: Sidable {
         return NSFetchRequest<SkillSet>(entityName: "SkillSet")
     }
 
-    @NSManaged public var sid: Int64
+    @NSManaged public var sid: Int
     @NSManaged public var microTasks: NSSet
     @NSManaged public var rubric: Rubric
 

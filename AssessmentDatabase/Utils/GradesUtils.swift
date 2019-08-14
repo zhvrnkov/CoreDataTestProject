@@ -15,7 +15,7 @@ public class GradesUtils: EntityUtils {
     }
     
     public func copyFields(from item: GradeFields, to entity: Grade) {
-        entity.sid = Int64(item.sid)
+        entity.sid = item.sid
         entity.title = item.title
     }
     

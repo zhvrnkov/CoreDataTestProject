@@ -15,7 +15,11 @@ public class RubricsUtils: EntityUtils {
     }
     
     public func copyFields(from item: RubricFields, to entity: Rubric) {
-        entity.sid = Int64(item.sid)
+        entity.sid = item.sid
+        entity.title = item.title
+        entity.weight = item.weight
+        entity.lastUpdate = item.lastUpdated
+        entity.isActive = item.isActive
     }
     
     public func setRelations(

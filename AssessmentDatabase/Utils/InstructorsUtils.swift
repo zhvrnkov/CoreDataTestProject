@@ -15,7 +15,7 @@ public class InstructorsUtils: EntityUtils {
     }
     
     public func copyFields(from item: InstructorFields, to entity: Instructor) {
-        entity.sid = Int64(item.sid)
+        entity.sid = item.sid
         entity.loginUsername = item.loginUsername
         entity.firstName = item.firstName
         entity.lastName = item.lastName

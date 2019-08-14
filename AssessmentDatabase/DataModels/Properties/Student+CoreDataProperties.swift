@@ -16,7 +16,7 @@ extension Student: Sidable {
         return NSFetchRequest<Student>(entityName: "Student")
     }
 
-    @NSManaged public var sid: Int64
+    @NSManaged public var sid: Int
     @NSManaged public var assessments: NSSet?
     @NSManaged public var instructors: NSSet?
     @NSManaged public var microTaskGrades: NSSet?

@@ -17,7 +17,7 @@ public class SkillSetsUtils: EntityUtils {
     }
     
     public func copyFields(from item: SkillSetFields, to entity: SkillSet) {
-        entity.sid = Int64(item.sid)
+        entity.sid = item.sid
     }
     
     public func setRelations(
@@ -33,7 +33,7 @@ public class SkillSetsUtils: EntityUtils {
     }
     
     private func set(
-        rubricSid: Int64,
+        rubricSid: Int,
         of skillSet: SkillSet,
         in context: NSManagedObjectContext) throws
     {

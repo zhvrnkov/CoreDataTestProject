@@ -86,7 +86,7 @@ final class EntityUtilsMethodsTest: XCTestCase {
         mockGrades.forEach {
             let item = This.utils.get(whereSid: $0.sid)
             XCTAssertNotNil(item)
-            XCTAssertEqual(item?.sid, Int64($0.sid), "\($0.sid)")
+            XCTAssertEqual(item?.sid, Int($0.sid), "\($0.sid)")
         }
     }
     
@@ -96,7 +96,7 @@ final class EntityUtilsMethodsTest: XCTestCase {
             switch result {
             case .success(let output):
                 XCTAssertNotNil(output)
-                XCTAssertEqual(output?.sid, Int64(self.mockGrades[0].sid))
+                XCTAssertEqual(output?.sid, Int(self.mockGrades[0].sid))
             case .failure(let error):
                 XCTFail(error.localizedDescription)
             }
@@ -167,7 +167,7 @@ final class EntityUtilsMethodsTest: XCTestCase {
     
     func testFilterWithNewThatNotInSaved() {
         let saved = mocks.savedItems
-        let new = (Int64(saved.count)..<Int64(saved.count + 10))
+        let new = (Int(saved.count)..<Int(saved.count + 10))
             .map { MockGradeFields(sid: $0, title: "") }
         let output = This.utils.filter(saved: saved.map { $0.sid }, new: new.map { $0.sid })
         XCTAssertEqual(new.count, output.toAdd.count)
@@ -180,11 +180,11 @@ final class EntityUtilsMethodsTest: XCTestCase {
     
     func testFilterWithHalfInSavedAndHalfDont() {
         let saved = mocks.savedItems
-        let new = (Int64(saved.count/2)..<Int64(saved.count))
+        let new = (Int(saved.count/2)..<Int(saved.count))
             .map { MockGradeFields(sid: $0, title: "") }
-        let toDelete = (0..<Int64(saved.count/2))
+        let toDelete = (0..<Int(saved.count/2))
             .map { MockGradeFields(sid: $0, title: "") }
-        let toSave = (Int64(saved.count)..<Int64(saved.count/2 + saved.count))
+        let toSave = (Int(saved.count)..<Int(saved.count/2 + saved.count))
             .map { MockGradeFields(sid: $0, title: "") }
         let output = This.utils.filter(saved: saved.map { $0.sid }, new: (new + toSave).map { $0.sid })
         XCTAssertEqual(toDelete.count, output.toDelete.count)

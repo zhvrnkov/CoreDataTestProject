@@ -10,8 +10,8 @@ import Foundation
 import CoreData
 
 public struct FilterOutput {
-    let toDelete: [Int64]
-    let toAdd: [Int64]
+    let toDelete: [Int]
+    let toAdd: [Int]
 }
 
 public protocol EntityUtils: class {
@@ -30,19 +30,19 @@ public protocol EntityUtils: class {
     func get(where predicate: Predicate) -> [EntityType]
     func asyncGet(where predicate: Predicate, _ completeion: @escaping (Result<[EntityType], Error>) -> Void)
     
-    func get(whereSid sid: Int64) -> EntityType?
-    func asyncGet(whereSid sid: Int64, _ completeion: @escaping (Result<EntityType?, Error>) -> Void)
+    func get(whereSid sid: Int) -> EntityType?
+    func asyncGet(whereSid sid: Int, _ completeion: @escaping (Result<EntityType?, Error>) -> Void)
     
-    func get(whereSids sids: [Int64]) -> [EntityType]
-    func asyncGet(whereSids sids: [Int64], _ completeion: @escaping (Result<[EntityType], Error>) -> Void)
+    func get(whereSids sids: [Int]) -> [EntityType]
+    func asyncGet(whereSids sids: [Int], _ completeion: @escaping (Result<[EntityType], Error>) -> Void)
     
     func save(item: EntityValueFields) throws
     func save(items: [EntityValueFields]) throws
     
-    func delete(whereSid sid: Int64) throws
-    func delete(whereSids sids: [Int64]) throws
+    func delete(whereSid sid: Int) throws
+    func delete(whereSids sids: [Int]) throws
     
-    func update(whereSid sid: Int64, like item: EntityValueFields) throws
+    func update(whereSid sid: Int, like item: EntityValueFields) throws
 }
 
 public extension EntityUtils {
@@ -103,14 +103,14 @@ public extension EntityUtils {
         }
     }
     
-    func get(whereSid sid: Int64) -> EntityType? {
+    func get(whereSid sid: Int) -> EntityType? {
         let predicate = Predicate(format: "sid==%d", arguments: [sid])
         let output = get(where: predicate)
         assert(output.count <= 1)
         return output.first
     }
     
-    func asyncGet(whereSid sid: Int64, _ completeion: @escaping (Result<EntityType?, Error>) -> Void) {
+    func asyncGet(whereSid sid: Int, _ completeion: @escaping (Result<EntityType?, Error>) -> Void) {
         let predicate = Predicate(format: "sid==%d", arguments: [sid])
         asyncGet(where: predicate) { result in
             switch result {
@@ -123,12 +123,12 @@ public extension EntityUtils {
         }
     }
     
-    func get(whereSids sids: [Int64]) -> [EntityType] {
+    func get(whereSids sids: [Int]) -> [EntityType] {
         let predicate = Predicate(format: "sid IN %@", arguments: [sids])
         return get(where: predicate)
     }
     
-    func asyncGet(whereSids sids: [Int64], _ completeion: @escaping (Result<[EntityType], Error>) -> Void) {
+    func asyncGet(whereSids sids: [Int], _ completeion: @escaping (Result<[EntityType], Error>) -> Void) {
         let predicate = Predicate(format: "sid IN %@", arguments: [sids])
         asyncGet(where: predicate, completeion)
     }
@@ -177,7 +177,7 @@ public extension EntityUtils {
         }
     }
     
-    func delete(whereSid sid: Int64) throws {
+    func delete(whereSid sid: Int) throws {
         var error: Error?
         let context = backgroundContext
         context.performAndWait {
@@ -199,7 +199,7 @@ public extension EntityUtils {
         }
     }
     
-    func delete(whereSids sids: [Int64]) throws {
+    func delete(whereSids sids: [Int]) throws {
         var error: Error?
         let context = backgroundContext
         context.performAndWait {
@@ -220,7 +220,7 @@ public extension EntityUtils {
         }
     }
     
-    func update(whereSid sid: Int64, like item: EntityValueFields) throws {
+    func update(whereSid sid: Int, like item: EntityValueFields) throws {
         var error: Error?
         let context = backgroundContext
         context.performAndWait {
@@ -266,7 +266,7 @@ public extension EntityUtils {
         }
     }
     
-    func filter(saved: [Int64], new: [Int64]) -> FilterOutput {
+    func filter(saved: [Int], new: [Int]) -> FilterOutput {
         let toDelete = saved.filter { savedSid in !new.contains(savedSid)}
         let toSave = new.filter { newSid in !saved.contains(newSid)}
         

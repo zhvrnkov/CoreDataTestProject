@@ -16,7 +16,7 @@ public class StudentsUtils: EntityUtils {
     }
     
     public func copyFields(from item: StudentFields, to entity: Student) {
-        entity.sid = Int64(item.sid)
+        entity.sid = item.sid
     }
     
     public func setRelations(
@@ -32,7 +32,7 @@ public class StudentsUtils: EntityUtils {
     }
     
     private func set(
-        instructorSids: [Int64],
+        instructorSids: [Int],
         of student: Student,
         in context: NSManagedObjectContext) throws
     {

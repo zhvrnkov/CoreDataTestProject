@@ -16,7 +16,7 @@ extension Microtask: Sidable {
         return NSFetchRequest<Microtask>(entityName: "Microtask")
     }
 
-    @NSManaged public var sid: Int64
+    @NSManaged public var sid: Int
     @NSManaged public var skillSet: SkillSet
     @NSManaged public var studentMicroTaskGrades: NSSet
 

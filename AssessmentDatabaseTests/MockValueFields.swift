@@ -8,28 +8,28 @@
 
 import Foundation
 
-fileprivate let count: Range<Int64> = (0..<7)
-fileprivate let mediumCount: Range<Int64> = (0..<5)
-fileprivate let smallCount: Range<Int64> = (0..<2)
+fileprivate let count: Range<Int> = (0..<7)
+fileprivate let mediumCount: Range<Int> = (0..<5)
+fileprivate let smallCount: Range<Int> = (0..<2)
 
-fileprivate func getInstructor(_ sid: Int64) -> MockInstructorFields {
+fileprivate func getInstructor(_ sid: Int) -> MockInstructorFields {
     return MockInstructorFields(sid: sid, loginUsername: "zhvrnkv", firstName: "Vlad", lastName: "Zhavoronkov", avatar: "anime", email: "@dada.ya", phone: "8921380123", phoneStudent: "12839128", address: "hsdahfsd", address2: "fsdklfhs", city: "slkdhflksf", state: "fklhdahsl", zip: "skjdfhksj", country: "lksdhfaslk", credentials: "flsdhfaslkj", depiction: "sldfhsk", fbid: ["fdjsafglfas"], lang: "RU", flags: ["dsajdhla"], schools: [], assessments: [], students: [])
 }
 
 struct MockAssessmentFields: AssessmentFields {
-    var sid: Int64
+    var sid: Int
     var date: Date
-    var schoolId: Int64
+    var schoolId: Int
     var isSynced: Bool = false
     
-    var instructorSid: Int64
+    var instructorSid: Int
     var rubric: RubricFields
     var studentMicrotaskGrades: [StudentMicrotaskGradeFields]
     var students: [StudentFields]
 }
 
 struct MockInstructorFields: InstructorFields {
-    var sid: Int64
+    var sid: Int
     var loginUsername: String
     var firstName: String
     var lastName: String
@@ -55,31 +55,38 @@ struct MockInstructorFields: InstructorFields {
 }
 
 struct MockRubricFields: RubricFields {
-    var sid: Int64
+    static func mock(sid: Int) -> MockRubricFields {
+        return .init(sid: sid, title: "Lorem Ipsum", lastUpdated: 123, weight: 0, isActive: true, skillSets: [])
+    }
+    var sid: Int
+    var title: String
+    var lastUpdated: Int
+    var weight: Int
+    var isActive: Bool
     
     var skillSets: [SkillSetFields]
 }
 
 struct MockStudentMicrotaskGrade: StudentMicrotaskGradeFields {
-    var sid: Int64
+    var sid: Int
     var isSynced: Bool = false
     
-    var assessmentSid: Int64
-    var gradeSid: Int64
-    var microTaskSid: Int64
-    var studentSid: Int64
+    var assessmentSid: Int
+    var gradeSid: Int
+    var microTaskSid: Int
+    var studentSid: Int
 }
 
 struct MockStudentFields: StudentFields {
-    var sid: Int64
+    var sid: Int
     
-    var assessmentSids: [Int64]
-    var instructorSids: [Int64]
-    var microTaskGradesSids: [Int64]
+    var assessmentSids: [Int]
+    var instructorSids: [Int]
+    var microTaskGradesSids: [Int]
 }
 
 struct MockGradeFields: GradeFields {
-    var sid: Int64
+    var sid: Int
     var title: String
 }
 
@@ -92,21 +99,21 @@ struct MockMicrotaskFields: MicrotaskFields, Hashable {
         hasher.combine(sid)
     }
     
-    var sid: Int64
+    var sid: Int
     
-    var skillSetSid: Int64
+    var skillSetSid: Int
 }
 
 struct MockSkillSets: SkillSetFields {
-    var sid: Int64
+    var sid: Int
     
-    var rubricSid: Int64
+    var rubricSid: Int
     var microTasks: [MicrotaskFields]
 }
 
 struct AssessmentUtilsTestMocks {
     let rubrics: [MockRubricFields] = count.map {
-        MockRubricFields(sid: $0, skillSets: [])
+        MockRubricFields.mock(sid: $0)
     }
     
     let instructors: [MockInstructorFields] = count.map {
@@ -152,7 +159,7 @@ struct InstructorUtilsTestMocks {
 
 struct MicrotaskUtilsTestMocks {
     let rubrics: [MockRubricFields] = count.map {
-        MockRubricFields(sid: $0, skillSets: [])
+        MockRubricFields.mock(sid: $0)
     }
     lazy var skillSets: [MockSkillSets] = count.map {
         MockSkillSets(sid: $0, rubricSid: rubrics[Int($0)].sid, microTasks: [])
@@ -164,13 +171,13 @@ struct MicrotaskUtilsTestMocks {
 
 struct RubricUtilsTestMocks {
     let emptyRubrics: [MockRubricFields] = count.map {
-        MockRubricFields(sid: $0, skillSets: [])
+        MockRubricFields.mock(sid: $0)
     }
 }
 
 struct SkillSetsUtilsTestMocks {
     let rubrics: [MockRubricFields] = count.map {
-        MockRubricFields(sid: $0, skillSets: [])
+        MockRubricFields.mock(sid: $0)
     }
     lazy var skillSets: [MockSkillSets] = count.map {
         MockSkillSets(sid: $0, rubricSid: rubrics[Int($0)].sid, microTasks: [])
@@ -197,7 +204,7 @@ struct StudentMicrotaskGradesUtilsTestMocks {
         MockStudentFields(sid: $0, assessmentSids: [], instructorSids: [instructors[Int($0)].sid], microTaskGradesSids: [])
     }
     let rubrics: [MockRubricFields] = count.map {
-        MockRubricFields(sid: $0, skillSets: [])
+        MockRubricFields.mock(sid: $0)
     }
     lazy var skillSets: [MockSkillSets] = rubrics.map { rubric in
         MockSkillSets(sid: rubric.sid, rubricSid: rubric.sid, microTasks: [])

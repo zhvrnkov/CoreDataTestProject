@@ -9,6 +9,11 @@
 import Foundation
 
 public struct Predicate {
-    let format: String
-    let arguments: [Any]
+    public let format: String
+    public let arguments: [Any]
+    
+    public init(format: String, arguments: [Any]) {
+        self.format = format
+        self.arguments = arguments
+    }
 }

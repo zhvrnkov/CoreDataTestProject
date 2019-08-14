@@ -71,6 +71,6 @@ final class MicrotaskUtilsTest: XCTestCase {
     
     private func compareItem(_ item: MicrotaskFields, _ entity: Microtask) {
         XCTAssertEqual(item.sid, entity.sid)
-        XCTAssertEqual(Int64(item.skillSetSid), entity.skillSet.sid)
+        XCTAssertEqual(Int(item.skillSetSid), entity.skillSet.sid)
     }
 }

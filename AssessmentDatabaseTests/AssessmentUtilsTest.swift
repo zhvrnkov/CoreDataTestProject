@@ -105,8 +105,8 @@ final class AssessmentUtilsTest: XCTestCase {
         XCTAssertEqual(entity.studentMicrotaskGrades.allObjects.count, item.studentMicrotaskGrades.count)
         XCTAssertEqual(item.studentMicrotaskGrades.count, entity.studentMicrotaskGrades.count)
         XCTAssertEqual(item.students.count, entity.students.count)
-        XCTAssertEqual(Int64(item.instructorSid), entity.instructor.sid)
-        XCTAssertEqual(Int64(item.rubric.sid), entity.rubric.sid)
+        XCTAssertEqual(Int(item.instructorSid), entity.instructor.sid)
+        XCTAssertEqual(Int(item.rubric.sid), entity.rubric.sid)
     }
     
     func checkFields(of entity: Assessment, source item: AssessmentFields) {

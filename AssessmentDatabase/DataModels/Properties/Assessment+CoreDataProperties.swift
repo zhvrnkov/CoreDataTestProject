@@ -18,8 +18,8 @@ extension Assessment: Sidable {
 
     @NSManaged public var isSynced: Bool
     @NSManaged public var date: NSDate
-    @NSManaged public var schoolId: Int64
-    @NSManaged public var sid: Int64
+    @NSManaged public var schoolId: Int
+    @NSManaged public var sid: Int
     @NSManaged public var instructor: Instructor
     @NSManaged public var rubric: Rubric
     @NSManaged public var studentMicrotaskGrades: NSSet

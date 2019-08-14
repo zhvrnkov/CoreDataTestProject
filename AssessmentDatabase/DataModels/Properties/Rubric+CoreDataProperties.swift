@@ -16,7 +16,11 @@ extension Rubric: Sidable {
         return NSFetchRequest<Rubric>(entityName: "Rubric")
     }
 
-    @NSManaged public var sid: Int64
+    @NSManaged public var sid: Int
+    @NSManaged public var title: String
+    @NSManaged public var lastUpdate: Int
+    @NSManaged public var weight: Int
+    @NSManaged public var isActive: Bool
     @NSManaged public var assessments: NSSet?
     @NSManaged public var skillSets: NSSet?
 

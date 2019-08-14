@@ -16,7 +16,7 @@ extension Instructor: Sidable {
         return NSFetchRequest<Instructor>(entityName: "Instructor")
     }
 
-    @NSManaged public var sid: Int64
+    @NSManaged public var sid: Int
     @NSManaged public var loginUsername: String
     @NSManaged public var firstName: String
     @NSManaged public var lastName: String

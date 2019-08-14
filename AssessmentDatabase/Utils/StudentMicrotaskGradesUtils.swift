@@ -20,7 +20,7 @@ public class StudentMicrotaskGradesUtils: EntityUtils {
     }
     
     public func copyFields(from item: StudentMicrotaskGradeFields, to entity: StudentMicrotaskGrade) {
-        entity.sid = Int64(item.sid)
+        entity.sid = item.sid
         entity.isSynced = item.isSynced
     }
     
@@ -40,7 +40,7 @@ public class StudentMicrotaskGradesUtils: EntityUtils {
     }
     
     private func set(
-        assessmentSid: Int64,
+        assessmentSid: Int,
         of entity: StudentMicrotaskGrade,
         in context: NSManagedObjectContext) throws
     {
@@ -58,7 +58,7 @@ public class StudentMicrotaskGradesUtils: EntityUtils {
     }
     
     private func set(
-        gradeSid: Int64,
+        gradeSid: Int,
         of entity: StudentMicrotaskGrade,
         in context: NSManagedObjectContext) throws
     {
@@ -74,7 +74,7 @@ public class StudentMicrotaskGradesUtils: EntityUtils {
     }
     
     private func set(
-        microTaskSid: Int64,
+        microTaskSid: Int,
         of entity: StudentMicrotaskGrade,
         in context: NSManagedObjectContext) throws
     {
@@ -90,7 +90,7 @@ public class StudentMicrotaskGradesUtils: EntityUtils {
     }
     
     private func set(
-        studentSid: Int64,
+        studentSid: Int,
         of entity: StudentMicrotaskGrade,
         in context: NSManagedObjectContext) throws
     {

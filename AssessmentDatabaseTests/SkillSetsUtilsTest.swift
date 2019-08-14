@@ -58,6 +58,6 @@ final class SkillSetsUtilsTest: XCTestCase {
     
     private func compareItem(_ item: SkillSetFields, _ entity: SkillSet) {
         XCTAssertEqual(item.sid, entity.sid)
-        XCTAssertEqual(Int64(item.rubricSid), entity.rubric.sid)
+        XCTAssertEqual(Int(item.rubricSid), entity.rubric.sid)
     }
 }

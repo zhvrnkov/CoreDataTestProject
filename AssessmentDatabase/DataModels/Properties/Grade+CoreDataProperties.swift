@@ -16,7 +16,7 @@ extension Grade: Sidable {
         return NSFetchRequest<Grade>(entityName: "Grade")
     }
 
-    @NSManaged public var sid: Int64
+    @NSManaged public var sid: Int
     @NSManaged public var title: String
     @NSManaged public var studentMicrotaskGrades: NSSet
 

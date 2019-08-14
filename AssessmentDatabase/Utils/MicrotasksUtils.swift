@@ -17,7 +17,7 @@ public class MicrotasksUtils: EntityUtils {
     }
     
     public func copyFields(from item: MicrotaskFields, to entity: Microtask) {
-        entity.sid = Int64(item.sid)
+        entity.sid = item.sid
     }
     
     public func setRelations(
@@ -33,7 +33,7 @@ public class MicrotasksUtils: EntityUtils {
     }
     
     private func set(
-        skillSetSid: Int64,
+        skillSetSid: Int,
         of microtask: Microtask,
         in context: NSManagedObjectContext) throws
     {
