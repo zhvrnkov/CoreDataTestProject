@@ -17,6 +17,8 @@ public class GradesUtils: EntityUtils {
     public func copyFields(from item: GradeFields, to entity: Grade) {
         entity.sid = item.sid
         entity.title = item.title
+        entity.score = item.score
+        entity.passed = item.passed
     }
     
     public func setRelations(

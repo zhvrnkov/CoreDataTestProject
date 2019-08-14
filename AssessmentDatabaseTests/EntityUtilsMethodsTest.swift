@@ -168,7 +168,7 @@ final class EntityUtilsMethodsTest: XCTestCase {
     func testFilterWithNewThatNotInSaved() {
         let saved = mocks.savedItems
         let new = (Int(saved.count)..<Int(saved.count + 10))
-            .map { MockGradeFields(sid: $0, title: "") }
+            .map { MockGradeFields.mock(sid: $0) }
         let output = This.utils.filter(saved: saved.map { $0.sid }, new: new.map { $0.sid })
         XCTAssertEqual(new.count, output.toAdd.count)
         XCTAssertEqual(saved.count, output.toDelete.count)
@@ -181,11 +181,11 @@ final class EntityUtilsMethodsTest: XCTestCase {
     func testFilterWithHalfInSavedAndHalfDont() {
         let saved = mocks.savedItems
         let new = (Int(saved.count/2)..<Int(saved.count))
-            .map { MockGradeFields(sid: $0, title: "") }
+            .map { MockGradeFields.mock(sid: $0) }
         let toDelete = (0..<Int(saved.count/2))
-            .map { MockGradeFields(sid: $0, title: "") }
+            .map { MockGradeFields.mock(sid: $0) }
         let toSave = (Int(saved.count)..<Int(saved.count/2 + saved.count))
-            .map { MockGradeFields(sid: $0, title: "") }
+            .map { MockGradeFields.mock(sid: $0) }
         let output = This.utils.filter(saved: saved.map { $0.sid }, new: (new + toSave).map { $0.sid })
         XCTAssertEqual(toDelete.count, output.toDelete.count)
         XCTAssertEqual(toSave.count, output.toAdd.count)

@@ -92,8 +92,13 @@ struct MockStudentFields: StudentFields {
 }
 
 struct MockGradeFields: GradeFields {
+    static func mock(sid: Int) -> MockGradeFields {
+        return .init(sid: sid, title: "Lorem Ipsum", score: 0, passed: 1)
+    }
     var sid: Int
     var title: String
+    var score: Int
+    var passed: Int
 }
 
 struct MockMicrotaskFields: MicrotaskFields, Hashable {
@@ -170,7 +175,7 @@ struct GradesUtilsTestMocks {
             "Fuck you"
         ]
         return mediumCount.map {
-            MockGradeFields(sid: $0, title: gradesTitles[Int($0)])
+            MockGradeFields.mock(sid: $0)
         }
     }()
 }
@@ -210,15 +215,8 @@ struct SkillSetsUtilsTestMocks {
 
 struct StudentMicrotaskGradesUtilsTestMocks {
     let grades: [MockGradeFields] = {
-        let gradesTitles: [String] = [
-            "Excellent",
-            "Good",
-            "Common",
-            "Bad",
-            "Fuck you"
-        ]
         return mediumCount.map {
-            MockGradeFields(sid: $0, title: gradesTitles[Int($0)])
+            MockGradeFields.mock(sid: $0)
         }
     }()
     let instructors: [MockInstructorFields] = count.map {
@@ -262,10 +260,10 @@ struct StudentsUtilsTestMocks {
 
 struct EntityUtilsMethodsTestMocks {
     var mockGrades: [MockGradeFields] = count.map {
-        MockGradeFields(sid: $0, title: "Lorem Ipsum")
+        MockGradeFields.mock(sid: $0)
     }
     
     var savedItems: [MockGradeFields] = count.map {
-        MockGradeFields(sid: $0, title: "")
+        MockGradeFields.mock(sid: $0)
     }
 }

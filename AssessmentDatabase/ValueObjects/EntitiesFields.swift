@@ -96,5 +96,7 @@ public protocol StudentMicrotaskGradeFields: Sidable {
 }
 
 public protocol GradeFields: Sidable {
+    var score: Int { get set }
+    var passed: Int { get set }
     var title: String { get set }
 }
