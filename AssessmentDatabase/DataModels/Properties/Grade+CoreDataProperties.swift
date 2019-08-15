@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 
-extension Grade: Sidable {
+extension Grade: DBSidable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Grade> {
         return NSFetchRequest<Grade>(entityName: "Grade")
@@ -19,7 +19,7 @@ extension Grade: Sidable {
     @NSManaged public var sid: Int
     @NSManaged public var title: String
     @NSManaged public var score: Int
-    @NSManaged public var passed: Int
+    @NSManaged public var passed: Bool
     @NSManaged public var studentMicrotaskGrades: NSSet
 
 }

@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 
-extension Rubric: Sidable {
+extension Rubric: DBSidable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Rubric> {
         return NSFetchRequest<Rubric>(entityName: "Rubric")
@@ -21,8 +21,8 @@ extension Rubric: Sidable {
     @NSManaged public var lastUpdate: Int
     @NSManaged public var weight: Int
     @NSManaged public var isActive: Bool
-    @NSManaged public var assessments: NSSet?
-    @NSManaged public var skillSets: NSSet?
+    @NSManaged public var assessments: NSSet
+    @NSManaged public var skillSets: NSSet
 
 }
 

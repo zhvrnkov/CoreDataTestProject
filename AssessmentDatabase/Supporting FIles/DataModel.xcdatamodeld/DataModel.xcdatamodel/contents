@@ -11,7 +11,7 @@
         <relationship name="students" toMany="YES" deletionRule="Nullify" destinationEntity="Student" inverseName="assessments" inverseEntity="Student" syncable="YES"/>
     </entity>
     <entity name="Grade" representedClassName=".Grade" syncable="YES">
-        <attribute name="passed" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="passed" optional="YES" attributeType="Boolean" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="score" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="sid" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>

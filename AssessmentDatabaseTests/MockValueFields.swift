@@ -95,12 +95,12 @@ struct MockStudentFields: StudentFields {
 
 struct MockGradeFields: GradeFields {
     static func mock(sid: Int) -> MockGradeFields {
-        return .init(sid: sid, title: "Lorem Ipsum", score: 0, passed: 1)
+        return .init(sid: sid, title: "Lorem Ipsum", score: 0, passed: true)
     }
     var sid: Int
     var title: String
     var score: Int
-    var passed: Int
+    var passed: Bool
 }
 
 struct MockMicrotaskFields: MicrotaskFields, Hashable {
@@ -112,7 +112,7 @@ struct MockMicrotaskFields: MicrotaskFields, Hashable {
         return .init(sid: sid, isActive: true, critical: 1, depiction: "Can identify key safety equipment necessary and the use thereof for a manifestly safe voyage; including fire extinguishers, flares, first aid kit, sound device, flashlight, fire blanket, tool kit, life jackets - inspection and donning. Discuss accessibility.", title: "Lorem Ipsum", weight: 0, skillSetSid: skillSetSid)
     }
     
-    func hash(Int64o hasher: inout Hasher) {
+    func hash(hasher: inout Hasher) {
         hasher.combine(sid)
     }
     

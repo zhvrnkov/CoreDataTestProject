@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 
-extension StudentMicrotaskGrade: Sidable {
+extension StudentMicrotaskGrade: DBSidable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<StudentMicrotaskGrade> {
         return NSFetchRequest<StudentMicrotaskGrade>(entityName: "StudentMicrotaskGrade")

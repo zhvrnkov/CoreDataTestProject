@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 
-extension Instructor: Sidable {
+extension Instructor: DBSidable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Instructor> {
         return NSFetchRequest<Instructor>(entityName: "Instructor")
