@@ -74,8 +74,8 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sid" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="assessments" toMany="YES" deletionRule="Nullify" destinationEntity="Assessment" inverseName="students" inverseEntity="Assessment" syncable="YES"/>
-        <relationship name="instructors" toMany="YES" deletionRule="Deny" destinationEntity="Instructor" inverseName="students" inverseEntity="Instructor" syncable="YES"/>
-        <relationship name="microTaskGrades" toMany="YES" deletionRule="Deny" destinationEntity="StudentMicrotaskGrade" inverseName="student" inverseEntity="StudentMicrotaskGrade" syncable="YES"/>
+        <relationship name="instructors" toMany="YES" deletionRule="Nullify" destinationEntity="Instructor" inverseName="students" inverseEntity="Instructor" syncable="YES"/>
+        <relationship name="microTaskGrades" toMany="YES" deletionRule="Cascade" destinationEntity="StudentMicrotaskGrade" inverseName="student" inverseEntity="StudentMicrotaskGrade" syncable="YES"/>
     </entity>
     <entity name="StudentMicrotaskGrade" representedClassName=".StudentMicrotaskGrade" syncable="YES">
         <attribute name="isSynced" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
