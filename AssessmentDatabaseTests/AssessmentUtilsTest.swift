@@ -116,10 +116,10 @@ final class AssessmentUtilsTest: XCTestCase {
     }
     
     private func deleteAll() {
-        This.instructorsUtil.deleteAll()
-        This.studentsUtil.deleteAll()
-        This.rubricsUtil.deleteAll()
-        This.util.deleteAll()
+        XCTAssertNoThrow(try This.instructorsUtil.delete(whereSids: mocks.instructors.sids))
+        XCTAssertNoThrow(try This.studentsUtil.delete(whereSids: mocks.students.sids))
+        XCTAssertNoThrow(try This.rubricsUtil.delete(whereSids: mocks.rubrics.sids))
+        XCTAssertNoThrow(try This.util.delete(whereSids: mocks.assessments.sids))
     }
     
     private func checkAll() {

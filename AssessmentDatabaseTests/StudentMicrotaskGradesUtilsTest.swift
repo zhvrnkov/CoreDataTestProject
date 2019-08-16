@@ -129,13 +129,14 @@ final class StudentMicrotaskGradesUtilsTest: XCTestCase {
     }
     
     private func deleteAll() {
-        This.instructorsUtils.deleteAll()
-        This.rubricsUtils.deleteAll()
-        This.assessmentsUtils.deleteAll()
-        This.gradesUtils.deleteAll()
-        This.studentsUtils.deleteAll()
-        This.microtasksUtils.deleteAll()
-        This.skillSetsUtils.deleteAll()
+        XCTAssertNoThrow(try This.instructorsUtils.delete(whereSids: mocks.instructors.sids))
+        XCTAssertNoThrow(try This.rubricsUtils.delete(whereSids: mocks.rubrics.sids))
+        XCTAssertNoThrow(try This.assessmentsUtils.delete(whereSids: mocks.assessments.sids))
+        XCTAssertNoThrow(try This.gradesUtils.delete(whereSids: mocks.grades.sids))
+        XCTAssertNoThrow(try This.studentsUtils.delete(whereSids: mocks.students.sids))
+        XCTAssertNoThrow(try This.microtasksUtils.delete(whereSids: mocks.microTasks.sids))
+        XCTAssertNoThrow(try This.skillSetsUtils.delete(whereSids: mocks.skillSets.sids))
+        XCTAssertNoThrow(try This.util.delete(whereSids: mocks.microtaskGrades.sids))
     }
     
     private func checkAll() {
@@ -146,5 +147,6 @@ final class StudentMicrotaskGradesUtilsTest: XCTestCase {
         XCTAssertTrue(This.studentsUtils.getAll().isEmpty)
         XCTAssertTrue(This.microtasksUtils.getAll().isEmpty)
         XCTAssertTrue(This.skillSetsUtils.getAll().isEmpty)
+        XCTAssertTrue(This.util.getAll().isEmpty)
     }
 }

@@ -29,8 +29,8 @@ final class StudentsUtilsTest: XCTestCase {
     
     override func tearDown() {
         super.tearDown()
-        This.util.deleteAll()
-        This.instructorsUtils.deleteAll()
+        XCTAssertNoThrow(try This.instructorsUtils.delete(whereSids: mocks.instructors.sids))
+        XCTAssertNoThrow(try This.util.delete(whereSids: mocks.students.sids))
         
         XCTAssertTrue(This.util.getAll().isEmpty)
         XCTAssertTrue(This.instructorsUtils.getAll().isEmpty)

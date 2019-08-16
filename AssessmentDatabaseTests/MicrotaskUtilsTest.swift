@@ -36,8 +36,8 @@ final class MicrotaskUtilsTest: XCTestCase {
     override func tearDown() {
         super.tearDown()
         
-        This.rubricUtils.deleteAll()
-        This.skillSetsUtils.deleteAll()
+        XCTAssertNoThrow(try This.rubricUtils.delete(whereSids: mocks.rubrics.sids))
+        XCTAssertNoThrow(try This.skillSetsUtils.delete(whereSids: mocks.skillSets.sids))
         
         XCTAssertTrue(This.rubricUtils.getAll().isEmpty)
         XCTAssertTrue(This.skillSetsUtils.getAll().isEmpty)

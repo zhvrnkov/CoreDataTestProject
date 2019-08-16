@@ -1,22 +1,80 @@
 import Foundation
 import CoreData
 
-public class MicrotasksUtils: EntityUtils {
+public class MicrotasksUtils: EntityUtilsMethods {
     public typealias EntityType = Microtask
     public typealias EntityValueFields = MicrotaskFields
     
-    public var container: NSPersistentContainer
-    public var backgroundContext: NSManagedObjectContext {
+    public func getAll() -> [EntityType] {
+        return _getAll()
+    }
+    
+    public func asyncGetAll(_ completion: @escaping (Result<[EntityType], Error>) -> Void) {
+        _asyncGetAll(completion)
+    }
+    
+    public func get(where predicate: Predicate) -> [EntityType] {
+        return _get(where: predicate)
+    }
+    
+    public func asyncGet(where predicate: Predicate, _ completeion: @escaping (Result<[EntityType], Error>) -> Void) {
+        _asyncGet(where: predicate, completeion)
+    }
+    
+    public func get(whereSid sid: Int) -> EntityType? {
+        return _get(whereSid: sid)
+    }
+    
+    public func asyncGet(whereSid sid: Int, _ completeion: @escaping (Result<EntityType?, Error>) -> Void) {
+        return _asyncGet(whereSid: sid, completeion)
+    }
+    
+    public func get(whereSids sids: [Int]) -> [EntityType] {
+        return _get(whereSids: sids)
+    }
+    
+    public func asyncGet(whereSids sids: [Int], _ completeion: @escaping (Result<[EntityType], Error>) -> Void) {
+        return _asyncGet(whereSids: sids, completeion)
+    }
+    
+    public func save(item: EntityValueFields) throws {
+        try _save(item: item)
+    }
+    public func save(items: [EntityValueFields]) throws {
+        try _save(items: items)
+    }
+    
+    public func delete(whereSid sid: Int) throws {
+        try _delete(whereSid: sid)
+    }
+    public func delete(whereSids sids: [Int]) throws {
+        try _delete(whereSids: sids)
+    }
+    
+    public func update(whereSid sid: Int, like item: EntityValueFields) throws {
+        try _update(whereSid: sid, like: item)
+    }
+    
+    var container: NSPersistentContainer
+    var backgroundContext: NSManagedObjectContext {
         return container.newBackgroundContext()
     }
     
-    public var skillSetsUtils: SkillSetsUtils?
+    var skillSetsUtils: SkillSetsUtils?
     
-    public init(with container: NSPersistentContainer) {
+    init(with container: NSPersistentContainer) {
         self.container = container
     }
     
-    public func copyFields(from item: MicrotaskFields, to entity: Microtask) {
+    public enum Errors: Error {
+        case noUtils
+        
+        case skillSetNotFound
+    }
+}
+
+extension MicrotasksUtils:  EntityUtils {
+    func copyFields(from item: MicrotaskFields, to entity: Microtask) {
         entity.sid = item.sid
         entity.isActive = item.isActive
         entity.weight = item.weight
@@ -25,7 +83,7 @@ public class MicrotasksUtils: EntityUtils {
         entity.critical = item.critical
     }
     
-    public func setRelations(
+    func setRelations(
         from item: MicrotaskFields,
         of entity: Microtask,
         in context: NSManagedObjectContext) throws
@@ -47,16 +105,10 @@ public class MicrotasksUtils: EntityUtils {
         }
         guard let savedSkillSet = utils.get(whereSid: skillSetSid),
             let contextSkillSets = context.object(with: savedSkillSet.objectID) as? SkillSet
-        else {
-            throw Errors.skillSetNotFound
+            else {
+                throw Errors.skillSetNotFound
         }
         contextSkillSets.addToMicroTasks(microtask)
         microtask.skillSet = contextSkillSets
-    }
-    
-    public enum Errors: Error {
-        case noUtils
-        
-        case skillSetNotFound
     }
 }

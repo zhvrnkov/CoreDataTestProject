@@ -12,6 +12,12 @@ public protocol DBSidable {
     var sid: Int { get set }
 }
 
+extension Array where Element: DBSidable {
+    var sids: [Int] {
+        return map { $0.sid }
+    }
+}
+
 public protocol InstructorFields: DBSidable {
     var loginUsername: String { get set }
     var firstName: String { get set }

@@ -23,7 +23,7 @@ final class EntityUtilsMethodsTest: XCTestCase {
     
     override func tearDown() {
         super.tearDown()
-        This.utils.deleteAll()
+        XCTAssertNoThrow(try This.utils.delete(whereSids: mockGrades.sids))
         XCTAssertEqual(This.utils.getAll().count, 0)
     }
     
@@ -158,7 +158,7 @@ final class EntityUtilsMethodsTest: XCTestCase {
     func testFilterWithEmptyNew() {
         let saved = mocks.savedItems
         let new: [MockGradeFields] = []
-        let output = This.utils.filter(saved: saved.map { $0.sid }, new: new.map { $0.sid })
+        let output = This.utils._filter(saved: saved.map { $0.sid }, new: new.map { $0.sid })
         XCTAssertEqual(saved.count, output.toDelete.count)
         XCTAssertEqual(output.toAdd.count, 0)
         let itemsToDelete = output.toDelete.compactMap { sid in saved.first(where: { $0.sid == sid })}
@@ -169,7 +169,7 @@ final class EntityUtilsMethodsTest: XCTestCase {
         let saved = mocks.savedItems
         let new = (Int(saved.count)..<Int(saved.count + 10))
             .map { MockGradeFields.mock(sid: $0) }
-        let output = This.utils.filter(saved: saved.map { $0.sid }, new: new.map { $0.sid })
+        let output = This.utils._filter(saved: saved.map { $0.sid }, new: new.map { $0.sid })
         XCTAssertEqual(new.count, output.toAdd.count)
         XCTAssertEqual(saved.count, output.toDelete.count)
         let itemsToSave = output.toAdd.compactMap { sid in new.first(where: { $0.sid == sid })}
@@ -186,7 +186,7 @@ final class EntityUtilsMethodsTest: XCTestCase {
             .map { MockGradeFields.mock(sid: $0) }
         let toSave = (Int(saved.count)..<Int(saved.count/2 + saved.count))
             .map { MockGradeFields.mock(sid: $0) }
-        let output = This.utils.filter(saved: saved.map { $0.sid }, new: (new + toSave).map { $0.sid })
+        let output = This.utils._filter(saved: saved.map { $0.sid }, new: (new + toSave).map { $0.sid })
         XCTAssertEqual(toDelete.count, output.toDelete.count)
         XCTAssertEqual(toSave.count, output.toAdd.count)
         let itemsToDelete = output.toDelete.compactMap{ sid in saved.first { $0.sid == sid }}

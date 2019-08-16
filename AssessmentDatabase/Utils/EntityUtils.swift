@@ -14,15 +14,9 @@ public struct FilterOutput {
     let toAdd: [Int]
 }
 
-public protocol EntityUtils: class {
+public protocol EntityUtilsMethods: class {
     associatedtype EntityType: NSManagedObject
     associatedtype EntityValueFields
-    
-    var container: NSPersistentContainer { get set }
-    var backgroundContext: NSManagedObjectContext { get }
-    
-    func copyFields(from item: EntityValueFields, to entity: EntityType)
-    func setRelations(from item: EntityValueFields, of entity: EntityType, in context: NSManagedObjectContext) throws
     
     func getAll() -> [EntityType]
     func asyncGetAll(_ completion: @escaping (Result<[EntityType], Error>) -> Void)
@@ -45,8 +39,19 @@ public protocol EntityUtils: class {
     func update(whereSid sid: Int, like item: EntityValueFields) throws
 }
 
-public extension EntityUtils {
-    func getAll() -> [EntityType] {
+protocol EntityUtils: class {
+    associatedtype EntityType: NSManagedObject
+    associatedtype EntityValueFields
+    
+    var container: NSPersistentContainer { get set }
+    var backgroundContext: NSManagedObjectContext { get }
+    
+    func copyFields(from item: EntityValueFields, to entity: EntityType)
+    func setRelations(from item: EntityValueFields, of entity: EntityType, in context: NSManagedObjectContext) throws
+}
+
+extension EntityUtils where Self: EntityUtilsMethods {
+    func _getAll() -> [EntityType] {
         let request = NSFetchRequest<EntityType>(
             entityName: "\(EntityType.self)")
         var output: [EntityType] = []
@@ -61,7 +66,7 @@ public extension EntityUtils {
         return output
     }
     
-    func asyncGetAll(_ completion: @escaping (Result<[EntityType], Error>) -> Void) {
+    func _asyncGetAll(_ completion: @escaping (Result<[EntityType], Error>) -> Void) {
         let request = NSFetchRequest<EntityType>(
             entityName: "\(EntityType.self)"
         )
@@ -75,7 +80,7 @@ public extension EntityUtils {
         }
     }
     
-    func get(where predicate: Predicate) -> [EntityType] {
+    func _get(where predicate: Predicate) -> [EntityType] {
         let request = NSFetchRequest<EntityType>(entityName: "\(EntityType.self)")
         request.predicate = NSPredicate(format: predicate.format, argumentArray: predicate.arguments)
         var output: [EntityType] = []
@@ -90,7 +95,7 @@ public extension EntityUtils {
         return output
     }
     
-    func asyncGet(where predicate: Predicate, _ completeion: @escaping (Result<[EntityType], Error>) -> Void) {
+    func _asyncGet(where predicate: Predicate, _ completeion: @escaping (Result<[EntityType], Error>) -> Void) {
         let request = NSFetchRequest<EntityType>(entityName: "\(EntityType.self)")
         request.predicate = NSPredicate(format: predicate.format, argumentArray: predicate.arguments)
         let context = container.viewContext
@@ -103,14 +108,14 @@ public extension EntityUtils {
         }
     }
     
-    func get(whereSid sid: Int) -> EntityType? {
+    func _get(whereSid sid: Int) -> EntityType? {
         let predicate = Predicate(format: "sid==%d", arguments: [sid])
         let output = get(where: predicate)
         assert(output.count <= 1)
         return output.first
     }
     
-    func asyncGet(whereSid sid: Int, _ completeion: @escaping (Result<EntityType?, Error>) -> Void) {
+    func _asyncGet(whereSid sid: Int, _ completeion: @escaping (Result<EntityType?, Error>) -> Void) {
         let predicate = Predicate(format: "sid==%d", arguments: [sid])
         asyncGet(where: predicate) { result in
             switch result {
@@ -123,17 +128,17 @@ public extension EntityUtils {
         }
     }
     
-    func get(whereSids sids: [Int]) -> [EntityType] {
+    func _get(whereSids sids: [Int]) -> [EntityType] {
         let predicate = Predicate(format: "sid IN %@", arguments: [sids])
         return get(where: predicate)
     }
     
-    func asyncGet(whereSids sids: [Int], _ completeion: @escaping (Result<[EntityType], Error>) -> Void) {
+    func _asyncGet(whereSids sids: [Int], _ completeion: @escaping (Result<[EntityType], Error>) -> Void) {
         let predicate = Predicate(format: "sid IN %@", arguments: [sids])
         asyncGet(where: predicate, completeion)
     }
 
-    func save(item: EntityValueFields) throws {
+    func _save(item: EntityValueFields) throws {
         var error: Error?
         let context = backgroundContext
         context.performAndWait {
@@ -142,7 +147,7 @@ public extension EntityUtils {
             do {
                 try self.setRelations(from: item, of: entity, in: context)
                 try context.save()
-                try saveMain()
+                try _saveMain()
             } catch let err {
                 error = err
             }
@@ -152,7 +157,7 @@ public extension EntityUtils {
         }
     }
     
-    func save(items: [EntityValueFields]) throws {
+    func _save(items: [EntityValueFields]) throws {
         var error: Error?
         let context = backgroundContext
         context.performAndWait {
@@ -168,7 +173,7 @@ public extension EntityUtils {
             if error == nil {
                 do {
                     try context.save()
-                    try saveMain()
+                    try _saveMain()
                 } catch let err {
                     error = err
                 }
@@ -179,7 +184,7 @@ public extension EntityUtils {
         }
     }
     
-    func delete(whereSid sid: Int) throws {
+    func _delete(whereSid sid: Int) throws {
         var error: Error?
         let context = backgroundContext
         context.performAndWait {
@@ -191,7 +196,7 @@ public extension EntityUtils {
             context.delete(contextEntity)
             do {
                 try context.save()
-                try saveMain()
+                try _saveMain()
             } catch let err {
                 error = err
             }
@@ -201,7 +206,7 @@ public extension EntityUtils {
         }
     }
     
-    func delete(whereSids sids: [Int]) throws {
+    func _delete(whereSids sids: [Int]) throws {
         var error: Error?
         let context = backgroundContext
         context.performAndWait {
@@ -212,7 +217,7 @@ public extension EntityUtils {
             }
             do {
                 try context.save()
-                try saveMain()
+                try _saveMain()
             } catch let err {
                 error = err
             }
@@ -222,7 +227,7 @@ public extension EntityUtils {
         }
     }
     
-    func update(whereSid sid: Int, like item: EntityValueFields) throws {
+    func _update(whereSid sid: Int, like item: EntityValueFields) throws {
         var error: Error?
         let context = backgroundContext
         context.performAndWait {
@@ -236,7 +241,7 @@ public extension EntityUtils {
             do {
                 try setRelations(from: item, of: contextEntity, in: context)
                 try context.save()
-                try saveMain()
+                try _saveMain()
             } catch let err {
                 error = err
             }
@@ -246,15 +251,15 @@ public extension EntityUtils {
         }
     }
     
-    func deleteAll() {
+    func _deleteAll() {
         let all = getAll()
         for item in all {
             container.viewContext.delete(item)
         }
-        try? saveMain()
+        try? _saveMain()
     }
     
-    func saveMain() throws {
+    func _saveMain() throws {
         var error: Error?
         container.viewContext.performAndWait {
             do {
@@ -268,7 +273,7 @@ public extension EntityUtils {
         }
     }
     
-    func filter(saved: [Int], new: [Int]) -> FilterOutput {
+    func _filter(saved: [Int], new: [Int]) -> FilterOutput {
         let toDelete = saved.filter { savedSid in !new.contains(savedSid)}
         let toSave = new.filter { newSid in !saved.contains(newSid)}
         

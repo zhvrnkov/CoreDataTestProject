@@ -16,7 +16,7 @@ final class GradesUtilsTest: XCTestCase {
     
     override func tearDown() {
         super.tearDown()
-        This.util.deleteAll()
+        XCTAssertNoThrow(try This.util.delete(whereSids: mockGrades.sids))
         XCTAssertTrue(This.util.getAll().isEmpty)
     }
 

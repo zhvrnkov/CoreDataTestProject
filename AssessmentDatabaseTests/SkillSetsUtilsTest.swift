@@ -27,7 +27,7 @@ final class SkillSetsUtilsTest: XCTestCase {
     override func tearDown() {
         super.setUp()
         
-        This.rubricsUtils.deleteAll()
+        XCTAssertNoThrow(try This.rubricsUtils.delete(whereSids: mocks.rubrics.sids))
         XCTAssertTrue(This.rubricsUtils.getAll().isEmpty)
     }
     
@@ -44,7 +44,7 @@ final class SkillSetsUtilsTest: XCTestCase {
     }
     
     func testSaveIncompleteItemAndThenSaveComplete() {
-        This.rubricsUtils.deleteAll()
+        XCTAssertNoThrow(try This.rubricsUtils.delete(whereSids: mocks.rubrics.sids))
         let item = mocks.skillSets.randomElement()!
         XCTAssertThrowsError(try This.util.save(item: item))
         XCTAssertNoThrow(try This.rubricsUtils.save(items: mocks.rubrics))
@@ -53,7 +53,7 @@ final class SkillSetsUtilsTest: XCTestCase {
     }
     
     func testSaveIncompleteItemsAndSaveComplete() {
-        This.rubricsUtils.deleteAll()
+        XCTAssertNoThrow(try This.rubricsUtils.delete(whereSids: mocks.rubrics.sids))
         let item = mocks.skillSets.randomElement()!
         XCTAssertThrowsError(try This.util.save(items: [item]))
         XCTAssertNoThrow(try This.rubricsUtils.save(items: mocks.rubrics))

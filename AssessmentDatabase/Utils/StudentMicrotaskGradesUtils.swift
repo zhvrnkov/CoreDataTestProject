@@ -1,32 +1,93 @@
 import Foundation
 import CoreData
 
-public class StudentMicrotaskGradesUtils: EntityUtils {
+public class StudentMicrotaskGradesUtils: EntityUtilsMethods {
     public typealias EntityType = StudentMicrotaskGrade
     public typealias EntityValueFields = StudentMicrotaskGradeFields
     
-    public var container: NSPersistentContainer
-    public var backgroundContext: NSManagedObjectContext {
+    public func getAll() -> [EntityType] {
+        return _getAll()
+    }
+    
+    public func asyncGetAll(_ completion: @escaping (Result<[EntityType], Error>) -> Void) {
+        _asyncGetAll(completion)
+    }
+    
+    public func get(where predicate: Predicate) -> [EntityType] {
+        return _get(where: predicate)
+    }
+    
+    public func asyncGet(where predicate: Predicate, _ completeion: @escaping (Result<[EntityType], Error>) -> Void) {
+        _asyncGet(where: predicate, completeion)
+    }
+    
+    public func get(whereSid sid: Int) -> EntityType? {
+        return _get(whereSid: sid)
+    }
+    
+    public func asyncGet(whereSid sid: Int, _ completeion: @escaping (Result<EntityType?, Error>) -> Void) {
+        return _asyncGet(whereSid: sid, completeion)
+    }
+    
+    public func get(whereSids sids: [Int]) -> [EntityType] {
+        return _get(whereSids: sids)
+    }
+    
+    public func asyncGet(whereSids sids: [Int], _ completeion: @escaping (Result<[EntityType], Error>) -> Void) {
+        return _asyncGet(whereSids: sids, completeion)
+    }
+    
+    public func save(item: EntityValueFields) throws {
+        try _save(item: item)
+    }
+    public func save(items: [EntityValueFields]) throws {
+        try _save(items: items)
+    }
+    
+    public func delete(whereSid sid: Int) throws {
+        try _delete(whereSid: sid)
+    }
+    public func delete(whereSids sids: [Int]) throws {
+        try _delete(whereSids: sids)
+    }
+    
+    public func update(whereSid sid: Int, like item: EntityValueFields) throws {
+        try _update(whereSid: sid, like: item)
+    }
+    
+    var container: NSPersistentContainer
+    var backgroundContext: NSManagedObjectContext {
         return container.newBackgroundContext()
     }
     
-    public var assessmentsUtils: AssessmentsUtils?
-    public var gradesUtils: GradesUtils?
-    public var studentsUtils: StudentsUtils?
-    public var microtasksUtils: MicrotasksUtils?
+    var assessmentsUtils: AssessmentsUtils?
+    var gradesUtils: GradesUtils?
+    var studentsUtils: StudentsUtils?
+    var microtasksUtils: MicrotasksUtils?
     
-    public init(with container: NSPersistentContainer) {
+    init(with container: NSPersistentContainer) {
         self.container = container
     }
     
-    public func copyFields(from item: StudentMicrotaskGradeFields, to entity: StudentMicrotaskGrade) {
+    public enum Errors: Error {
+        case noUtils
+        
+        case assessmentNotFound
+        case gradeNotFound
+        case microTaskNotFound
+        case studentNotFound
+    }
+}
+
+extension StudentMicrotaskGradesUtils: EntityUtils {
+    func copyFields(from item: StudentMicrotaskGradeFields, to entity: StudentMicrotaskGrade) {
         entity.sid = item.sid
         entity.isSynced = item.isSynced
         entity.lastUpdated = item.lastUpdated
         entity.passed = item.passed
     }
     
-    public func setRelations(
+    func setRelations(
         from item: StudentMicrotaskGradeFields,
         of entity: StudentMicrotaskGrade,
         in context: NSManagedObjectContext) throws
@@ -51,8 +112,8 @@ public class StudentMicrotaskGradesUtils: EntityUtils {
         
         guard let assessment = utils.get(whereSid: assessmentSid),
             let contextAssessment = context.object(with: assessment.objectID) as? Assessment
-        else {
-            throw Errors.assessmentNotFound
+            else {
+                throw Errors.assessmentNotFound
         }
         entity.assessment = contextAssessment
         contextAssessment.addToStudentMicrotaskGrades(entity)
@@ -68,8 +129,8 @@ public class StudentMicrotaskGradesUtils: EntityUtils {
             else { throw Errors.noUtils }
         guard let grade = utils.get(whereSid: gradeSid),
             let contextGrade = context.object(with: grade.objectID) as? Grade
-        else {
-            throw Errors.gradeNotFound
+            else {
+                throw Errors.gradeNotFound
         }
         entity.grade = contextGrade
         contextGrade.addToStudentMicrotaskGrades(entity)
@@ -84,8 +145,8 @@ public class StudentMicrotaskGradesUtils: EntityUtils {
             else { throw Errors.noUtils }
         guard let savedMicrotask = utils.get(whereSid: microTaskSid),
             let contextMicrotask = context.object(with: savedMicrotask.objectID) as? Microtask
-        else {
-            throw Errors.microTaskNotFound
+            else {
+                throw Errors.microTaskNotFound
         }
         entity.microTask = contextMicrotask
         contextMicrotask.addToStudentMicroTaskGrades(entity)
@@ -100,19 +161,10 @@ public class StudentMicrotaskGradesUtils: EntityUtils {
             else { throw Errors.noUtils }
         guard let student = utils.get(whereSid: studentSid),
             let contextStudent = context.object(with: student.objectID) as? Student
-        else {
-            throw Errors.studentNotFound
+            else {
+                throw Errors.studentNotFound
         }
         entity.student = contextStudent
         contextStudent.addToMicroTaskGrades(entity)
-    }
-    
-    public enum Errors: Error {
-        case noUtils
-        
-        case assessmentNotFound
-        case gradeNotFound
-        case microTaskNotFound
-        case studentNotFound
     }
 }
