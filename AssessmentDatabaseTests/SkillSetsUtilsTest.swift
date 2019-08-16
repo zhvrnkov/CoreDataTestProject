@@ -33,7 +33,7 @@ final class SkillSetsUtilsTest: XCTestCase {
     
     func testSaveItem() {
         let item = mocks.skillSets.randomElement()!
-        XCTAssertNotNil(try This.util.save(item: item))
+        XCTAssertNoThrow(try This.util.save(item: item))
         compareItems([item], This.util.getAll())
     }
     
@@ -41,6 +41,24 @@ final class SkillSetsUtilsTest: XCTestCase {
         let items = mocks.skillSets
         XCTAssertNoThrow(try This.util.save(items: items))
         compareItems(items, This.util.getAll())
+    }
+    
+    func testSaveIncompleteItemAndThenSaveComplete() {
+        This.rubricsUtils.deleteAll()
+        let item = mocks.skillSets.randomElement()!
+        XCTAssertThrowsError(try This.util.save(item: item))
+        XCTAssertNoThrow(try This.rubricsUtils.save(items: mocks.rubrics))
+        XCTAssertNoThrow(try This.util.save(item: item))
+        compareItems([item], This.util.getAll())
+    }
+    
+    func testSaveIncompleteItemsAndSaveComplete() {
+        This.rubricsUtils.deleteAll()
+        let item = mocks.skillSets.randomElement()!
+        XCTAssertThrowsError(try This.util.save(items: [item]))
+        XCTAssertNoThrow(try This.rubricsUtils.save(items: mocks.rubrics))
+        XCTAssertNoThrow(try This.util.save(items: [item]))
+        compareItems([item], This.util.getAll())
     }
     
     private func compareItems(_ items: [SkillSetFields], _ entities: [SkillSet]) {

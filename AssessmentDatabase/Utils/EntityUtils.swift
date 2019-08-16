@@ -165,11 +165,13 @@ public extension EntityUtils {
                     error = err
                 }
             }
-            do {
-                try context.save()
-                try saveMain()
-            } catch let err {
-                error == nil ? error = err : ()
+            if error == nil {
+                do {
+                    try context.save()
+                    try saveMain()
+                } catch let err {
+                    error = err
+                }
             }
         }
         if let error = error {
