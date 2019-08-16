@@ -37,9 +37,8 @@ final class MicrotaskUtilsTest: XCTestCase {
         super.tearDown()
         
         XCTAssertNoThrow(try This.rubricUtils.delete(whereSids: mocks.rubrics.sids))
-        XCTAssertNoThrow(try This.skillSetsUtils.delete(whereSids: mocks.skillSets.sids))
-        
         XCTAssertTrue(This.rubricUtils.getAll().isEmpty)
+        XCTAssertNoThrow(try This.skillSetsUtils.delete(whereSids: mocks.skillSets.sids))
         XCTAssertTrue(This.skillSetsUtils.getAll().isEmpty)
     }
 

@@ -24,7 +24,7 @@ final class EntityUtilsMethodsTest: XCTestCase {
     override func tearDown() {
         super.tearDown()
         XCTAssertNoThrow(try This.utils.delete(whereSids: mockGrades.sids))
-        XCTAssertEqual(This.utils.getAll().count, 0)
+        XCTAssertTrue(This.utils.getAll().isEmpty)
     }
     
     func testThatPersistentContainerIsSetted() {

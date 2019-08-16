@@ -64,7 +64,6 @@ final class StudentMicrotaskGradesUtilsTest: XCTestCase {
     override func tearDown() {
         super.tearDown()
         deleteAll()
-        checkAll()
     }
     
     func testSaveItem() {
@@ -130,23 +129,20 @@ final class StudentMicrotaskGradesUtilsTest: XCTestCase {
     
     private func deleteAll() {
         XCTAssertNoThrow(try This.instructorsUtils.delete(whereSids: mocks.instructors.sids))
-        XCTAssertNoThrow(try This.rubricsUtils.delete(whereSids: mocks.rubrics.sids))
-        XCTAssertNoThrow(try This.assessmentsUtils.delete(whereSids: mocks.assessments.sids))
-        XCTAssertNoThrow(try This.gradesUtils.delete(whereSids: mocks.grades.sids))
-        XCTAssertNoThrow(try This.studentsUtils.delete(whereSids: mocks.students.sids))
-        XCTAssertNoThrow(try This.microtasksUtils.delete(whereSids: mocks.microTasks.sids))
-        XCTAssertNoThrow(try This.skillSetsUtils.delete(whereSids: mocks.skillSets.sids))
-        XCTAssertNoThrow(try This.util.delete(whereSids: mocks.microtaskGrades.sids))
-    }
-    
-    private func checkAll() {
         XCTAssertTrue(This.instructorsUtils.getAll().isEmpty)
+        XCTAssertNoThrow(try This.rubricsUtils.delete(whereSids: mocks.rubrics.sids))
         XCTAssertTrue(This.rubricsUtils.getAll().isEmpty)
+        XCTAssertNoThrow(try This.assessmentsUtils.delete(whereSids: mocks.assessments.sids))
         XCTAssertTrue(This.assessmentsUtils.getAll().isEmpty)
+        XCTAssertNoThrow(try This.gradesUtils.delete(whereSids: mocks.grades.sids))
         XCTAssertTrue(This.gradesUtils.getAll().isEmpty)
+        XCTAssertNoThrow(try This.studentsUtils.delete(whereSids: mocks.students.sids))
         XCTAssertTrue(This.studentsUtils.getAll().isEmpty)
+        XCTAssertNoThrow(try This.microtasksUtils.delete(whereSids: mocks.microTasks.sids))
         XCTAssertTrue(This.microtasksUtils.getAll().isEmpty)
+        XCTAssertNoThrow(try This.skillSetsUtils.delete(whereSids: mocks.skillSets.sids))
         XCTAssertTrue(This.skillSetsUtils.getAll().isEmpty)
+        XCTAssertNoThrow(try This.util.delete(whereSids: mocks.microtaskGrades.sids))
         XCTAssertTrue(This.util.getAll().isEmpty)
     }
 }

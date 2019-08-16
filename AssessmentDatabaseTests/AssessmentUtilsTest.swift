@@ -39,7 +39,6 @@ final class AssessmentUtilsTest: XCTestCase {
     override func tearDown() {
         super.tearDown()
         deleteAll()
-        checkAll()
     }
     
     func testSaveItem() {
@@ -117,15 +116,12 @@ final class AssessmentUtilsTest: XCTestCase {
     
     private func deleteAll() {
         XCTAssertNoThrow(try This.instructorsUtil.delete(whereSids: mocks.instructors.sids))
-        XCTAssertNoThrow(try This.studentsUtil.delete(whereSids: mocks.students.sids))
-        XCTAssertNoThrow(try This.rubricsUtil.delete(whereSids: mocks.rubrics.sids))
-        XCTAssertNoThrow(try This.util.delete(whereSids: mocks.assessments.sids))
-    }
-    
-    private func checkAll() {
         XCTAssertTrue(This.instructorsUtil.getAll().isEmpty)
+        XCTAssertNoThrow(try This.studentsUtil.delete(whereSids: mocks.students.sids))
         XCTAssertTrue(This.studentsUtil.getAll().isEmpty)
+        XCTAssertNoThrow(try This.rubricsUtil.delete(whereSids: mocks.rubrics.sids))
         XCTAssertTrue(This.rubricsUtil.getAll().isEmpty)
+        XCTAssertNoThrow(try This.util.delete(whereSids: mocks.assessments.sids))
         XCTAssertTrue(This.util.getAll().isEmpty)
     }
 }
