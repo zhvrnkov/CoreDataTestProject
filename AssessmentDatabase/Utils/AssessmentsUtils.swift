@@ -94,8 +94,8 @@ extension AssessmentsUtils: EntityUtils {
         in context: NSManagedObjectContext) throws
     {
         do {
-            try set(rubric: item.rubric, of: entity, in: context)
-            try set(students: item.students, of: entity, in: context)
+            try set(rubricSid: item.rubricSid, of: entity, in: context)
+            try set(studentSids: item.studentSids, of: entity, in: context)
             try set(instructorSid: item.instructorSid, of: entity, in: context)
         } catch {
             throw error
@@ -103,15 +103,15 @@ extension AssessmentsUtils: EntityUtils {
     }
     
     private func set(
-        students: [StudentFields],
+        studentSids: [Int],
         of assessment: Assessment,
         in context: NSManagedObjectContext) throws
     {
         guard let utils = studentsUtils else {
             throw Errors.noUtils
         }
-        let savedStudents = utils.get(whereSids: students.map { $0.sid })
-        if students.count != savedStudents.count {
+        let savedStudents = utils.get(whereSids: studentSids)
+        if studentSids.count != savedStudents.count {
             throw Errors.studentsNotFound
         }
         guard let assessmentStudents = assessment.students.allObjects as? [Student],
@@ -119,7 +119,7 @@ extension AssessmentsUtils: EntityUtils {
             else {
                 throw Errors.badCasting
         }
-        let filterOutput = _filter(saved: assessmentStudents.map { $0.sid }, new: students.map { $0.sid })
+        let filterOutput = _filter(saved: assessmentStudents.map { $0.sid }, new: studentSids)
         filterOutput.toAdd.forEach { sidToAdd in
             if let studentToAdd = contextStudents.first(where: { $0.sid == sidToAdd }) {
                 assessment.addToStudents(studentToAdd)
@@ -133,13 +133,13 @@ extension AssessmentsUtils: EntityUtils {
     }
     
     private func set(
-        rubric: RubricFields,
+        rubricSid: Int,
         of assessment: Assessment,
         in context: NSManagedObjectContext) throws
     {
         guard let utils = rubricsUtils
             else { throw Errors.noUtils }
-        guard let rubric = utils.get(whereSid: rubric.sid),
+        guard let rubric = utils.get(whereSid: rubricSid),
             let contextRubric = context.object(with: rubric.objectID) as? Rubric
             else {
                 throw Errors.rubricNotFound

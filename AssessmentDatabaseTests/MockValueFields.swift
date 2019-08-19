@@ -23,9 +23,9 @@ struct MockAssessmentFields: AssessmentFields {
     var isSynced: Bool = false
     
     var instructorSid: Int
-    var rubric: RubricFields
+    var rubricSid: Int
     var studentMicrotaskGrades: [StudentMicrotaskGradeFields]
-    var students: [StudentFields]
+    var studentSids: [Int]
 }
 
 struct MockInstructorFields: InstructorFields {
@@ -163,7 +163,7 @@ struct AssessmentUtilsTestMocks {
             return student.instructorSids.contains(where: { $0 == instructor.sid })
         })
         let rubric = rubrics.randomElement()!
-        return MockAssessmentFields(sid: instructor.sid, date: Date(), schoolId: count.randomElement()!, isSynced: false, instructorSid: instructor.sid, rubric: rubric, studentMicrotaskGrades: [], students: instructorStudents)
+        return MockAssessmentFields(sid: instructor.sid, date: Date(), schoolId: count.randomElement()!, isSynced: false, instructorSid: instructor.sid, rubricSid: rubric.sid, studentMicrotaskGrades: [], studentSids: instructorStudents.map { $0.sid })
     }
 }
 
@@ -241,10 +241,10 @@ struct StudentMicrotaskGradesUtilsTestMocks {
     lazy var assessments: [MockAssessmentFields] = rubrics.map { rubric in
         let instructorSid = instructors[Int(rubric.sid)].sid
         let assessmentStudents = students.filter { $0.instructorSids.contains(instructorSid) }
-        return MockAssessmentFields(sid: rubric.sid, date: Date(), schoolId: rubric.sid + 1, isSynced: false, instructorSid: instructors[Int(rubric.sid)].sid, rubric: rubric, studentMicrotaskGrades: [], students: assessmentStudents)
+        return MockAssessmentFields(sid: rubric.sid, date: Date(), schoolId: rubric.sid + 1, isSynced: false, instructorSid: instructors[Int(rubric.sid)].sid, rubricSid: rubric.sid, studentMicrotaskGrades: [], studentSids: assessmentStudents.map { $0.sid })
     }
     lazy var microtaskGrades: [MockStudentMicrotaskGrade] = count.map {
-        MockStudentMicrotaskGrade(sid: $0, isSynced: false, passed: true, lastUpdated: 123, assessmentSid: assessments[Int($0)].sid, gradeSid: (grades.randomElement()!).sid, microTaskSid: microTasks[Int($0)].sid, studentSid: assessments[Int($0)].students.first!.sid)
+        MockStudentMicrotaskGrade(sid: $0, isSynced: false, passed: true, lastUpdated: 123, assessmentSid: assessments[Int($0)].sid, gradeSid: (grades.randomElement()!).sid, microTaskSid: microTasks[Int($0)].sid, studentSid: assessments[Int($0)].studentSids.first!)
     }
 }
 

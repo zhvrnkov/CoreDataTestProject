@@ -59,9 +59,9 @@ public protocol AssessmentFields: DBSidable {
     var isSynced: Bool { get set }
     
     var instructorSid: Int { get set }
-    var rubric: RubricFields { get set }
+    var rubricSid: Int { get set }
     var studentMicrotaskGrades: [StudentMicrotaskGradeFields] { get set }
-    var students: [StudentFields] { get set }
+    var studentSids: [Int] { get set }
 }
 
 public protocol RubricFields: DBSidable {

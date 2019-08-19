@@ -55,9 +55,9 @@ final class AssessmentUtilsTest: XCTestCase {
     
     func testAddStudentsToAssessment() {
         var item = mocks.assessments.randomElement()!
-        let newStudents = mocks.students.filter { student in !item.students.contains(where: { $0.sid == student.sid })}
+        let newStudents = mocks.students.filter { student in !item.studentSids.contains(student.sid) }
         XCTAssertNoThrow(try This.util.save(item: item))
-        item.students += newStudents
+        item.studentSids += newStudents.sids
         XCTAssertNoThrow(try This.util.update(whereSid: item.sid, like: item))
         compareItems([item], This.util.getAll())
     }
@@ -65,7 +65,7 @@ final class AssessmentUtilsTest: XCTestCase {
     func testRemoveStudentsFromAssessment() {
         var item = mocks.assessments.randomElement()!
         XCTAssertNoThrow(try This.util.save(item: item))
-        item.students = []
+        item.studentSids = []
         XCTAssertNoThrow(try This.util.update(whereSid: item.sid, like: item))
         compareItems([item], This.util.getAll())
     }
@@ -73,8 +73,8 @@ final class AssessmentUtilsTest: XCTestCase {
     func testChangeRubricOfAssessment() {
         var item = mocks.assessments.randomElement()!
         XCTAssertNoThrow(try This.util.save(item: item))
-        let newRubric = mocks.rubrics.first(where: { $0.sid != item.rubric.sid })!
-        item.rubric = newRubric
+        let newRubric = mocks.rubrics.first(where: { $0.sid != item.rubricSid })!
+        item.rubricSid = newRubric.sid
         XCTAssertNoThrow(try This.util.update(whereSid: item.sid, like: item))
         compareItems([item], This.util.getAll())
     }
@@ -103,9 +103,9 @@ final class AssessmentUtilsTest: XCTestCase {
         XCTAssertNotNil(entity.students.allObjects as? [Student])
         XCTAssertEqual(entity.studentMicrotaskGrades.allObjects.count, item.studentMicrotaskGrades.count)
         XCTAssertEqual(item.studentMicrotaskGrades.count, entity.studentMicrotaskGrades.count)
-        XCTAssertEqual(item.students.count, entity.students.count)
+        XCTAssertEqual(item.studentSids.count, entity.students.count)
         XCTAssertEqual(Int(item.instructorSid), entity.instructor.sid)
-        XCTAssertEqual(Int(item.rubric.sid), entity.rubric.sid)
+        XCTAssertEqual(Int(item.rubricSid), entity.rubric.sid)
     }
     
     func checkFields(of entity: Assessment, source item: AssessmentFields) {
