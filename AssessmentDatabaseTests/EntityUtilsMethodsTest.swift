@@ -11,19 +11,24 @@ import CoreData
 
 final class EntityUtilsMethodsTest: XCTestCase {
     typealias This = EntityUtilsMethodsTest
-    static var utils: GradesUtils = .init(with: getMockPersistentContainer())
+    static var utils: RubricsUtils = .init(with: getMockPersistentContainer())
+    static var skillSetUtils: SkillSetsUtils = {
+        let temp = SkillSetsUtils(with: getMockPersistentContainer())
+        temp.rubricUtils = This.utils
+        return temp
+    }()
     static let context = This.utils.container.viewContext
     private let mocks = EntityUtilsMethodsTestMocks()
-    private lazy var mockGrades = mocks.mockGrades
+    private lazy var rubrics = mocks.rubrics
     
     override func setUp() {
         super.setUp()
-        XCTAssertNoThrow(try This.utils.save(items: mockGrades))
+        XCTAssertNoThrow(try This.utils.save(items: rubrics))
     }
     
     override func tearDown() {
         super.tearDown()
-        XCTAssertNoThrow(try This.utils.delete(whereSids: mockGrades.sids))
+        XCTAssertNoThrow(try This.utils.delete(whereSids: rubrics.sids))
         XCTAssertTrue(This.utils.getAll().isEmpty)
     }
     
@@ -33,8 +38,8 @@ final class EntityUtilsMethodsTest: XCTestCase {
     
     func testGetAll() {
         let grades = This.utils.getAll()
-        XCTAssertEqual(grades.count, mockGrades.count)
-        mockGrades.forEach { item in
+        XCTAssertEqual(grades.count, rubrics.count)
+        rubrics.forEach { item in
             guard let entity = grades.first(where: { Int($0.sid) == item.sid }) else {
                 XCTFail()
                 return
@@ -50,7 +55,7 @@ final class EntityUtilsMethodsTest: XCTestCase {
         This.utils.asyncGetAll { result in
             switch result {
             case .success(let grades):
-                XCTAssertEqual(grades.count, self.mockGrades.count)
+                XCTAssertEqual(grades.count, self.rubrics.count)
             case .failure(let error):
                 XCTFail(error.localizedDescription)
             }
@@ -60,14 +65,14 @@ final class EntityUtilsMethodsTest: XCTestCase {
     }
     
     func testGetWherePredicate() {
-        let item = mockGrades[0]
+        let item = rubrics[0]
         let predicate = Predicate(format: "sid==%d", arguments: [item.sid])
         let entities = This.utils.get(where: predicate)
         compareItems([item], entities)
     }
     
     func testAsyncGetWherePredicate() {
-        let item = mockGrades[mockGrades.count - 1]
+        let item = rubrics[rubrics.count - 1]
         let predicate = Predicate(format: "sid==%d", arguments: [item.sid])
         let exp = XCTestExpectation(description: "check entity in async get method")
         This.utils.asyncGet(where: predicate) { result in
@@ -83,7 +88,7 @@ final class EntityUtilsMethodsTest: XCTestCase {
     }
     
     func testGetWhereSid() {
-        mockGrades.forEach {
+        rubrics.forEach {
             let item = This.utils.get(whereSid: $0.sid)
             XCTAssertNotNil(item)
             XCTAssertEqual(item?.sid, Int($0.sid), "\($0.sid)")
@@ -92,11 +97,11 @@ final class EntityUtilsMethodsTest: XCTestCase {
     
     func testAsyncGetWhereSid() {
         let exp = XCTestExpectation(description: "")
-        This.utils.asyncGet(whereSid: mockGrades[0].sid) { result in
+        This.utils.asyncGet(whereSid: rubrics[0].sid) { result in
             switch result {
             case .success(let output):
                 XCTAssertNotNil(output)
-                XCTAssertEqual(output?.sid, Int(self.mockGrades[0].sid))
+                XCTAssertEqual(output?.sid, Int(self.rubrics[0].sid))
             case .failure(let error):
                 XCTFail(error.localizedDescription)
             }
@@ -106,17 +111,17 @@ final class EntityUtilsMethodsTest: XCTestCase {
     }
     
     func testGetWhereSids() {
-        let mocks = mockGrades[0..<(mockGrades.count / 2)]
+        let mocks = rubrics[0..<(rubrics.count / 2)]
         let items = This.utils.get(whereSids: mocks.map { $0.sid })
         XCTAssertEqual(items.count, mocks.count)
     }
     
     func testAsyncGetWhereSids() {
         let exp = XCTestExpectation(description: "")
-        This.utils.asyncGet(whereSids: mockGrades.map { $0.sid }) { result in
+        This.utils.asyncGet(whereSids: rubrics.map { $0.sid }) { result in
             switch result {
             case .success(let output):
-                XCTAssertEqual(output.count, self.mockGrades.count)
+                XCTAssertEqual(output.count, self.rubrics.count)
             case .failure(let error):
                 XCTFail(error.localizedDescription)
             }
@@ -126,13 +131,13 @@ final class EntityUtilsMethodsTest: XCTestCase {
     }
     
     func testSaveItem() {
-        let item = mockGrades[0]
+        let item = rubrics[0]
         XCTAssertNoThrow(try This.utils.save(item: item))
-        XCTAssertEqual(This.utils.getAll().count, mockGrades.count + 1)
+        XCTAssertEqual(This.utils.getAll().count, rubrics.count + 1)
     }
     
     func testDeleteWhereSid() {
-        let item = mockGrades[0]
+        let item = rubrics[0]
         XCTAssertNoThrow(try This.utils.delete(whereSid: item.sid))
         This.utils.getAll().forEach {
             XCTAssertNotEqual($0.sid, item.sid)
@@ -140,12 +145,12 @@ final class EntityUtilsMethodsTest: XCTestCase {
     }
     
     func testDeleteWhereSids() {
-        XCTAssertNoThrow(try This.utils.delete(whereSids: mockGrades.map { $0.sid }))
+        XCTAssertNoThrow(try This.utils.delete(whereSids: rubrics.map { $0.sid }))
         XCTAssertTrue(This.utils.getAll().isEmpty)
     }
     
     func testUpdate() {
-        var toUpdate = mockGrades[0]
+        var toUpdate = rubrics[0]
         toUpdate.title = "Ipsum Lorem"
         XCTAssertNoThrow(try This.utils.update(whereSid: toUpdate.sid, like: toUpdate))
         guard let entity = This.utils.get(whereSid: toUpdate.sid) else {
@@ -155,9 +160,40 @@ final class EntityUtilsMethodsTest: XCTestCase {
         compareItem(toUpdate, entity)
     }
     
+    func testUndefinedItemUpdateShouldThrow() {
+        XCTAssertNoThrow(try This.utils.delete(whereSids: rubrics.sids))
+        let item = rubrics.randomElement()!
+        XCTAssertThrowsError(try This.utils.update(whereSid: item.sid, like: item))
+    }
+    
+    func testUndefinedItemToDeleteShouldThrow() {
+        XCTAssertNoThrow(try This.utils.delete(whereSids: rubrics.sids))
+        let item = rubrics.randomElement()!
+        XCTAssertThrowsError(try This.utils.delete(whereSid: item.sid))
+    }
+    
+    func testIncompleteSave() {
+        var item = mocks.skillSets.randomElement()!
+        let rubricSid = item.rubricSid
+        item.rubricSid = -1
+        XCTAssertThrowsError(try This.skillSetUtils.save(item: item))
+        XCTAssertTrue(This.skillSetUtils.getAll().isEmpty)
+    }
+    
+    func testIncompleteSaveAndThenCompleteSave() {
+        var item = mocks.skillSets.randomElement()!
+        let rubricSid = item.rubricSid
+        item.rubricSid = -1
+        XCTAssertThrowsError(try This.skillSetUtils.save(item: item))
+        XCTAssertTrue(This.skillSetUtils.getAll().isEmpty)
+        item.rubricSid = rubricSid
+        XCTAssertNoThrow(try This.skillSetUtils.save(item: item))
+        XCTAssertEqual(This.skillSetUtils.getAll().count, 1)
+    }
+    
     func testFilterWithEmptyNew() {
-        let saved = mocks.savedItems
-        let new: [MockGradeFields] = []
+        let saved = mocks.rubrics
+        let new: [MockRubricFields] = []
         let output = This.utils._filter(saved: saved.map { $0.sid }, new: new.map { $0.sid })
         XCTAssertEqual(saved.count, output.toDelete.count)
         XCTAssertEqual(output.toAdd.count, 0)
@@ -166,9 +202,9 @@ final class EntityUtilsMethodsTest: XCTestCase {
     }
     
     func testFilterWithNewThatNotInSaved() {
-        let saved = mocks.savedItems
+        let saved = mocks.rubrics
         let new = (Int(saved.count)..<Int(saved.count + 10))
-            .map { MockGradeFields.mock(sid: $0) }
+            .map { MockRubricFields.mock(sid: $0) }
         let output = This.utils._filter(saved: saved.map { $0.sid }, new: new.map { $0.sid })
         XCTAssertEqual(new.count, output.toAdd.count)
         XCTAssertEqual(saved.count, output.toDelete.count)
@@ -179,13 +215,13 @@ final class EntityUtilsMethodsTest: XCTestCase {
     }
     
     func testFilterWithHalfInSavedAndHalfDont() {
-        let saved = mocks.savedItems
+        let saved = mocks.rubrics
         let new = (Int(saved.count/2)..<Int(saved.count))
-            .map { MockGradeFields.mock(sid: $0) }
+            .map { MockRubricFields.mock(sid: $0) }
         let toDelete = (0..<Int(saved.count/2))
-            .map { MockGradeFields.mock(sid: $0) }
+            .map { MockRubricFields.mock(sid: $0) }
         let toSave = (Int(saved.count)..<Int(saved.count/2 + saved.count))
-            .map { MockGradeFields.mock(sid: $0) }
+            .map { MockRubricFields.mock(sid: $0) }
         let output = This.utils._filter(saved: saved.map { $0.sid }, new: (new + toSave).map { $0.sid })
         XCTAssertEqual(toDelete.count, output.toDelete.count)
         XCTAssertEqual(toSave.count, output.toAdd.count)
@@ -195,7 +231,7 @@ final class EntityUtilsMethodsTest: XCTestCase {
         compareFilterItems(toSave, itemsToSave)
     }
     
-    func compareItems(_ items: [MockGradeFields], _ entities: [Grade]) {
+    func compareItems(_ items: [MockRubricFields], _ entities: [Rubric]) {
         XCTAssertEqual(items.count, entities.count)
         for index in items.indices {
             let item = items[index]
@@ -207,12 +243,19 @@ final class EntityUtilsMethodsTest: XCTestCase {
         }
     }
     
-    func compareItem(_ item: MockGradeFields, _ entity: Grade) {
+    func compareItem(_ item: MockRubricFields, _ entity: Rubric) {
         XCTAssertEqual(item.sid, entity.sid)
-        XCTAssertEqual(item.title, entity.title)
+        XCTAssertEqual(item.skillSets.count, entity.skillSets.count)
+        let dbSkillSets = (entity.skillSets.allObjects as? [SkillSet])!
+        item.skillSets.forEach { skillSet in
+            guard let dbEntity = dbSkillSets.first(where: { $0.sid == skillSet.sid }) else {
+                XCTFail("can't find skillsets that should be saved")
+                return
+            }
+        }
     }
     
-    func compareFilterItems(_ saved: [MockGradeFields], _ new: [MockGradeFields]) {
+    func compareFilterItems(_ saved: [DBSidable], _ new: [DBSidable]) {
         saved.forEach { item in
             guard let toDelete = new.first(where: { $0.sid == item.sid }) else {
                 XCTFail()

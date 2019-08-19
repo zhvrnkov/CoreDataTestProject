@@ -261,11 +261,10 @@ struct StudentsUtilsTestMocks {
 }
 
 struct EntityUtilsMethodsTestMocks {
-    var mockGrades: [MockGradeFields] = count.map {
-        MockGradeFields.mock(sid: $0)
+    let rubrics: [MockRubricFields] = count.map {
+        MockRubricFields.mock(sid: $0)
     }
-    
-    var savedItems: [MockGradeFields] = count.map {
-        MockGradeFields.mock(sid: $0)
+    let skillSets: [MockSkillSets] = count.map {
+        MockSkillSets.mock(sid: $0, rubricSid: $0)
     }
 }
