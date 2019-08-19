@@ -54,14 +54,14 @@ public protocol StudentFields: DBSidable {
 }
 
 public protocol AssessmentFields: DBSidable {
-    var date: Date { get set }
-    var schoolId: Int { get set }
-    var isSynced: Bool { get set }
+    var date: Date { get }
+    var schoolId: Int { get }
+    var isSynced: Bool { get }
     
-    var instructorSid: Int { get set }
-    var rubricSid: Int { get set }
-    var microTaskGradeSids: [Int] { get set }
-    var studentSids: [Int] { get set }
+    var instructorSid: Int { get }
+    var rubricSid: Int { get }
+    var microTaskGradeSids: [Int] { get }
+    var studentSids: [Int] { get }
 }
 
 public protocol RubricFields: DBSidable {
