@@ -75,6 +75,6 @@ final class StudentsUtilsTest: XCTestCase {
         XCTAssertEqual(item.logbookPass, entity.logbookPass)
         XCTAssertEqual(item.assessmentSids.count, entity.assessments.count)
         XCTAssertEqual(item.instructorSids.count, entity.instructors.count)
-        XCTAssertEqual(item.microTaskGradesSids.count, entity.microTaskGrades.count)
+        XCTAssertEqual(item.microTaskGrades.count, entity.microTaskGrades.count)
     }
 }

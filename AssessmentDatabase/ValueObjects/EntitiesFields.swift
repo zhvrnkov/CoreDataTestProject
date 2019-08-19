@@ -50,7 +50,7 @@ public protocol StudentFields: DBSidable {
     
     var assessmentSids: [Int] { get set }
     var instructorSids: [Int] { get set }
-    var microTaskGradesSids: [Int] { get set }
+    var microTaskGrades: [StudentMicrotaskGradeFields] { get set }
 }
 
 public protocol AssessmentFields: DBSidable {
@@ -60,7 +60,7 @@ public protocol AssessmentFields: DBSidable {
     
     var instructorSid: Int { get set }
     var rubricSid: Int { get set }
-    var studentMicrotaskGrades: [StudentMicrotaskGradeFields] { get set }
+    var microTaskGradeSids: [Int] { get set }
     var studentSids: [Int] { get set }
 }
 
