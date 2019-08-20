@@ -71,6 +71,7 @@ public protocol RubricFields: DBSidable {
     var isActive: Bool { get set }
     
     var skillSets: [SkillSetFields] { get set }
+    var grades: [GradeFields] { get set }
 }
 
 public protocol SkillSetFields: DBSidable {
@@ -107,4 +108,5 @@ public protocol GradeFields: DBSidable {
     var score: Int { get set }
     var passed: Bool { get set }
     var title: String { get set }
+    var rubricSid: Int { get set }
 }

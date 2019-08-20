@@ -35,6 +35,7 @@ final public class DatabaseManager {
         configureMicrotaskUtils()
         congifureStudentMicrotaskGradeUtils()
         configureInstructorUtils()
+        configureGradeUtils()
     }
     
     public static func getInitializedPersistentContainer(named name: String = "DataModel") throws -> PersistentContainer {
@@ -75,5 +76,9 @@ final public class DatabaseManager {
     
     private func configureInstructorUtils() {
         students.instructorsUtils = instructors
+    }
+    
+    private func configureGradeUtils() {
+        grades.rubricUtils = rubrics
     }
 }

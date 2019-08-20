@@ -18,7 +18,11 @@ final class StudentMicrotaskGradesUtilsTest: XCTestCase {
         util.instructorsUtils = This.instructorsUtils
         return util
     }()
-    static let gradesUtils = GradesUtils(with: container)
+    static let gradesUtils: GradesUtils = {
+        let t = GradesUtils(with: container)
+        t.rubricUtils = This.rubricsUtils
+        return t
+    }()
     
     static let rubricsUtils = RubricsUtils(with: container)
     static let skillSetsUtils: SkillSetsUtils = {
@@ -54,10 +58,10 @@ final class StudentMicrotaskGradesUtilsTest: XCTestCase {
     override func setUp() {
         super.setUp()
         
+        saveMicrotasks()
         XCTAssertNoThrow(try This.gradesUtils.save(items: mocks.grades))
         XCTAssertNoThrow(try This.instructorsUtils.save(items: mocks.instructors))
         XCTAssertNoThrow(try This.studentsUtils.save(items: mocks.students))
-        saveMicrotasks()
         XCTAssertNoThrow(try This.assessmentsUtils.save(items: mocks.assessments))
     }
 

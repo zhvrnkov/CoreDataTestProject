@@ -22,6 +22,7 @@ extension Rubric: DBSidable {
     @NSManaged public var weight: Int
     @NSManaged public var isActive: Bool
     @NSManaged public var assessments: NSSet
+    @NSManaged public var grades: NSSet
     @NSManaged public var skillSets: NSSet
 
 }
@@ -58,4 +59,20 @@ extension Rubric {
     @objc(removeSkillSets:)
     @NSManaged public func removeFromSkillSets(_ values: NSSet)
 
+}
+
+extension Rubric {
+    
+    @objc(addGradesObject:)
+    @NSManaged public func addToGrades(_ value: Grade)
+    
+    @objc(removeGradesObject:)
+    @NSManaged public func removeFromGrades(_ value: Grade)
+    
+    @objc(addGrades:)
+    @NSManaged public func addToGrades(_ values: NSSet)
+    
+    @objc(removeGrades:)
+    @NSManaged public func removeFromGrades(_ values: NSSet)
+    
 }

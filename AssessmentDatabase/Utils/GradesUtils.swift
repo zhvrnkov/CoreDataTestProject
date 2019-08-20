@@ -55,10 +55,17 @@ public class GradesUtils: EntityUtilsMethods {
         try _update(whereSid: sid, like: item)
     }
     
+    public enum Errors: Error {
+        case noUtils
+
+        case rubricNotFound
+    }
+    
     var container: NSPersistentContainer
     var backgroundContext: NSManagedObjectContext {
         return container.newBackgroundContext()
     }
+    var rubricUtils: RubricsUtils?
     
     init(with container: NSPersistentContainer) {
         self.container = container
@@ -77,5 +84,26 @@ extension GradesUtils: EntityUtils {
         from item: GradeFields,
         of entity: Grade,
         in context: NSManagedObjectContext) throws
-    {}
+    {
+        do {
+            try set(rubricSid: item.rubricSid, of: entity, in: context)
+        } catch {
+            throw error
+        }
+    }
+    
+    private func set(
+        rubricSid: Int, of grade: Grade, in context: NSManagedObjectContext) throws
+    {
+        guard let utils = rubricUtils else {
+            throw Errors.noUtils
+        }
+        guard let rubric = utils.get(whereSid: rubricSid),
+            let contextRubric = context.object(with: rubric.objectID) as? Rubric
+        else {
+            throw Errors.rubricNotFound
+        }
+        grade.rubric = contextRubric
+        contextRubric.addToGrades(grade)
+    }
 }

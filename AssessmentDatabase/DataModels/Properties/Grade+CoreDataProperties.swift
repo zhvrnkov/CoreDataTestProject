@@ -20,6 +20,7 @@ extension Grade: DBSidable {
     @NSManaged public var title: String
     @NSManaged public var score: Int
     @NSManaged public var passed: Bool
+    @NSManaged public var rubric: Rubric
     @NSManaged public var studentMicrotaskGrades: NSSet
 
 }

@@ -11,13 +11,25 @@ import XCTest
 final class GradesUtilsTest: XCTestCase {
     typealias This = GradesUtilsTest
     static let container = getMockPersistentContainer()
-    static let util = GradesUtils(with: container)
-    private let mockGrades = GradesUtilsTestMocks().grades
+    static let rubricUtils = RubricsUtils(with: container)
+    static let util: GradesUtils = {
+        let t = GradesUtils(with: container)
+        t.rubricUtils = This.rubricUtils
+        return t
+    }()
+    private let mocks = GradesUtilsTestMocks()
+    private lazy var mockGrades = mocks.grades
+    private lazy var mockRubric = mocks.rubric
+    
+    override func setUp() {
+        XCTAssertNoThrow(try This.rubricUtils.save(item: mockRubric))
+    }
     
     override func tearDown() {
         super.tearDown()
-        XCTAssertNoThrow(try This.util.delete(whereSids: mockGrades.sids))
+        XCTAssertNoThrow(try This.rubricUtils.delete(whereSid: mockRubric.sid))
         XCTAssertTrue(This.util.getAll().isEmpty)
+        XCTAssertTrue(This.rubricUtils.getAll().isEmpty)
     }
 
     func testSaveItem() {

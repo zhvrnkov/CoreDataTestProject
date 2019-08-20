@@ -56,7 +56,7 @@ struct MockInstructorFields: InstructorFields {
 
 struct MockRubricFields: RubricFields {
     static func mock(sid: Int) -> MockRubricFields {
-        return .init(sid: sid, title: "Lorem Ipsum", lastUpdate: 123, weight: 0, isActive: true, skillSets: [])
+        return .init(sid: sid, title: "Lorem Ipsum", lastUpdate: 123, weight: 0, isActive: true, skillSets: [], grades: [])
     }
     var sid: Int
     var title: String
@@ -65,6 +65,7 @@ struct MockRubricFields: RubricFields {
     var isActive: Bool
     
     var skillSets: [SkillSetFields]
+    var grades: [GradeFields]
 }
 
 struct MockStudentMicrotaskGrade: StudentMicrotaskGradeFields {
@@ -95,12 +96,13 @@ struct MockStudentFields: StudentFields {
 
 struct MockGradeFields: GradeFields {
     static func mock(sid: Int) -> MockGradeFields {
-        return .init(sid: sid, title: "Lorem Ipsum", score: 0, passed: true)
+        return .init(sid: sid, title: "Lorem Ipsum", score: 0, passed: true, rubricSid: 1)
     }
     var sid: Int
     var title: String
     var score: Int
     var passed: Bool
+    var rubricSid: Int
 }
 
 struct MockMicrotaskFields: MicrotaskFields, Hashable {
@@ -168,6 +170,7 @@ struct AssessmentUtilsTestMocks {
 }
 
 struct GradesUtilsTestMocks {
+    let rubric = MockRubricFields(sid: 1, title: "", lastUpdate: 12, weight: 1, isActive: true, skillSets: [], grades: [])
     let grades: [MockGradeFields] = {
         let gradesTitles: [String] = [
             "Excellent",
