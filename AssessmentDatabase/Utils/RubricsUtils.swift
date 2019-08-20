@@ -84,7 +84,5 @@ extension RubricsUtils: EntityUtils {
         from item: RubricFields,
         of entity: Rubric,
         in context: NSManagedObjectContext) throws
-    {
-        #warning("Nothing is here")
-    }
+    {}
 }

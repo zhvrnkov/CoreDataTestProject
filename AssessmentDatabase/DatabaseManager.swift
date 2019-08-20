@@ -30,8 +30,11 @@ final public class DatabaseManager {
     public let studentMicrotaskGrades = StudentMicrotaskGradesUtils(with: DatabaseManager.persistentContainer)
     
     private init() {
-        setAssessmentsUtils()
-        setSkillSetsUtils()
+        configureAssessmentsUtils()
+        configureSkillSetsUtils()
+        configureMicrotaskUtils()
+        congifureStudentMicrotaskGradeUtils()
+        configureInstructorUtils()
     }
     
     public static func getInitializedPersistentContainer(named name: String = "DataModel") throws -> PersistentContainer {
@@ -49,13 +52,28 @@ final public class DatabaseManager {
         }
     }
     
-    private func setAssessmentsUtils() {
+    private func configureAssessmentsUtils() {
         assessments.studentsUtils = students
         assessments.rubricsUtils = rubrics
         assessments.instructorsUtils = instructors
     }
     
-    private func setSkillSetsUtils() {
+    private func configureSkillSetsUtils() {
         skillSets.rubricUtils = rubrics
+    }
+
+    private func configureMicrotaskUtils() {
+        microtasks.skillSetsUtils = skillSets
+    }
+    
+    private func congifureStudentMicrotaskGradeUtils() {
+        studentMicrotaskGrades.assessmentsUtils = assessments
+        studentMicrotaskGrades.gradesUtils = grades
+        studentMicrotaskGrades.studentsUtils = students
+        studentMicrotaskGrades.microtasksUtils = microtasks
+    }
+    
+    private func configureInstructorUtils() {
+        students.instructorsUtils = instructors
     }
 }

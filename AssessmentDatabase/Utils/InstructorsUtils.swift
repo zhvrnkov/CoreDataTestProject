@@ -100,7 +100,5 @@ extension InstructorsUtils: EntityUtils {
         from item: InstructorFields,
         of entity: Instructor,
         in context: NSManagedObjectContext) throws
-    {
-        #warning("Nothing is here")
-    }
+    {}
 }
