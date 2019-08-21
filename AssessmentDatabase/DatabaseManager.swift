@@ -53,6 +53,17 @@ final public class DatabaseManager {
         }
     }
     
+    public func clear() {
+        assessments._deleteAll()
+        grades._deleteAll()
+        instructors._deleteAll()
+        microtasks._deleteAll()
+        rubrics._deleteAll()
+        skillSets._deleteAll()
+        students._deleteAll()
+        studentMicrotaskGrades._deleteAll()
+    }
+    
     private func configureAssessmentsUtils() {
         assessments.studentsUtils = students
         assessments.rubricsUtils = rubrics
