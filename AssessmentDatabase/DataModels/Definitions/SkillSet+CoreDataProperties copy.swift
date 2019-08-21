@@ -2,7 +2,7 @@
 //  SkillSet+CoreDataProperties.swift
 //  
 //
-//  Created by Vlad Zhavoronkov  on 8/12/19.
+//  Created by Vlad Zhavoronkov  on 8/21/19.
 //
 //
 
@@ -10,18 +10,18 @@ import Foundation
 import CoreData
 
 
-extension SkillSet: DBSidable {
+extension SkillSet {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<SkillSet> {
         return NSFetchRequest<SkillSet>(entityName: "SkillSet")
     }
 
-    @NSManaged public var sid: Int
-    @NSManaged public var title: String
-    @NSManaged public var weight: Int
     @NSManaged public var isActive: Bool
-    @NSManaged public var microTasks: NSSet
-    @NSManaged public var rubric: Rubric
+    @NSManaged public var sid: Int64
+    @NSManaged public var title: String?
+    @NSManaged public var weight: Int64
+    @NSManaged public var microTasks: NSSet?
+    @NSManaged public var rubric: Rubric?
 
 }
 

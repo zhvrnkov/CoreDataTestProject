@@ -76,7 +76,7 @@ public class StudentsUtils: EntityUtilsMethods {
 
 extension StudentsUtils: EntityUtils {
     func copyFields(from item: StudentFields, to entity: Student) {
-        entity.sid = item.sid
+        entity.sid = Int64(item.sid)
         entity.name = item.name
         entity.email = item.email
         entity.logbookPass = item.logbookPass

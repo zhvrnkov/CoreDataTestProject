@@ -73,10 +73,10 @@ public class RubricsUtils: EntityUtilsMethods {
 
 extension RubricsUtils: EntityUtils {
     func copyFields(from item: RubricFields, to entity: Rubric) {
-        entity.sid = item.sid
+        entity.sid = Int64(item.sid)
         entity.title = item.title
-        entity.weight = item.weight
-        entity.lastUpdate = item.lastUpdate
+        entity.weight = Int64(item.weight)
+        entity.lastUpdate = Int64(item.lastUpdate)
         entity.isActive = item.isActive
     }
     

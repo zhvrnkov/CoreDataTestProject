@@ -54,10 +54,10 @@ final class RubricUtilsTest: XCTestCase {
     }
     
     private func compareItem(_ item: MockRubricFields, _ entity: Rubric) {
-        XCTAssertEqual(item.sid, entity.sid)
+        XCTAssertEqual(item.sid, Int(entity.sid))
         XCTAssertEqual(item.isActive, entity.isActive)
-        XCTAssertEqual(item.lastUpdate, entity.lastUpdate)
+        XCTAssertEqual(item.lastUpdate, Int(entity.lastUpdate))
         XCTAssertEqual(item.title, entity.title)
-        XCTAssertEqual(item.weight, entity.weight)
+        XCTAssertEqual(item.weight, Int(entity.weight))
     }
 }

@@ -74,7 +74,7 @@ public class InstructorsUtils: EntityUtilsMethods {
 
 extension InstructorsUtils: EntityUtils {
     func copyFields(from item: InstructorFields, to entity: Instructor) {
-        entity.sid = item.sid
+        entity.sid = Int64(item.sid)
         entity.loginUsername = item.loginUsername
         entity.firstName = item.firstName
         entity.lastName = item.lastName
@@ -90,9 +90,9 @@ extension InstructorsUtils: EntityUtils {
         entity.country = item.country
         entity.credentials = item.credentials
         entity.depiction = item.depiction
-        entity.fbid = item.fbid
+        entity.fbid = item.fbid as [NSString]
         entity.lang = item.lang
-        entity.flags = item.flags
+        entity.flags = item.flags as [NSString]
         entity.schools = []
     }
     

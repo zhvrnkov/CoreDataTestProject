@@ -2,7 +2,7 @@
 //  Microtask+CoreDataProperties.swift
 //  
 //
-//  Created by Vlad Zhavoronkov  on 8/12/19.
+//  Created by Vlad Zhavoronkov  on 8/21/19.
 //
 //
 
@@ -10,20 +10,20 @@ import Foundation
 import CoreData
 
 
-extension Microtask: DBSidable {
+extension Microtask {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Microtask> {
         return NSFetchRequest<Microtask>(entityName: "Microtask")
     }
 
-    @NSManaged public var sid: Int
+    @NSManaged public var critical: Int64
+    @NSManaged public var depiction: String?
     @NSManaged public var isActive: Bool
-    @NSManaged public var critical: Int
-    @NSManaged public var depiction: String
-    @NSManaged public var title: String
-    @NSManaged public var weight: Int
-    @NSManaged public var skillSet: SkillSet
-    @NSManaged public var studentMicroTaskGrades: NSSet
+    @NSManaged public var sid: Int64
+    @NSManaged public var title: String?
+    @NSManaged public var weight: Int64
+    @NSManaged public var skillSet: SkillSet?
+    @NSManaged public var studentMicroTaskGrades: NSSet?
 
 }
 

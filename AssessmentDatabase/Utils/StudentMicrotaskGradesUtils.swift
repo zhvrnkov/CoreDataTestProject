@@ -81,9 +81,9 @@ public class StudentMicrotaskGradesUtils: EntityUtilsMethods {
 
 extension StudentMicrotaskGradesUtils: EntityUtils {
     func copyFields(from item: StudentMicrotaskGradeFields, to entity: StudentMicrotaskGrade) {
-        entity.sid = item.sid
+        entity.sid = Int64(item.sid)
         entity.isSynced = item.isSynced
-        entity.lastUpdated = item.lastUpdated
+        entity.lastUpdated = Int64(item.lastUpdated)
         entity.passed = item.passed
     }
     

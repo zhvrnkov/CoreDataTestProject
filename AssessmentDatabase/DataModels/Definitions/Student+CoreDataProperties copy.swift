@@ -2,7 +2,7 @@
 //  Student+CoreDataProperties.swift
 //  
 //
-//  Created by Vlad Zhavoronkov  on 8/12/19.
+//  Created by Vlad Zhavoronkov  on 8/21/19.
 //
 //
 
@@ -10,19 +10,19 @@ import Foundation
 import CoreData
 
 
-extension Student: DBSidable {
+extension Student {
+
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Student> {
         return NSFetchRequest<Student>(entityName: "Student")
     }
 
-    @NSManaged public var sid: Int
-    @NSManaged public var name: String
-    @NSManaged public var email: String
-    @NSManaged public var logbookPass: String
-    
-    @NSManaged public var assessments: NSSet
-    @NSManaged public var instructors: NSSet
-    @NSManaged public var microTaskGrades: NSSet
+    @NSManaged public var email: String?
+    @NSManaged public var logbookPass: String?
+    @NSManaged public var name: String?
+    @NSManaged public var sid: Int64
+    @NSManaged public var assessments: NSSet?
+    @NSManaged public var instructors: NSSet?
+    @NSManaged public var microTaskGrades: NSSet?
 
 }
 

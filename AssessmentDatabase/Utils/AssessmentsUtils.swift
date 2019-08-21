@@ -82,8 +82,8 @@ public class AssessmentsUtils: EntityUtilsMethods {
 
 extension AssessmentsUtils: EntityUtils {
     func copyFields(from item: AssessmentFields, to entity: Assessment) {
-        entity.sid = item.sid
-        entity.schoolId = item.schoolId
+        entity.sid = Int64(item.sid)
+        entity.schoolId = Int64(item.schoolId)
         entity.date = item.date as NSDate
         entity.isSynced = item.isSynced
     }
@@ -114,12 +114,12 @@ extension AssessmentsUtils: EntityUtils {
         if studentSids.count != savedStudents.count {
             throw Errors.studentsNotFound
         }
-        guard let assessmentStudents = assessment.students.allObjects as? [Student],
+        guard let assessmentStudents = assessment.students?.allObjects as? [Student],
             let contextStudents = savedStudents.map({ context.object(with: $0.objectID) }) as? [Student]
             else {
                 throw Errors.badCasting
         }
-        let filterOutput = _filter(saved: assessmentStudents.map { $0.sid }, new: studentSids)
+        let filterOutput = _filter(saved: assessmentStudents.map { Int($0.sid) }, new: studentSids)
         filterOutput.toAdd.forEach { sidToAdd in
             if let studentToAdd = contextStudents.first(where: { $0.sid == sidToAdd }) {
                 assessment.addToStudents(studentToAdd)

@@ -45,7 +45,7 @@ final class EntityUtilsMethodsTest: XCTestCase {
                 return
             }
             XCTAssertNotNil(entity)
-            XCTAssertEqual(item.sid, entity.sid)
+            XCTAssertEqual(item.sid, Int(entity.sid))
             XCTAssertEqual(item.title, entity.title)
         }
     }
@@ -91,7 +91,7 @@ final class EntityUtilsMethodsTest: XCTestCase {
         rubrics.forEach {
             let item = This.utils.get(whereSid: $0.sid)
             XCTAssertNotNil(item)
-            XCTAssertEqual(item?.sid, Int($0.sid), "\($0.sid)")
+            XCTAssertEqual(item?.sid ?? -1, Int64($0.sid), "\($0.sid)")
         }
     }
     
@@ -101,7 +101,7 @@ final class EntityUtilsMethodsTest: XCTestCase {
             switch result {
             case .success(let output):
                 XCTAssertNotNil(output)
-                XCTAssertEqual(output?.sid, Int(self.rubrics[0].sid))
+                XCTAssertEqual(output?.sid, Int64(self.rubrics[0].sid))
             case .failure(let error):
                 XCTFail(error.localizedDescription)
             }
@@ -140,7 +140,7 @@ final class EntityUtilsMethodsTest: XCTestCase {
         let item = rubrics[0]
         XCTAssertNoThrow(try This.utils.delete(whereSid: item.sid))
         This.utils.getAll().forEach {
-            XCTAssertNotEqual($0.sid, item.sid)
+            XCTAssertNotEqual($0.sid, Int64(item.sid))
         }
     }
     
@@ -244,9 +244,9 @@ final class EntityUtilsMethodsTest: XCTestCase {
     }
     
     func compareItem(_ item: MockRubricFields, _ entity: Rubric) {
-        XCTAssertEqual(item.sid, entity.sid)
-        XCTAssertEqual(item.skillSets.count, entity.skillSets.count)
-        let dbSkillSets = (entity.skillSets.allObjects as? [SkillSet])!
+        XCTAssertEqual(item.sid, Int(entity.sid))
+        XCTAssertEqual(item.skillSets.count, entity.skillSets?.count)
+        let dbSkillSets = (entity.skillSets?.allObjects as? [SkillSet])!
         item.skillSets.forEach { skillSet in
             guard let dbEntity = dbSkillSets.first(where: { $0.sid == skillSet.sid }) else {
                 XCTFail("can't find skillsets that should be saved")

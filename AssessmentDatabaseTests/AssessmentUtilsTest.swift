@@ -99,19 +99,19 @@ final class AssessmentUtilsTest: XCTestCase {
     func checkRelations(of entity: Assessment, source item: AssessmentFields) {
         XCTAssertNotNil(entity.instructor)
         XCTAssertNotNil(entity.rubric)
-        XCTAssertNotNil(entity.studentMicrotaskGrades.allObjects as? [StudentMicrotaskGrade])
-        XCTAssertNotNil(entity.students.allObjects as? [Student])
-        XCTAssertEqual(entity.studentMicrotaskGrades.allObjects.count, item.microTaskGradeSids.count)
-        XCTAssertEqual(item.microTaskGradeSids.count, entity.studentMicrotaskGrades.count)
-        XCTAssertEqual(item.studentSids.count, entity.students.count)
-        XCTAssertEqual(Int(item.instructorSid), entity.instructor.sid)
-        XCTAssertEqual(Int(item.rubricSid), entity.rubric.sid)
+        XCTAssertNotNil(entity.studentMicrotaskGrades?.allObjects as? [StudentMicrotaskGrade])
+        XCTAssertNotNil(entity.students?.allObjects as? [Student])
+        XCTAssertEqual(entity.studentMicrotaskGrades?.allObjects.count, item.microTaskGradeSids.count)
+        XCTAssertEqual(item.microTaskGradeSids.count, entity.studentMicrotaskGrades?.count)
+        XCTAssertEqual(item.studentSids.count, entity.students?.count)
+        XCTAssertEqual(Int64(item.instructorSid), entity.instructor?.sid)
+        XCTAssertEqual(Int64(item.rubricSid), entity.rubric?.sid)
     }
     
     func checkFields(of entity: Assessment, source item: AssessmentFields) {
-        XCTAssertEqual(item.sid, entity.sid)
-        XCTAssertEqual(item.schoolId, entity.schoolId)
-        XCTAssertEqual(item.date.timeIntervalSince1970, entity.date.timeIntervalSince1970)
+        XCTAssertEqual(item.sid, Int(entity.sid))
+        XCTAssertEqual(item.schoolId, Int(entity.schoolId))
+        XCTAssertEqual(item.date.timeIntervalSince1970, entity.date?.timeIntervalSince1970)
     }
     
     private func deleteAll() {

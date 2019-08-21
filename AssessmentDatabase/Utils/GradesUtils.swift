@@ -74,9 +74,9 @@ public class GradesUtils: EntityUtilsMethods {
 
 extension GradesUtils: EntityUtils {
     public func copyFields(from item: GradeFields, to entity: Grade) {
-        entity.sid = item.sid
+        entity.sid = Int64(item.sid)
         entity.title = item.title
-        entity.score = item.score
+        entity.score = Int64(item.score)
         entity.passed = item.passed
     }
     

@@ -75,9 +75,9 @@ public class SkillSetsUtils: EntityUtilsMethods {
 
 extension SkillSetsUtils: EntityUtils {
     func copyFields(from item: SkillSetFields, to entity: SkillSet) {
-        entity.sid = item.sid
+        entity.sid = Int64(item.sid)
         entity.title = item.title
-        entity.weight = item.weight
+        entity.weight = Int64(item.weight)
         entity.isActive = item.isActive
     }
     

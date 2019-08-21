@@ -2,7 +2,7 @@
 //  Grade+CoreDataProperties.swift
 //  
 //
-//  Created by Vlad Zhavoronkov  on 8/12/19.
+//  Created by Vlad Zhavoronkov  on 8/21/19.
 //
 //
 
@@ -10,18 +10,18 @@ import Foundation
 import CoreData
 
 
-extension Grade: DBSidable {
+extension Grade {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Grade> {
         return NSFetchRequest<Grade>(entityName: "Grade")
     }
 
-    @NSManaged public var sid: Int
-    @NSManaged public var title: String
-    @NSManaged public var score: Int
     @NSManaged public var passed: Bool
-    @NSManaged public var rubric: Rubric
-    @NSManaged public var studentMicrotaskGrades: NSSet
+    @NSManaged public var score: Int64
+    @NSManaged public var sid: Int64
+    @NSManaged public var title: String?
+    @NSManaged public var rubric: Rubric?
+    @NSManaged public var studentMicrotaskGrades: NSSet?
 
 }
 

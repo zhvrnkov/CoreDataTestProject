@@ -75,12 +75,12 @@ public class MicrotasksUtils: EntityUtilsMethods {
 
 extension MicrotasksUtils:  EntityUtils {
     func copyFields(from item: MicrotaskFields, to entity: Microtask) {
-        entity.sid = item.sid
+        entity.sid = Int64(item.sid)
         entity.isActive = item.isActive
-        entity.weight = item.weight
+        entity.weight = Int64(item.weight)
         entity.title = item.title
         entity.depiction = item.depiction
-        entity.critical = item.critical
+        entity.critical = Int64(item.critical)
     }
     
     func setRelations(

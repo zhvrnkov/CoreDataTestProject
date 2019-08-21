@@ -67,12 +67,12 @@ final class InstructorUtilsTest: XCTestCase {
         XCTAssertTrue(item.country == entity.country)
         XCTAssertTrue(item.credentials == entity.credentials)
         XCTAssertTrue(item.depiction == entity.depiction)
-        XCTAssertTrue(item.fbid == entity.fbid)
+        XCTAssertTrue(item.fbid == ((entity.fbid ?? []) as [String]))
         XCTAssertTrue(item.lang == entity.lang)
-        XCTAssertTrue(item.flags == entity.flags)
-        XCTAssertTrue(item.schools.count == entity.schools.count)
+        XCTAssertTrue(item.flags == ((entity.flags ?? []) as [String]))
+        XCTAssertTrue(item.schools.count == entity.schools?.count)
         
-        XCTAssertEqual(item.assessments.count, entity.assessments.count)
-        XCTAssertEqual(item.students.count, entity.students.count)
+        XCTAssertEqual(item.assessments.count, entity.assessments?.count)
+        XCTAssertEqual(item.students.count, entity.students?.count)
     }
 }

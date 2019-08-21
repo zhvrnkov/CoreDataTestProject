@@ -2,7 +2,7 @@
 //  Assessment+CoreDataProperties.swift
 //  
 //
-//  Created by Vlad Zhavoronkov  on 8/12/19.
+//  Created by Vlad Zhavoronkov  on 8/21/19.
 //
 //
 
@@ -10,20 +10,20 @@ import Foundation
 import CoreData
 
 
-extension Assessment: DBSidable {
+extension Assessment {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Assessment> {
         return NSFetchRequest<Assessment>(entityName: "Assessment")
     }
 
+    @NSManaged public var date: NSDate?
     @NSManaged public var isSynced: Bool
-    @NSManaged public var date: NSDate
-    @NSManaged public var schoolId: Int
-    @NSManaged public var sid: Int
-    @NSManaged public var instructor: Instructor
-    @NSManaged public var rubric: Rubric
-    @NSManaged public var studentMicrotaskGrades: NSSet
-    @NSManaged public var students: NSSet
+    @NSManaged public var schoolId: Int64
+    @NSManaged public var sid: Int64
+    @NSManaged public var instructor: Instructor?
+    @NSManaged public var rubric: Rubric?
+    @NSManaged public var studentMicrotaskGrades: NSSet?
+    @NSManaged public var students: NSSet?
 
 }
 
