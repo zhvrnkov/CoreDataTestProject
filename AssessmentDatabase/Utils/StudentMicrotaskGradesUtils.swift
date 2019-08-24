@@ -69,10 +69,10 @@ public class StudentMicrotaskGradesUtils
         return container.newBackgroundContext()
     }
     
-    public var assessmentObjectIDFetch: ObjectIDFetch?
-    public var gradeObjectIDFetch: ObjectIDFetch?
-    public var studentObjectIDFetch: ObjectIDFetch?
-    public var microtaskObjectIDFetch: ObjectIDFetch?
+    var assessmentObjectIDFetch: ObjectIDFetch?
+    var gradeObjectIDFetch: ObjectIDFetch?
+    var studentObjectIDFetch: ObjectIDFetch?
+    var microtaskObjectIDFetch: ObjectIDFetch?
     
     public init(with container: NSPersistentContainer) {
         self.container = container

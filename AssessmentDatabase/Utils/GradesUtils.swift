@@ -69,7 +69,7 @@ public class GradesUtils
     var backgroundContext: NSManagedObjectContext {
         return container.newBackgroundContext()
     }
-    public var rubricObjectIDFetch: ObjectIDFetch?
+    var rubricObjectIDFetch: ObjectIDFetch?
     
     public init(with container: NSPersistentContainer) {
         self.container = container

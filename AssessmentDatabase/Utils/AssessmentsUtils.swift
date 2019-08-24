@@ -69,9 +69,9 @@ public class AssessmentsUtils
         return container.newBackgroundContext()
     }
     
-    public var studentObjectIDsFetch: ObjectIDsFetch?
-    public var rubricObjectIDFetch: ObjectIDFetch?
-    public var instructorObjectIDFetch: ObjectIDFetch?
+    var studentObjectIDsFetch: ObjectIDsFetch?
+    var rubricObjectIDFetch: ObjectIDFetch?
+    var instructorObjectIDFetch: ObjectIDFetch?
     
     public init(with container: NSPersistentContainer) {
         self.container = container
