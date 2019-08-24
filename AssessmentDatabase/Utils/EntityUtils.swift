@@ -9,8 +9,8 @@
 import Foundation
 import CoreData
 
-typealias ObjectIDFetch = ((Int) -> NSManagedObjectID?)
-typealias ObjectIDsFetch = (([Int]) -> [NSManagedObjectID])
+public typealias ObjectIDFetch = ((Int) -> NSManagedObjectID?)
+public typealias ObjectIDsFetch = (([Int]) -> [NSManagedObjectID])
 
 let dbError = "Something happen with your local database. Place contact the support"
 let badSid: Int64 = -1
