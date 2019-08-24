@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 
-extension Microtask {
+extension Microtask: DBSidable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Microtask> {
         return NSFetchRequest<Microtask>(entityName: "Microtask")

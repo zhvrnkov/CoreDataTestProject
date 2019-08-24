@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 
-extension SkillSet {
+extension SkillSet: DBSidable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<SkillSet> {
         return NSFetchRequest<SkillSet>(entityName: "SkillSet")

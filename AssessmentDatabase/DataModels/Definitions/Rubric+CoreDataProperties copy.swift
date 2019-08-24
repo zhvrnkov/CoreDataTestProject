@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 
-extension Rubric {
+extension Rubric: DBSidable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Rubric> {
         return NSFetchRequest<Rubric>(entityName: "Rubric")

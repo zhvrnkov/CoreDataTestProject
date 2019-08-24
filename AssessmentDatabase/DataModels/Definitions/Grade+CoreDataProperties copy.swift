@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 
-extension Grade {
+extension Grade: DBSidable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Grade> {
         return NSFetchRequest<Grade>(entityName: "Grade")
