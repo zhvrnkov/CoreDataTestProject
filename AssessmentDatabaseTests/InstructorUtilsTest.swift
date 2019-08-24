@@ -11,7 +11,7 @@ import XCTest
 final class InstructorUtilsTest: XCTestCase {
     typealias This = InstructorUtilsTest
     static let container = getMockPersistentContainer()
-    static let util = InstructorsUtils(with: container)
+    static let util = InstructorsUtils<MockInstructorFields>(with: container)
     private var mocks = InstructorUtilsTestMocks()
     
     private lazy var mockInstructors = mocks.emptyInstructors
@@ -39,7 +39,7 @@ final class InstructorUtilsTest: XCTestCase {
         compareItems(items, This.util.getAll())
     }
     
-    func compareItems(_ items: [InstructorFields], _ entities: [Instructor]) {
+    func compareItems(_ items: [MockInstructorFields], _ entities: [MockInstructorFields]) {
         XCTAssertEqual(items.count, entities.count)
         items.forEach { item in
             guard let entity = entities.first(where: { Int($0.sid) == item.sid }) else {
@@ -50,7 +50,7 @@ final class InstructorUtilsTest: XCTestCase {
         }
     }
     
-    func compareItem(_ item: InstructorFields, _ entity: Instructor) {
+    func compareItem(_ item: MockInstructorFields, _ entity: MockInstructorFields) {
         XCTAssertTrue(item.sid == Int(entity.sid))
         XCTAssertTrue(item.loginUsername == entity.loginUsername)
         XCTAssertTrue(item.firstName == entity.firstName)
@@ -70,9 +70,9 @@ final class InstructorUtilsTest: XCTestCase {
         XCTAssertTrue(item.fbid == ((entity.fbid ?? []) as [String]))
         XCTAssertTrue(item.lang == entity.lang)
         XCTAssertTrue(item.flags == ((entity.flags ?? []) as [String]))
-        XCTAssertTrue(item.schools.count == entity.schools?.count)
+        XCTAssertTrue(item.schools.count == entity.schools.count)
         
-        XCTAssertEqual(item.assessments.count, entity.assessments?.count)
-        XCTAssertEqual(item.students.count, entity.students?.count)
+        XCTAssertEqual(item.assessments.count, entity.assessments.count)
+        XCTAssertEqual(item.students.count, entity.students.count)
     }
 }
