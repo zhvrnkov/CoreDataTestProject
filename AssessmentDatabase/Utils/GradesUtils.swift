@@ -1,7 +1,7 @@
 import Foundation
 import CoreData
 
-public class GradesUtils: EntityUtilsRealization {
+public class GradesUtils: EntityUtilsMethods {
     public typealias EntityType = Grade
     public typealias EntityValueFields = GradeFields
     

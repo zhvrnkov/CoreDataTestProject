@@ -1,7 +1,7 @@
 import Foundation
 import CoreData
 
-public class StudentMicrotaskGradesUtils: EntityUtilsRealization {
+public class StudentMicrotaskGradesUtils: EntityUtilsMethods {
     public typealias EntityType = StudentMicrotaskGrade
     public typealias EntityValueFields = StudentMicrotaskGradeFields
     
@@ -112,8 +112,8 @@ extension StudentMicrotaskGradesUtils: EntityUtils {
         
         guard let assessment = utils.get(whereSid: assessmentSid),
             let contextAssessment = context.object(with: assessment.objectID) as? Assessment
-        else {
-            throw Errors.assessmentNotFound
+            else {
+                throw Errors.assessmentNotFound
         }
         entity.assessment = contextAssessment
         contextAssessment.addToStudentMicrotaskGrades(entity)

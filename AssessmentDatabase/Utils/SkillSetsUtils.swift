@@ -1,7 +1,7 @@
 import Foundation
 import CoreData
 
-public class SkillSetsUtils: EntityUtilsRealization {
+public class SkillSetsUtils: EntityUtilsMethods {
     public typealias EntityType = SkillSet
     public typealias EntityValueFields = SkillSetFields
     

@@ -1,7 +1,7 @@
 import Foundation
 import CoreData
 
-public class MicrotasksUtils: EntityUtilsRealization {
+public class MicrotasksUtils: EntityUtilsMethods {
     public typealias EntityType = Microtask
     public typealias EntityValueFields = MicrotaskFields
     

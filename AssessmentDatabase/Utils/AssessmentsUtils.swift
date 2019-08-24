@@ -1,7 +1,7 @@
 import Foundation
 import CoreData
 
-public class AssessmentsUtils: EntityUtilsRealization {
+public class AssessmentsUtils: EntityUtilsMethods {
     public typealias EntityType = Assessment
     public typealias EntityValueFields = AssessmentFields
     
@@ -153,11 +153,12 @@ extension AssessmentsUtils: EntityUtils {
         of assessment: Assessment,
         in context: NSManagedObjectContext) throws
     {
-        guard let utils = instructorsUtils else { throw Errors.noUtils }
+        guard let utils = instructorsUtils
+            else { throw Errors.noUtils }
         guard let instructor = utils.get(whereSid: instructorSid),
             let contextInstructor = context.object(with: instructor.objectID) as? Instructor
-        else {
-            throw Errors.instructorNotFound
+            else {
+                throw Errors.instructorNotFound
         }
         contextInstructor.addToAssessments(assessment)
         assessment.instructor = contextInstructor
