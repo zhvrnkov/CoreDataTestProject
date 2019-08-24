@@ -1,7 +1,7 @@
 import Foundation
 import CoreData
 
-public class StudentsUtils: EntityUtilsMethods {
+public class StudentsUtils: EntityUtilsRealization {
     public typealias EntityType = Student
     public typealias EntityValueFields = StudentFields
     

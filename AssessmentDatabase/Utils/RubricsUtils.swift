@@ -1,7 +1,7 @@
 import Foundation
 import CoreData
 
-public class RubricsUtils: EntityUtilsMethods {
+public class RubricsUtils: EntityUtilsRealization {
     public typealias EntityType = Rubric
     public typealias EntityValueFields = RubricFields
     

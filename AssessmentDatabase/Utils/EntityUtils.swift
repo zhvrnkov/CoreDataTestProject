@@ -14,7 +14,18 @@ public struct FilterOutput {
     let toAdd: [Int]
 }
 
-public protocol EntityUtilsMethods: class {
+protocol EntityUtils: class {
+    associatedtype EntityType: NSManagedObject
+    associatedtype EntityValueFields
+    
+    var container: NSPersistentContainer { get set }
+    var backgroundContext: NSManagedObjectContext { get }
+    
+    func copyFields(from item: EntityValueFields, to entity: EntityType)
+    func setRelations(from item: EntityValueFields, of entity: EntityType, in context: NSManagedObjectContext) throws
+}
+
+public protocol EntityUtilsRealization: class {
     associatedtype EntityType: NSManagedObject
     associatedtype EntityValueFields
     
@@ -39,18 +50,7 @@ public protocol EntityUtilsMethods: class {
     func update(whereSid sid: Int, like item: EntityValueFields) throws
 }
 
-protocol EntityUtils: class {
-    associatedtype EntityType: NSManagedObject
-    associatedtype EntityValueFields
-    
-    var container: NSPersistentContainer { get set }
-    var backgroundContext: NSManagedObjectContext { get }
-    
-    func copyFields(from item: EntityValueFields, to entity: EntityType)
-    func setRelations(from item: EntityValueFields, of entity: EntityType, in context: NSManagedObjectContext) throws
-}
-
-extension EntityUtils where Self: EntityUtilsMethods {
+extension EntityUtils where Self: EntityUtilsRealization {
     func _getAll() -> [EntityType] {
         let request = NSFetchRequest<EntityType>(
             entityName: "\(EntityType.self)")
@@ -168,15 +168,14 @@ extension EntityUtils where Self: EntityUtilsMethods {
                     try self.setRelations(from: item, of: entity, in: context)
                 } catch let err {
                     error = err
+                    context.delete(entity)
                 }
             }
-            if error == nil {
-                do {
-                    try context.save()
-                    try _saveMain()
-                } catch let err {
-                    error = err
-                }
+            do {
+                try context.save()
+                try _saveMain()
+            } catch let err {
+                error = err
             }
         }
         if let error = error {
