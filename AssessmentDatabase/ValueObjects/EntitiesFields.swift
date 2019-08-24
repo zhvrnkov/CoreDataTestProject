@@ -29,6 +29,9 @@ public extension Array where Element: Sidable {
 }
 
 public protocol InstructorFields: Sidable {
+    associatedtype AssessmentFieldsType: AssessmentFields
+    associatedtype StudentFieldsType: StudentFields
+    
     var loginUsername: String { get set }
     var firstName: String { get set }
     var lastName: String { get set }
@@ -49,10 +52,11 @@ public protocol InstructorFields: Sidable {
     var flags: [String] { get set }
     var schools: [Any] { get set }
     
-    var assessments: [AssessmentFields] { get set }
-    var students: [StudentFields] { get set }
+    var assessments: [AssessmentFieldsType] { get set }
+    var students: [StudentFieldsType] { get set }
     
-    init(loginUsername: String,
+    init(sid: Int,
+         loginUsername: String,
          firstName: String,
          lastName: String,
          avatar: String,
@@ -71,18 +75,20 @@ public protocol InstructorFields: Sidable {
          lang: String,
          flags: [String],
          schools: [Any],
-         assessments: [AssessmentFields],
-         students: [StudentFields])
+         assessments: [AssessmentFieldsType],
+         students: [StudentFieldsType])
 }
 
 public protocol StudentFields: Sidable {
+    associatedtype StudentMicrotaskGradeFieldsType: StudentMicrotaskGradeFields
+    
     var name: String { get set }
     var email: String { get set }
     var logbookPass: String { get set }
     
     var assessmentSids: [Int] { get set }
     var instructorSids: [Int] { get set }
-    var microTaskGrades: [StudentMicrotaskGradeFields] { get set }
+    var microTaskGrades: [StudentMicrotaskGradeFieldsType] { get set }
     
     init(sid: Int,
          email: String,
@@ -90,17 +96,25 @@ public protocol StudentFields: Sidable {
          name: String,
          assessmentSids: [Int],
          instructorSids: [Int],
-         microTaskGrades: [StudentMicrotaskGradeFields])
+         microTaskGrades: [StudentMicrotaskGradeFieldsType])
 }
 
 public protocol AssessmentFields: Sidable {
+    associatedtype StudentFieldsType: StudentFields
+    associatedtype RubricFieldsType: RubricFields
+    
     var date: Date { get }
     var schoolId: Int { get }
     var isSynced: Bool { get }
     
     var instructorSid: Int { get }
+    
+    var rubric: RubricFieldsType { get set }
     var rubricSid: Int { get }
+    
     var microTaskGradeSids: [Int] { get }
+    
+    var students: [StudentFieldsType] { get set }
     var studentSids: [Int] { get }
     
     init(sid: Int,
@@ -108,43 +122,63 @@ public protocol AssessmentFields: Sidable {
          date: Date,
          schoolId: Int,
          instructorSid: Int,
-         rubric: Int,
+         rubric: RubricFieldsType,
          microTaskGradeSids: [Int],
-         studentSids: [Int])
+         students: [StudentFieldsType])
+}
+
+extension AssessmentFields {
+    var rubricSid: Int {
+        return rubric.sid
+    }
+    var studentSids: [Int] {
+        return students.map { $0.sid }
+    }
 }
 
 public protocol RubricFields: Sidable {
+    associatedtype SkillSetFieldsType: SkillSetFields
+    associatedtype GradeFieldsType: GradeFields
+    
     var title: String { get set }
     var lastUpdate: Int { get set }
     var weight: Int { get set }
     var isActive: Bool { get set }
     
-    var skillSets: [SkillSetFields] { get set }
-    var grades: [GradeFields] { get set }
+    var skillSets: [SkillSetFieldsType] { get set }
+    var grades: [GradeFieldsType] { get set }
     
     init(sid: Int,
          title: String,
          lastUpdate: Int,
          weight: Int,
          isActive: Bool,
-         skillSets: [SkillSetFields],
-         grades: [GradeFields])
+         skillSets: [SkillSetFieldsType],
+         grades: [GradeFieldsType])
+}
+
+extension RubricFields {
+    static var bad: Self {
+        return Self.init(sid: -1, title: dbError, lastUpdate: -1, weight: 0, isActive: false, skillSets: [], grades: [])
+    }
 }
 
 public protocol SkillSetFields: Sidable {
+    associatedtype MicrotaskFieldsType: MicrotaskFields
+    
     var rubricSid: Int { get set }
     var title: String { get set }
     var weight: Int { get set }
     var isActive: Bool { get set }
     
-    var microTasks: [MicrotaskFields] { get set }
+    var microTasks: [MicrotaskFieldsType] { get set }
     
     init(sid: Int,
          rubricSid: Int,
          isActive: Bool,
          title: String,
          weight: Int,
-         microTasks: [MicrotaskFields])
+         microTasks: [MicrotaskFieldsType])
 }
 
 public protocol MicrotaskFields: Sidable {

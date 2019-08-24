@@ -1,39 +1,39 @@
 import Foundation
 import CoreData
 
-public class SkillSetsUtils: EntityUtils {
-    public typealias EntityType = SkillSet
-    public typealias EntityValueFields = SkillSetFields
-    
-    public func getAll() -> [EntityType] {
+public class SkillSetsUtils
+    <EntityValueFields: SkillSetFields>
+    : EntityUtils
+{
+    public func getAll() -> [EntityValueFields] {
         return _getAll()
     }
     
-    public func asyncGetAll(_ completion: @escaping (Result<[EntityType], Error>) -> Void) {
+    public func asyncGetAll(_ completion: @escaping (Result<[EntityValueFields], Error>) -> Void) {
         _asyncGetAll(completion)
     }
     
-    public func get(where predicate: Predicate) -> [EntityType] {
+    public func get(where predicate: Predicate) -> [EntityValueFields] {
         return _get(where: predicate)
     }
     
-    public func asyncGet(where predicate: Predicate, _ completeion: @escaping (Result<[EntityType], Error>) -> Void) {
+    public func asyncGet(where predicate: Predicate, _ completeion: @escaping (Result<[EntityValueFields], Error>) -> Void) {
         _asyncGet(where: predicate, completeion)
     }
     
-    public func get(whereSid sid: Int) -> EntityType? {
+    public func get(whereSid sid: Int) -> EntityValueFields? {
         return _get(whereSid: sid)
     }
     
-    public func asyncGet(whereSid sid: Int, _ completeion: @escaping (Result<EntityType?, Error>) -> Void) {
+    public func asyncGet(whereSid sid: Int, _ completeion: @escaping (Result<EntityValueFields?, Error>) -> Void) {
         return _asyncGet(whereSid: sid, completeion)
     }
     
-    public func get(whereSids sids: [Int]) -> [EntityType] {
+    public func get(whereSids sids: [Int]) -> [EntityValueFields] {
         return _get(whereSids: sids)
     }
     
-    public func asyncGet(whereSids sids: [Int], _ completeion: @escaping (Result<[EntityType], Error>) -> Void) {
+    public func asyncGet(whereSids sids: [Int], _ completeion: @escaping (Result<[EntityValueFields], Error>) -> Void) {
         return _asyncGet(whereSids: sids, completeion)
     }
     
@@ -74,7 +74,22 @@ public class SkillSetsUtils: EntityUtils {
 }
 
 extension SkillSetsUtils: EntityUtilsRealization {
-    func copyFields(from item: SkillSetFields, to entity: SkillSet) {
+    typealias Owner = SkillSetsUtils
+    typealias EntityType = SkillSet
+    
+    static func map(entity: SkillSet) -> EntityValueFields {
+        let entityMicrotasks = (entity.microTasks?.allObjects as? [Microtask]) ?? []
+        let microtasks: [EntityValueFields.MicrotaskFieldsType] = MicrotasksUtils.map(entities: entityMicrotasks)
+        return EntityValueFields.init(
+            sid: Int(entity.sid),
+            rubricSid: Int(entity.rubric?.sid ?? badSid),
+            isActive: entity.isActive,
+            title: entity.title ?? dbError,
+            weight: Int(entity.weight),
+            microTasks: microtasks)
+    }
+    
+    static func copyFields(from item: EntityValueFields, to entity: SkillSet) {
         entity.sid = Int64(item.sid)
         entity.title = item.title
         entity.weight = Int64(item.weight)
@@ -82,7 +97,7 @@ extension SkillSetsUtils: EntityUtilsRealization {
     }
     
     func setRelations(
-        from item: SkillSetFields,
+        from item: EntityValueFields,
         of entity: SkillSet,
         in context: NSManagedObjectContext) throws
     {

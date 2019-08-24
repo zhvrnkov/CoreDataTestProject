@@ -1,39 +1,39 @@
 import Foundation
 import CoreData
 
-public class GradesUtils: EntityUtils {
-    public typealias EntityType = Grade
-    public typealias EntityValueFields = GradeFields
-    
-    public func getAll() -> [EntityType] {
+public class GradesUtils
+    <EntityValueFields: GradeFields>
+    : EntityUtils
+{
+    public func getAll() -> [EntityValueFields] {
         return _getAll()
     }
     
-    public func asyncGetAll(_ completion: @escaping (Result<[EntityType], Error>) -> Void) {
+    public func asyncGetAll(_ completion: @escaping (Result<[EntityValueFields], Error>) -> Void) {
         _asyncGetAll(completion)
     }
     
-    public func get(where predicate: Predicate) -> [EntityType] {
+    public func get(where predicate: Predicate) -> [EntityValueFields] {
         return _get(where: predicate)
     }
     
-    public func asyncGet(where predicate: Predicate, _ completeion: @escaping (Result<[EntityType], Error>) -> Void) {
+    public func asyncGet(where predicate: Predicate, _ completeion: @escaping (Result<[EntityValueFields], Error>) -> Void) {
         _asyncGet(where: predicate, completeion)
     }
     
-    public func get(whereSid sid: Int) -> EntityType? {
+    public func get(whereSid sid: Int) -> EntityValueFields? {
         return _get(whereSid: sid)
     }
     
-    public func asyncGet(whereSid sid: Int, _ completeion: @escaping (Result<EntityType?, Error>) -> Void) {
+    public func asyncGet(whereSid sid: Int, _ completeion: @escaping (Result<EntityValueFields?, Error>) -> Void) {
         return _asyncGet(whereSid: sid, completeion)
     }
     
-    public func get(whereSids sids: [Int]) -> [EntityType] {
+    public func get(whereSids sids: [Int]) -> [EntityValueFields] {
         return _get(whereSids: sids)
     }
     
-    public func asyncGet(whereSids sids: [Int], _ completeion: @escaping (Result<[EntityType], Error>) -> Void) {
+    public func asyncGet(whereSids sids: [Int], _ completeion: @escaping (Result<[EntityValueFields], Error>) -> Void) {
         return _asyncGet(whereSids: sids, completeion)
     }
     
@@ -73,15 +73,27 @@ public class GradesUtils: EntityUtils {
 }
 
 extension GradesUtils: EntityUtilsRealization {
-    public func copyFields(from item: GradeFields, to entity: Grade) {
+    typealias Owner = GradesUtils
+    typealias EntityType = Grade
+    
+    static func map(entity: Grade) -> EntityValueFields {
+        return EntityValueFields.init(
+            sid: Int(entity.sid),
+            title: entity.title ?? dbError,
+            passed: entity.passed,
+            score: Int(entity.score),
+            rubricSid: Int(entity.rubric?.sid ?? badSid))
+    }
+    
+    static func copyFields(from item: EntityValueFields, to entity: Grade) {
         entity.sid = Int64(item.sid)
         entity.title = item.title
         entity.score = Int64(item.score)
         entity.passed = item.passed
     }
     
-    public func setRelations(
-        from item: GradeFields,
+    func setRelations(
+        from item: EntityValueFields,
         of entity: Grade,
         in context: NSManagedObjectContext) throws
     {

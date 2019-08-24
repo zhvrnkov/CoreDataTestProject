@@ -154,7 +154,7 @@ extension EntityUtilsRealization {
             let entity = EntityType(context: context)
             Self.copyFields(from: item, to: entity)
             do {
-                try Self.setRelations(from: item, of: entity, in: context)
+                try self.setRelations(from: item, of: entity, in: context)
                 try context.save()
                 try _saveMain()
             } catch let err {
@@ -174,7 +174,7 @@ extension EntityUtilsRealization {
                 let entity = EntityType(context: context)
                 Self.copyFields(from: item, to: entity)
                 do {
-                    try Self.setRelations(from: item, of: entity, in: context)
+                    try self.setRelations(from: item, of: entity, in: context)
                 } catch let err {
                     error = err
                 }
@@ -234,7 +234,7 @@ extension EntityUtilsRealization {
             }
             Self.copyFields(from: item, to: contextEntity)
             do {
-                try Self.setRelations(from: item, of: contextEntity, in: context)
+                try self.setRelations(from: item, of: contextEntity, in: context)
                 try context.save()
                 try _saveMain()
             } catch let err {

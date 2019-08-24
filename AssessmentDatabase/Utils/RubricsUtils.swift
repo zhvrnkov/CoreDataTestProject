@@ -93,5 +93,5 @@ extension RubricsUtils: EntityUtilsRealization {
         entity.isActive = item.isActive
     }
     
-    static func setRelations(from item: EntityValueFields, of entity: Rubric, in context: NSManagedObjectContext) throws {}
+    func setRelations(from item: EntityValueFields, of entity: Rubric, in context: NSManagedObjectContext) throws {}
 }
