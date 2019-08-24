@@ -1,39 +1,40 @@
 import Foundation
 import CoreData
 
-public class StudentMicrotaskGradesUtils: EntityUtils {
-    public typealias EntityType = StudentMicrotaskGrade
-    public typealias EntityValueFields = StudentMicrotaskGradeFields
+public class StudentMicrotaskGradesUtils
+    <EntityValueFields: StudentMicrotaskGradeFields>:
+    EntityUtils
+{
     
-    public func getAll() -> [EntityType] {
+    public func getAll() -> [EntityValueFields] {
         return _getAll()
     }
     
-    public func asyncGetAll(_ completion: @escaping (Result<[EntityType], Error>) -> Void) {
+    public func asyncGetAll(_ completion: @escaping (Result<[EntityValueFields], Error>) -> Void) {
         _asyncGetAll(completion)
     }
     
-    public func get(where predicate: Predicate) -> [EntityType] {
+    public func get(where predicate: Predicate) -> [EntityValueFields] {
         return _get(where: predicate)
     }
     
-    public func asyncGet(where predicate: Predicate, _ completeion: @escaping (Result<[EntityType], Error>) -> Void) {
+    public func asyncGet(where predicate: Predicate, _ completeion: @escaping (Result<[EntityValueFields], Error>) -> Void) {
         _asyncGet(where: predicate, completeion)
     }
     
-    public func get(whereSid sid: Int) -> EntityType? {
+    public func get(whereSid sid: Int) -> EntityValueFields? {
         return _get(whereSid: sid)
     }
     
-    public func asyncGet(whereSid sid: Int, _ completeion: @escaping (Result<EntityType?, Error>) -> Void) {
+    public func asyncGet(whereSid sid: Int, _ completeion: @escaping (Result<EntityValueFields?, Error>) -> Void) {
         return _asyncGet(whereSid: sid, completeion)
     }
     
-    public func get(whereSids sids: [Int]) -> [EntityType] {
+    public func get(whereSids sids: [Int]) -> [EntityValueFields] {
         return _get(whereSids: sids)
     }
     
-    public func asyncGet(whereSids sids: [Int], _ completeion: @escaping (Result<[EntityType], Error>) -> Void) {
+    public func asyncGet(whereSids sids: [Int], _ completeion: @escaping (Result<[EntityValueFields], Error>) -> Void) {
         return _asyncGet(whereSids: sids, completeion)
     }
     
@@ -80,7 +81,23 @@ public class StudentMicrotaskGradesUtils: EntityUtils {
 }
 
 extension StudentMicrotaskGradesUtils: EntityUtilsRealization {
-    func copyFields(from item: StudentMicrotaskGradeFields, to entity: StudentMicrotaskGrade) {
+    typealias Owner = StudentMicrotaskGradesUtils
+    typealias EntityType = StudentMicrotaskGrade
+    
+    static func map(
+        entity: StudentMicrotaskGrade) -> EntityValueFields {
+        return .init(
+            sid: Int(entity.sid),
+            lastUpdated: Int(entity.lastUpdated),
+            passed: entity.passed,
+            isSynced: entity.isSynced,
+            assessmentSid: Int(entity.assessment?.sid ?? badSid),
+            microTaskSid: Int(entity.microTask?.sid ?? badSid),
+            studentSid: Int(entity.student?.sid ?? badSid),
+            gradeSid: Int(entity.grade?.sid ?? badSid))
+    }
+    
+    static func copyFields(from item: EntityValueFields, to entity: StudentMicrotaskGrade) {
         entity.sid = Int64(item.sid)
         entity.isSynced = item.isSynced
         entity.lastUpdated = Int64(item.lastUpdated)
@@ -88,10 +105,9 @@ extension StudentMicrotaskGradesUtils: EntityUtilsRealization {
     }
     
     func setRelations(
-        from item: StudentMicrotaskGradeFields,
+        from item: EntityValueFields,
         of entity: StudentMicrotaskGrade,
-        in context: NSManagedObjectContext) throws
-    {
+        in context: NSManagedObjectContext) throws {
         do {
             try set(assessmentSid: item.assessmentSid, of: entity, in: context)
             try set(gradeSid: item.gradeSid, of: entity, in: context)
