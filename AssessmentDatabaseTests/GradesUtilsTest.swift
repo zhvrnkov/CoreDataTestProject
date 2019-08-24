@@ -11,10 +11,10 @@ import XCTest
 final class GradesUtilsTest: XCTestCase {
     typealias This = GradesUtilsTest
     static let container = getMockPersistentContainer()
-    static let rubricUtils = RubricsUtils(with: container)
-    static let util: GradesUtils = {
-        let t = GradesUtils(with: container)
-        t.rubricUtils = This.rubricUtils
+    static let rubricUtils = RubricsUtils<MockRubricFields>(with: container)
+    static let util: GradesUtils<MockGradeFields> = {
+        let t = GradesUtils<MockGradeFields>(with: container)
+        t.rubricObjectIDFetch = This.rubricUtils.getObjectId(whereSid:)
         return t
     }()
     private let mocks = GradesUtilsTestMocks()
@@ -43,7 +43,7 @@ final class GradesUtilsTest: XCTestCase {
         compareItems(mockGrades, This.util.getAll())
     }
     
-    private func compareItems(_ items: [GradeFields], _ entities: [Grade]) {
+    private func compareItems(_ items: [MockGradeFields], _ entities: [MockGradeFields]) {
         XCTAssertEqual(items.count, entities.count)
         items.forEach { item in
             guard let entity = entities.first(where: { Int($0.sid) == item.sid })
@@ -55,10 +55,10 @@ final class GradesUtilsTest: XCTestCase {
         }
     }
     
-    private func compareItem(_ item: GradeFields, _ entity: Grade) {
-        XCTAssertEqual(item.sid, Int(entity.sid))
+    private func compareItem(_ item: GradeFields, _ entity: MockGradeFields) {
+        XCTAssertEqual(item.sid, entity.sid)
         XCTAssertEqual(item.title, entity.title)
-        XCTAssertEqual(item.score, Int(entity.score))
+        XCTAssertEqual(item.score, entity.score)
         XCTAssertEqual(item.passed, entity.passed)
     }
 }
