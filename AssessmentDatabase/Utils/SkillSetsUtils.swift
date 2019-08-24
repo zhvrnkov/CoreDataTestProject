@@ -55,6 +55,10 @@ public class SkillSetsUtils
         try _update(whereSid: sid, like: item)
     }
     
+    public func configure<T: RubricFields>(rubricUtils: RubricsUtils<T>) {
+        self.rubricObjectIDFetch = rubricUtils.getObjectId(whereSid:)
+    }
+    
     var container: NSPersistentContainer
     var backgroundContext: NSManagedObjectContext {
         return container.newBackgroundContext()

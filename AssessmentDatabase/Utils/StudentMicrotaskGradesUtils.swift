@@ -56,6 +56,14 @@ public class StudentMicrotaskGradesUtils
         try _update(whereSid: sid, like: item)
     }
     
+    public func configure<T: AssessmentFields, U: GradeFields, V: StudentFields, W: MicrotaskFields>
+        (assessmentUtils: AssessmentsUtils<T>, gradeUtils: GradesUtils<U>, studentUtils: StudentsUtils<V>, microtaskUtils: MicrotasksUtils<W>) {
+        self.assessmentObjectIDFetch = assessmentUtils.getObjectId(whereSid:)
+        self.gradeObjectIDFetch = gradeUtils.getObjectId(whereSid:)
+        self.studentObjectIDFetch = studentUtils.getObjectId(whereSid:)
+        self.microtaskObjectIDFetch = microtaskUtils.getObjectId(whereSid:)
+    }
+    
     var container: NSPersistentContainer
     var backgroundContext: NSManagedObjectContext {
         return container.newBackgroundContext()

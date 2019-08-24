@@ -55,6 +55,10 @@ public class GradesUtils
         try _update(whereSid: sid, like: item)
     }
     
+    public func configure<T: RubricFields>(rubricUtils: RubricsUtils<T>) {
+        self.rubricObjectIDFetch = rubricUtils.getObjectId(whereSid:)
+    }
+    
     public enum Errors: Error {
         case noFetch
 

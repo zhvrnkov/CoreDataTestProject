@@ -55,6 +55,10 @@ public class MicrotasksUtils
         try _update(whereSid: sid, like: item)
     }
     
+    public func configure<T: SkillSetFields>(skillSetUtils: SkillSetsUtils<T>) {
+        self.skillSetObjectIDFetch = skillSetUtils.getObjectId(whereSid:)
+    }
+    
     var container: NSPersistentContainer
     var backgroundContext: NSManagedObjectContext {
         return container.newBackgroundContext()

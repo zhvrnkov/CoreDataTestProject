@@ -55,6 +55,14 @@ public class AssessmentsUtils
         try _update(whereSid: sid, like: item)
     }
     
+    public func configure<T: StudentFields, U: RubricFields, V: InstructorFields>
+        (studentUtils: StudentsUtils<T>, rubricUtils: RubricsUtils<U>, instructorUtils: InstructorsUtils<V>)
+    {
+        self.studentObjectIDsFetch = studentUtils.getObjectIds(whereSids:)
+        self.rubricObjectIDFetch = rubricUtils.getObjectId(whereSid:)
+        self.instructorObjectIDFetch = instructorUtils.getObjectId(whereSid:)
+    }
+    
     
     var container: NSPersistentContainer
     var backgroundContext: NSManagedObjectContext {

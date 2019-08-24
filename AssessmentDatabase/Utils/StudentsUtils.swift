@@ -55,6 +55,10 @@ public class StudentsUtils
         try _update(whereSid: sid, like: item)
     }
     
+    public func configure<T: InstructorFields>(instructorUtils: InstructorsUtils<T>) {
+        self.instructorObjectIDsFetch = instructorUtils.getObjectIds(whereSids:)
+    }
+    
     var container: NSPersistentContainer
     var backgroundContext: NSManagedObjectContext {
         return container.newBackgroundContext()
