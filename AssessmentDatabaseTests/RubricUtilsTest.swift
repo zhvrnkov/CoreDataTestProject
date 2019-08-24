@@ -11,7 +11,7 @@ import XCTest
 final class RubricUtilsTest: XCTestCase {
     typealias This = RubricUtilsTest
     static let container = getMockPersistentContainer()
-    static let util = RubricsUtils(with: container)
+    static let util = RubricsUtils<MockRubricFields>(with: container)
     private var mocks = RubricUtilsTestMocks()
     
     override func setUp() {
@@ -53,11 +53,11 @@ final class RubricUtilsTest: XCTestCase {
         }
     }
     
-    private func compareItem(_ item: MockRubricFields, _ entity: Rubric) {
-        XCTAssertEqual(item.sid, Int(entity.sid))
+    private func compareItem(_ item: MockRubricFields, _ entity: MockRubricFields) {
+        XCTAssertEqual(item.sid, entity.sid)
         XCTAssertEqual(item.isActive, entity.isActive)
-        XCTAssertEqual(item.lastUpdate, Int(entity.lastUpdate))
+        XCTAssertEqual(item.lastUpdate, entity.lastUpdate)
         XCTAssertEqual(item.title, entity.title)
-        XCTAssertEqual(item.weight, Int(entity.weight))
+        XCTAssertEqual(item.weight, entity.weight)
     }
 }
