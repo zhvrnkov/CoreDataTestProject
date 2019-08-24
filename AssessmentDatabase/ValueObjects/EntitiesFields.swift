@@ -8,17 +8,27 @@
 
 import Foundation
 
-public protocol DBSidable {
+protocol DBSidable {
+    var sid: Int64 { get set }
+}
+
+public protocol Sidable {
     var sid: Int { get set }
 }
 
 extension Array where Element: DBSidable {
+    var sids: [Int64] {
+        return map { $0.sid }
+    }
+}
+
+public extension Array where Element: Sidable {
     var sids: [Int] {
         return map { $0.sid }
     }
 }
 
-public protocol InstructorFields: DBSidable {
+public protocol InstructorFields: Sidable {
     var loginUsername: String { get set }
     var firstName: String { get set }
     var lastName: String { get set }
@@ -43,7 +53,7 @@ public protocol InstructorFields: DBSidable {
     var students: [StudentFields] { get set }
 }
 
-public protocol StudentFields: DBSidable {
+public protocol StudentFields: Sidable {
     var name: String { get set }
     var email: String { get set }
     var logbookPass: String { get set }
@@ -53,7 +63,7 @@ public protocol StudentFields: DBSidable {
     var microTaskGrades: [StudentMicrotaskGradeFields] { get set }
 }
 
-public protocol AssessmentFields: DBSidable {
+public protocol AssessmentFields: Sidable {
     var date: Date { get }
     var schoolId: Int { get }
     var isSynced: Bool { get }
@@ -64,7 +74,7 @@ public protocol AssessmentFields: DBSidable {
     var studentSids: [Int] { get }
 }
 
-public protocol RubricFields: DBSidable {
+public protocol RubricFields: Sidable {
     var title: String { get set }
     var lastUpdate: Int { get set }
     var weight: Int { get set }
@@ -74,7 +84,7 @@ public protocol RubricFields: DBSidable {
     var grades: [GradeFields] { get set }
 }
 
-public protocol SkillSetFields: DBSidable {
+public protocol SkillSetFields: Sidable {
     var rubricSid: Int { get set }
     var title: String { get set }
     var weight: Int { get set }
@@ -83,7 +93,7 @@ public protocol SkillSetFields: DBSidable {
     var microTasks: [MicrotaskFields] { get set }
 }
 
-public protocol MicrotaskFields: DBSidable {
+public protocol MicrotaskFields: Sidable {
     var isActive: Bool { get set }
     var critical: Int { get set }
     var depiction: String { get set }
@@ -93,7 +103,7 @@ public protocol MicrotaskFields: DBSidable {
     var skillSetSid: Int { get set }
 }
 
-public protocol StudentMicrotaskGradeFields: DBSidable {
+public protocol StudentMicrotaskGradeFields: Sidable {
     var isSynced: Bool { get set }
     var lastUpdated: Int { get set }
     var passed: Bool { get set }
@@ -104,7 +114,7 @@ public protocol StudentMicrotaskGradeFields: DBSidable {
     var studentSid: Int { get set }
 }
 
-public protocol GradeFields: DBSidable {
+public protocol GradeFields: Sidable {
     var score: Int { get set }
     var passed: Bool { get set }
     var title: String { get set }
