@@ -12,15 +12,15 @@ import XCTest
 final class AssessmentUtilsTest: XCTestCase {
     typealias This = AssessmentUtilsTest
     static let container = getMockPersistentContainer()
-    static let rubricsUtil = RubricsUtils(with: container)
-    static let studentsUtil = StudentsUtils(with: container)
-    static let instructorsUtil = InstructorsUtils(with: container)
+    static let rubricsUtil = RubricsUtils<MockRubricFields>(with: container)
+    static let studentsUtil = StudentsUtils<MockStudentFields>(with: container)
+    static let instructorsUtil = InstructorsUtils<MockInstructorFields>(with: container)
     
-    static let util: AssessmentsUtils = {
-        let utils = AssessmentsUtils(container: container)
-        utils.studentsUtils = studentsUtil
-        utils.rubricsUtils = rubricsUtil
-        utils.instructorsUtils = instructorsUtil
+    static let util: AssessmentsUtils<MockAssessmentFields> = {
+        let utils = AssessmentsUtils<MockAssessmentFields>(container: container)
+        utils.studentObjectIDsFetch = studentsUtil.getObjectIds(whereSids:)
+        utils.rubricObjectIDFetch = rubricsUtil.getObjectId(whereSid:)
+        utils.instructorObjectIDFetch = instructorsUtil.getObjectId(whereSid:)
         return utils
     }()
     
@@ -29,7 +29,7 @@ final class AssessmentUtilsTest: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        This.studentsUtil.instructorsUtils = This.instructorsUtil
+        This.studentsUtil.instructorObjectIDsFetch = This.instructorsUtil.getObjectIds(whereSids: )
         
         XCTAssertNoThrow(try This.instructorsUtil.save(items: mocks.instructors))
         XCTAssertNoThrow(try This.studentsUtil.save(items: mocks.students))
@@ -57,7 +57,7 @@ final class AssessmentUtilsTest: XCTestCase {
         var item = mocks.assessments.randomElement()!
         let newStudents = mocks.students.filter { student in !item.studentSids.contains(student.sid) }
         XCTAssertNoThrow(try This.util.save(item: item))
-        item.studentSids += newStudents.sids
+        item.students += newStudents
         XCTAssertNoThrow(try This.util.update(whereSid: item.sid, like: item))
         compareItems([item], This.util.getAll())
     }
@@ -65,7 +65,7 @@ final class AssessmentUtilsTest: XCTestCase {
     func testRemoveStudentsFromAssessment() {
         var item = mocks.assessments.randomElement()!
         XCTAssertNoThrow(try This.util.save(item: item))
-        item.studentSids = []
+        item.students = []
         XCTAssertNoThrow(try This.util.update(whereSid: item.sid, like: item))
         compareItems([item], This.util.getAll())
     }
@@ -74,12 +74,12 @@ final class AssessmentUtilsTest: XCTestCase {
         var item = mocks.assessments.randomElement()!
         XCTAssertNoThrow(try This.util.save(item: item))
         let newRubric = mocks.rubrics.first(where: { $0.sid != item.rubricSid })!
-        item.rubricSid = newRubric.sid
+        item.rubric = newRubric
         XCTAssertNoThrow(try This.util.update(whereSid: item.sid, like: item))
         compareItems([item], This.util.getAll())
     }
     
-    func compareItems(_ items: [AssessmentFields], _ entities: [Assessment]) {
+    func compareItems(_ items: [MockAssessmentFields], _ entities: [MockAssessmentFields]) {
         XCTAssertEqual(items.count, entities.count)
         for index in items.indices {
             let item = items[index]
@@ -91,27 +91,24 @@ final class AssessmentUtilsTest: XCTestCase {
         }
     }
     
-    func compareItem(_ item: AssessmentFields, _ entity: Assessment) {
+    func compareItem(_ item: MockAssessmentFields, _ entity: MockAssessmentFields) {
         checkFields(of: entity, source: item)
         checkRelations(of: entity, source: item)
     }
     
-    func checkRelations(of entity: Assessment, source item: AssessmentFields) {
-        XCTAssertNotNil(entity.instructor)
+    func checkRelations(of entity: MockAssessmentFields, source item: MockAssessmentFields) {
+        XCTAssertNotEqual(entity.instructorSid, Int(badSid))
         XCTAssertNotNil(entity.rubric)
-        XCTAssertNotNil(entity.studentMicrotaskGrades?.allObjects as? [StudentMicrotaskGrade])
-        XCTAssertNotNil(entity.students?.allObjects as? [Student])
-        XCTAssertEqual(entity.studentMicrotaskGrades?.allObjects.count, item.microTaskGradeSids.count)
-        XCTAssertEqual(item.microTaskGradeSids.count, entity.studentMicrotaskGrades?.count)
-        XCTAssertEqual(item.studentSids.count, entity.students?.count)
-        XCTAssertEqual(Int64(item.instructorSid), entity.instructor?.sid)
-        XCTAssertEqual(Int64(item.rubricSid), entity.rubric?.sid)
+        XCTAssertEqual(entity.microTaskGradeSids.count, item.microTaskGradeSids.count)
+        XCTAssertEqual(item.students.count, entity.students.count)
+        XCTAssertEqual(Int64(item.instructorSid), Int64(entity.instructorSid))
+        XCTAssertEqual(Int64(item.rubricSid), Int64(entity.rubric.sid))
     }
     
-    func checkFields(of entity: Assessment, source item: AssessmentFields) {
+    func checkFields(of entity: MockAssessmentFields, source item: MockAssessmentFields) {
         XCTAssertEqual(item.sid, Int(entity.sid))
         XCTAssertEqual(item.schoolId, Int(entity.schoolId))
-        XCTAssertEqual(item.date.timeIntervalSince1970, entity.date?.timeIntervalSince1970)
+        XCTAssertEqual(item.date.timeIntervalSince1970, entity.date.timeIntervalSince1970)
     }
     
     private func deleteAll() {
