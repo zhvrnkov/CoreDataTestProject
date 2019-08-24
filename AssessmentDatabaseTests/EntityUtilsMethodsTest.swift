@@ -32,8 +32,14 @@ final class EntityUtilsMethodsTest: XCTestCase {
         XCTAssertTrue(This.utils.getAll().isEmpty)
     }
     
-    func testThatPersistentContainerIsSetted() {
-        XCTAssertNoThrow(try DatabaseManager.getInitializedPersistentContainer())
+    func testThatPersistentContainerIsSettedForTestEnviorment() {
+        DatabaseManager.env = .test
+        print(DatabaseManager.shared.persistentContainer.debugDescription)
+    }
+    
+    func testThatPersistentContainerIsSettedForCommonEnviorment() {
+        DatabaseManager.env = .common
+        print(DatabaseManager.shared.persistentContainer.debugDescription)
     }
     
     func testGetAll() {
