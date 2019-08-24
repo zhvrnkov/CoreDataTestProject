@@ -21,7 +21,7 @@ final class RubricUtilsTest: XCTestCase {
     override func tearDown() {
         super.tearDown()
 
-        XCTAssertNoThrow(try This.util.delete(whereSids: mocks.emptyRubrics.sids))
+        try? This.util.delete(whereSids: mocks.emptyRubrics.sids)
         XCTAssertTrue(This.util.getAll().isEmpty)
     }
     

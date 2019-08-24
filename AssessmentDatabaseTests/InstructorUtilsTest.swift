@@ -23,7 +23,7 @@ final class InstructorUtilsTest: XCTestCase {
     override func tearDown() {
         super.tearDown()
         
-        XCTAssertNoThrow(try This.util.delete(whereSids: mockInstructors.sids))
+        try? This.util.delete(whereSids: mockInstructors.sids)
         XCTAssertTrue(This.util.getAll().isEmpty)
     }
     

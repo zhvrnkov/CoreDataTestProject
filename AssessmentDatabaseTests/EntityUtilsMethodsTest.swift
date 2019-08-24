@@ -28,7 +28,7 @@ final class EntityUtilsMethodsTest: XCTestCase {
     
     override func tearDown() {
         super.tearDown()
-        XCTAssertNoThrow(try This.utils.delete(whereSids: rubrics.sids))
+        try? This.utils.delete(whereSids: rubrics.sids)
         XCTAssertTrue(This.utils.getAll().isEmpty)
     }
     

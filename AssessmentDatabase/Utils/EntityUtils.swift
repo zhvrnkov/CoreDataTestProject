@@ -67,7 +67,7 @@ extension EntityUtilsRealization {
     func getObjectIds(whereSids sids: [Int]) -> [NSManagedObjectID] {
         let request = NSFetchRequest<EntityType>(
             entityName: "\(EntityType.self)")
-        request.predicate = NSPredicate(format: "sid IN %@", argumentArray: sids)
+        request.predicate = NSPredicate(format: "sid IN %@", argumentArray: [sids])
         var output: [NSManagedObjectID] = []
         let context = container.viewContext
         context.performAndWait {
@@ -224,6 +224,9 @@ extension EntityUtilsRealization {
         let context = backgroundContext
         context.performAndWait {
             let entities = try! context.fetch(request)
+            if entities.count != sids.count {
+                error = EntityUtilsError.entityNotFound
+            }
             entities.forEach { entity in
                 let contextEntity = context.object(with: entity.objectID)
                 context.delete(contextEntity)

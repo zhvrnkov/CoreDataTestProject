@@ -114,11 +114,9 @@ final class AssessmentUtilsTest: XCTestCase {
     private func deleteAll() {
         XCTAssertNoThrow(try This.instructorsUtil.delete(whereSids: mocks.instructors.sids))
         XCTAssertTrue(This.instructorsUtil.getAll().isEmpty)
-        XCTAssertNoThrow(try This.studentsUtil.delete(whereSids: mocks.students.sids))
         XCTAssertTrue(This.studentsUtil.getAll().isEmpty)
         XCTAssertNoThrow(try This.rubricsUtil.delete(whereSids: mocks.rubrics.sids))
         XCTAssertTrue(This.rubricsUtil.getAll().isEmpty)
-        XCTAssertNoThrow(try This.util.delete(whereSids: mocks.assessments.sids))
         XCTAssertTrue(This.util.getAll().isEmpty)
     }
 }

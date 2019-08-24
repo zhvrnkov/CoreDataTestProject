@@ -136,17 +136,11 @@ final class StudentMicrotaskGradesUtilsTest: XCTestCase {
         XCTAssertTrue(This.instructorsUtils.getAll().isEmpty)
         XCTAssertNoThrow(try This.rubricsUtils.delete(whereSids: mocks.rubrics.sids))
         XCTAssertTrue(This.rubricsUtils.getAll().isEmpty)
-        XCTAssertNoThrow(try This.assessmentsUtils.delete(whereSids: mocks.assessments.sids))
         XCTAssertTrue(This.assessmentsUtils.getAll().isEmpty)
-        XCTAssertNoThrow(try This.gradesUtils.delete(whereSids: mocks.grades.sids))
         XCTAssertTrue(This.gradesUtils.getAll().isEmpty)
-        XCTAssertNoThrow(try This.studentsUtils.delete(whereSids: mocks.students.sids))
         XCTAssertTrue(This.studentsUtils.getAll().isEmpty)
-        XCTAssertNoThrow(try This.microtasksUtils.delete(whereSids: mocks.microTasks.sids))
         XCTAssertTrue(This.microtasksUtils.getAll().isEmpty)
-        XCTAssertNoThrow(try This.skillSetsUtils.delete(whereSids: mocks.skillSets.sids))
         XCTAssertTrue(This.skillSetsUtils.getAll().isEmpty)
-        XCTAssertNoThrow(try This.util.delete(whereSids: mocks.microtaskGrades.sids))
         XCTAssertTrue(This.util.getAll().isEmpty)
     }
 }
