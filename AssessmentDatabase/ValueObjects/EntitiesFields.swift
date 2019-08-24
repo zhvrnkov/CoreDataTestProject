@@ -51,6 +51,28 @@ public protocol InstructorFields: Sidable {
     
     var assessments: [AssessmentFields] { get set }
     var students: [StudentFields] { get set }
+    
+    init(loginUsername: String,
+         firstName: String,
+         lastName: String,
+         avatar: String,
+         email: String,
+         phone: String,
+         phoneStudent: String,
+         address: String,
+         address2: String,
+         city: String,
+         state: String,
+         zip: String,
+         country: String,
+         credentials: String,
+         depiction: String,
+         fbid: [String],
+         lang: String,
+         flags: [String],
+         schools: [Any],
+         assessments: [AssessmentFields],
+         students: [StudentFields])
 }
 
 public protocol StudentFields: Sidable {
@@ -61,6 +83,14 @@ public protocol StudentFields: Sidable {
     var assessmentSids: [Int] { get set }
     var instructorSids: [Int] { get set }
     var microTaskGrades: [StudentMicrotaskGradeFields] { get set }
+    
+    init(sid: Int,
+         email: String,
+         logbookPass: String,
+         name: String,
+         assessmentSids: [Int],
+         instructorSids: [Int],
+         microTaskGrades: [StudentMicrotaskGradeFields])
 }
 
 public protocol AssessmentFields: Sidable {
@@ -72,6 +102,15 @@ public protocol AssessmentFields: Sidable {
     var rubricSid: Int { get }
     var microTaskGradeSids: [Int] { get }
     var studentSids: [Int] { get }
+    
+    init(sid: Int,
+         isSynced: Bool,
+         date: Date,
+         schoolId: Int,
+         instructorSid: Int,
+         rubric: Int,
+         microTaskGradeSids: [Int],
+         studentSids: [Int])
 }
 
 public protocol RubricFields: Sidable {
@@ -82,6 +121,14 @@ public protocol RubricFields: Sidable {
     
     var skillSets: [SkillSetFields] { get set }
     var grades: [GradeFields] { get set }
+    
+    init(sid: Int,
+         title: String,
+         lastUpdate: Int,
+         weight: Int,
+         isActive: Bool,
+         skillSets: [SkillSetFields],
+         grades: [GradeFields])
 }
 
 public protocol SkillSetFields: Sidable {
@@ -91,6 +138,13 @@ public protocol SkillSetFields: Sidable {
     var isActive: Bool { get set }
     
     var microTasks: [MicrotaskFields] { get set }
+    
+    init(sid: Int,
+         rubricSid: Int,
+         isActive: Bool,
+         title: String,
+         weight: Int,
+         microTasks: [MicrotaskFields])
 }
 
 public protocol MicrotaskFields: Sidable {
@@ -101,17 +155,34 @@ public protocol MicrotaskFields: Sidable {
     var weight: Int { get set }
     
     var skillSetSid: Int { get set }
+    
+    init(sid: Int,
+         critical: Int,
+         depiction: String,
+         isActive: Bool,
+         title: String,
+         weight: Int,
+         skillSetSid: Int)
 }
 
 public protocol StudentMicrotaskGradeFields: Sidable {
     var isSynced: Bool { get set }
     var lastUpdated: Int { get set }
     var passed: Bool { get set }
-
+    
     var assessmentSid: Int { get set }
     var gradeSid: Int { get set }
     var microTaskSid: Int { get set }
     var studentSid: Int { get set }
+    
+    init(sid: Int,
+         lastUpdated: Int,
+         passed: Bool,
+         isSynced: Bool,
+         assessmentSid: Int,
+         microTaskSid: Int,
+         studentSid: Int,
+         gradeSid: Int)
 }
 
 public protocol GradeFields: Sidable {
@@ -119,4 +190,10 @@ public protocol GradeFields: Sidable {
     var passed: Bool { get set }
     var title: String { get set }
     var rubricSid: Int { get set }
+    
+    init(sid: Int,
+         title: String,
+         passed: Bool,
+         score: Int,
+         rubricSid: Int)
 }
