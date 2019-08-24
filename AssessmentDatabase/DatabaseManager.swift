@@ -35,44 +35,4 @@ final public class DatabaseManager {
             return container
         }
     }
-    
-    public func clear() {
-        assessments._deleteAll()
-        grades._deleteAll()
-        instructors._deleteAll()
-        microtasks._deleteAll()
-        rubrics._deleteAll()
-        skillSets._deleteAll()
-        students._deleteAll()
-        studentMicrotaskGrades._deleteAll()
-    }
-    
-    private func configureAssessmentsUtils() {
-        assessments.studentsUtils = students
-        assessments.rubricsUtils = rubrics
-        assessments.instructorsUtils = instructors
-    }
-    
-    private func configureSkillSetsUtils() {
-        skillSets.rubricUtils = rubrics
-    }
-
-    private func configureMicrotaskUtils() {
-        microtasks.skillSetsUtils = skillSets
-    }
-    
-    private func congifureStudentMicrotaskGradeUtils() {
-        studentMicrotaskGrades.assessmentsUtils = assessments
-        studentMicrotaskGrades.gradesUtils = grades
-        studentMicrotaskGrades.studentsUtils = students
-        studentMicrotaskGrades.microtasksUtils = microtasks
-    }
-    
-    private func configureInstructorUtils() {
-        students.instructorsUtils = instructors
-    }
-    
-    private func configureGradeUtils() {
-        grades.rubricUtils = rubrics
-    }
 }
