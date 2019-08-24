@@ -1,7 +1,7 @@
 import Foundation
 import CoreData
 
-public class StudentMicrotaskGradesUtils: EntityUtilsMethods {
+public class StudentMicrotaskGradesUtils: EntityUtils {
     public typealias EntityType = StudentMicrotaskGrade
     public typealias EntityValueFields = StudentMicrotaskGradeFields
     
@@ -79,7 +79,7 @@ public class StudentMicrotaskGradesUtils: EntityUtilsMethods {
     }
 }
 
-extension StudentMicrotaskGradesUtils: EntityUtils {
+extension StudentMicrotaskGradesUtils: EntityUtilsRealization {
     func copyFields(from item: StudentMicrotaskGradeFields, to entity: StudentMicrotaskGrade) {
         entity.sid = Int64(item.sid)
         entity.isSynced = item.isSynced

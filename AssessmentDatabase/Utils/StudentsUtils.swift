@@ -1,7 +1,7 @@
 import Foundation
 import CoreData
 
-public class StudentsUtils: EntityUtilsMethods {
+public class StudentsUtils: EntityUtils {
     public typealias EntityType = Student
     public typealias EntityValueFields = StudentFields
     
@@ -74,7 +74,7 @@ public class StudentsUtils: EntityUtilsMethods {
     }
 }
 
-extension StudentsUtils: EntityUtils {
+extension StudentsUtils: EntityUtilsRealization {
     func copyFields(from item: StudentFields, to entity: Student) {
         entity.sid = Int64(item.sid)
         entity.name = item.name

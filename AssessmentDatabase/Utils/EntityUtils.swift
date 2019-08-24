@@ -14,7 +14,7 @@ public struct FilterOutput {
     let toAdd: [Int]
 }
 
-public protocol EntityUtilsMethods: class {
+public protocol EntityUtils: class {
     associatedtype EntityType: NSManagedObject
     associatedtype EntityValueFields
     
@@ -39,7 +39,7 @@ public protocol EntityUtilsMethods: class {
     func update(whereSid sid: Int, like item: EntityValueFields) throws
 }
 
-protocol EntityUtils: class {
+protocol EntityUtilsRealization: class {
     associatedtype EntityType: NSManagedObject
     associatedtype EntityValueFields
     
@@ -50,7 +50,7 @@ protocol EntityUtils: class {
     func setRelations(from item: EntityValueFields, of entity: EntityType, in context: NSManagedObjectContext) throws
 }
 
-extension EntityUtils where Self: EntityUtilsMethods {
+extension EntityUtilsRealization where Self: EntityUtils {
     func _getAll() -> [EntityType] {
         let request = NSFetchRequest<EntityType>(
             entityName: "\(EntityType.self)")

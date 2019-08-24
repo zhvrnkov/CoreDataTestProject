@@ -1,7 +1,7 @@
 import Foundation
 import CoreData
 
-public class GradesUtils: EntityUtilsMethods {
+public class GradesUtils: EntityUtils {
     public typealias EntityType = Grade
     public typealias EntityValueFields = GradeFields
     
@@ -72,7 +72,7 @@ public class GradesUtils: EntityUtilsMethods {
     }
 }
 
-extension GradesUtils: EntityUtils {
+extension GradesUtils: EntityUtilsRealization {
     public func copyFields(from item: GradeFields, to entity: Grade) {
         entity.sid = Int64(item.sid)
         entity.title = item.title
