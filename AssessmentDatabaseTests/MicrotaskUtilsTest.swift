@@ -13,18 +13,15 @@ final class MicrotaskUtilsTest: XCTestCase {
     static let container = getMockPersistentContainer()
     static let util: MicrotasksUtils<MockMicrotaskFields> = {
         let util = MicrotasksUtils<MockMicrotaskFields>(with: container)
-        util.skillSetsUtils = This.skillSetsUtils
+        util.skillSetObjectIDFetch = This.skillSetsUtils.getObjectId(whereSid:)
         return util
     }()
-    static let skillSetsUtils: SkillSetsUtils = {
-        let util = SkillSetsUtils(with: container)
-        util.rubricUtils = This.rubricUtils
+    static let skillSetsUtils: SkillSetsUtils<MockSkillSets> = {
+        let util = SkillSetsUtils<MockSkillSets>(with: container)
+        util.rubricObjectIDFetch = This.rubricUtils.getObjectId(whereSid:)
         return util
     }()
-    static let rubricUtils: RubricsUtils = {
-        let util = RubricsUtils(with: container)
-        return util
-    }()
+    static let rubricUtils = RubricsUtils<MockRubricFields>(with: container)
     private var mocks = MicrotaskUtilsTestMocks()
     
     override func setUp() {
@@ -55,7 +52,7 @@ final class MicrotaskUtilsTest: XCTestCase {
         compareItems(items, This.util.getAll())
     }
 
-    private func compareItems(_ items: [MicrotaskFields], _ entities: [Microtask]) {
+    private func compareItems(_ items: [MockMicrotaskFields], _ entities: [MockMicrotaskFields]) {
         XCTAssertEqual(items.count, entities.count)
         items.forEach { item in
             guard let entity = entities.first(where: { Int($0.sid) == item.sid })
@@ -64,17 +61,21 @@ final class MicrotaskUtilsTest: XCTestCase {
                 return
             }
             compareItem(item, entity)
-            XCTAssertTrue((entity.skillSet?.microTasks?.allObjects as? [Microtask])?.contains(where: { $0.sid == Int(item.sid) }) ?? false)
+            guard let skillSet = This.skillSetsUtils.get(whereSid: entity.skillSetSid) else {
+                XCTFail()
+                return
+            }
+            XCTAssertTrue(skillSet.microTasks.contains(where: { $0.sid == item.sid }))
         }
     }
     
-    private func compareItem(_ item: MicrotaskFields, _ entity: Microtask) {
+    private func compareItem(_ item: MicrotaskFields, _ entity: MockMicrotaskFields) {
         XCTAssertEqual(item.sid, Int(entity.sid))
-        XCTAssertEqual(Int64(item.skillSetSid), entity.skillSet?.sid ?? -1)
+        XCTAssertEqual(item.skillSetSid, entity.skillSetSid)
         XCTAssertEqual(item.isActive, entity.isActive)
-        XCTAssertEqual(item.critical, Int(entity.critical))
+        XCTAssertEqual(item.critical, entity.critical)
         XCTAssertEqual(item.depiction, entity.depiction)
         XCTAssertEqual(item.title, entity.title)
-        XCTAssertEqual(item.weight , Int(entity.weight))
+        XCTAssertEqual(item.weight , entity.weight)
     }
 }
