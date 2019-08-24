@@ -60,7 +60,7 @@ public class MicrotasksUtils
         return container.newBackgroundContext()
     }
     
-    var skillSetObjectIDFetch: ObjectIDFetch?
+    public var skillSetObjectIDFetch: ObjectIDFetch?
     
     public init(with container: NSPersistentContainer) {
         self.container = container

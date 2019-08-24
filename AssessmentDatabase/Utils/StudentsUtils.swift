@@ -59,7 +59,7 @@ public class StudentsUtils
     var backgroundContext: NSManagedObjectContext {
         return container.newBackgroundContext()
     }
-    var instructorObjectIDsFetch: ObjectIDsFetch?
+    public var instructorObjectIDsFetch: ObjectIDsFetch?
     
     public init(with container: NSPersistentContainer) {
         self.container = container
