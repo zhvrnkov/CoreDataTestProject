@@ -10,6 +10,6 @@ import Foundation
 import CoreData
 
 
-public class Microtask: NSManagedObject {
+class Microtask: NSManagedObject {
 
 }

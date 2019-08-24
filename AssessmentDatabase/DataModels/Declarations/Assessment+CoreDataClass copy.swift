@@ -10,6 +10,6 @@ import Foundation
 import CoreData
 
 
-public class Assessment: NSManagedObject {
+class Assessment: NSManagedObject {
 
 }

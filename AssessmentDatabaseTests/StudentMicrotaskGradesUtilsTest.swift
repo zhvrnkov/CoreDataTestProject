@@ -37,7 +37,7 @@ final class StudentMicrotaskGradesUtilsTest: XCTestCase {
     }()
     
     static let assessmentsUtils: AssessmentsUtils<MockAssessmentFields> = {
-        let utils = AssessmentsUtils<MockAssessmentFields>(container: container)
+        let utils = AssessmentsUtils<MockAssessmentFields>(with: container)
         utils.studentObjectIDsFetch = studentsUtils.getObjectIds(whereSids:)
         utils.rubricObjectIDFetch = rubricsUtils.getObjectId(whereSid:)
         utils.instructorObjectIDFetch = instructorsUtils.getObjectId(whereSid:)

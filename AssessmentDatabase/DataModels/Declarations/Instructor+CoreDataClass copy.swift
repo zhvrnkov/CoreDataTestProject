@@ -10,6 +10,6 @@ import Foundation
 import CoreData
 
 
-public class Instructor: NSManagedObject {
+class Instructor: NSManagedObject {
 
 }

@@ -10,6 +10,6 @@ import Foundation
 import CoreData
 
 
-public class Rubric: NSManagedObject {
+class Rubric: NSManagedObject {
 
 }

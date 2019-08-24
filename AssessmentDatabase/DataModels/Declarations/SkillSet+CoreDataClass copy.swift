@@ -10,6 +10,6 @@ import Foundation
 import CoreData
 
 
-public class SkillSet: NSManagedObject {
+class SkillSet: NSManagedObject {
 
 }

@@ -10,6 +10,6 @@ import Foundation
 import CoreData
 
 
-public class StudentMicrotaskGrade: NSManagedObject {
+class StudentMicrotaskGrade: NSManagedObject {
 
 }

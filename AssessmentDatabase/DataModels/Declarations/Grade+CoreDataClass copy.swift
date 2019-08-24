@@ -10,6 +10,6 @@ import Foundation
 import CoreData
 
 
-public class Grade: NSManagedObject {
+class Grade: NSManagedObject {
 
 }

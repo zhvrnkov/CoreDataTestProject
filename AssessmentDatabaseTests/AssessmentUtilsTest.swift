@@ -17,7 +17,7 @@ final class AssessmentUtilsTest: XCTestCase {
     static let instructorsUtil = InstructorsUtils<MockInstructorFields>(with: container)
     
     static let util: AssessmentsUtils<MockAssessmentFields> = {
-        let utils = AssessmentsUtils<MockAssessmentFields>(container: container)
+        let utils = AssessmentsUtils<MockAssessmentFields>(with: container)
         utils.studentObjectIDsFetch = studentsUtil.getObjectIds(whereSids:)
         utils.rubricObjectIDFetch = rubricsUtil.getObjectId(whereSid:)
         utils.instructorObjectIDFetch = instructorsUtil.getObjectId(whereSid:)
