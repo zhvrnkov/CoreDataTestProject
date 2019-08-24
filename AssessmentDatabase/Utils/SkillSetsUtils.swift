@@ -1,7 +1,7 @@
 import Foundation
 import CoreData
 
-public class SkillSetsUtils: EntityUtilsMethods {
+public class SkillSetsUtils: EntityUtils {
     public typealias EntityType = SkillSet
     public typealias EntityValueFields = SkillSetFields
     
@@ -73,7 +73,7 @@ public class SkillSetsUtils: EntityUtilsMethods {
     }
 }
 
-extension SkillSetsUtils: EntityUtils {
+extension SkillSetsUtils: EntityUtilsRealization {
     func copyFields(from item: SkillSetFields, to entity: SkillSet) {
         entity.sid = Int64(item.sid)
         entity.title = item.title

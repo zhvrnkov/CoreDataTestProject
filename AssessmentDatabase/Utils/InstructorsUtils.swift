@@ -1,7 +1,7 @@
 import Foundation
 import CoreData
 
-public class InstructorsUtils: EntityUtilsMethods {
+public class InstructorsUtils: EntityUtils {
     public typealias EntityType = Instructor
     public typealias EntityValueFields = InstructorFields
     
@@ -72,7 +72,7 @@ public class InstructorsUtils: EntityUtilsMethods {
     }
 }
 
-extension InstructorsUtils: EntityUtils {
+extension InstructorsUtils: EntityUtilsRealization {
     func copyFields(from item: InstructorFields, to entity: Instructor) {
         entity.sid = Int64(item.sid)
         entity.loginUsername = item.loginUsername

@@ -1,7 +1,7 @@
 import Foundation
 import CoreData
 
-public class RubricsUtils: EntityUtilsMethods {
+public class RubricsUtils: EntityUtils {
     public typealias EntityType = Rubric
     public typealias EntityValueFields = RubricFields
     
@@ -71,7 +71,7 @@ public class RubricsUtils: EntityUtilsMethods {
     }
 }
 
-extension RubricsUtils: EntityUtils {
+extension RubricsUtils: EntityUtilsRealization {
     func copyFields(from item: RubricFields, to entity: Rubric) {
         entity.sid = Int64(item.sid)
         entity.title = item.title

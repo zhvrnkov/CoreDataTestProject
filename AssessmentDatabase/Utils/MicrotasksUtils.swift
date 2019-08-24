@@ -1,7 +1,7 @@
 import Foundation
 import CoreData
 
-public class MicrotasksUtils: EntityUtilsMethods {
+public class MicrotasksUtils: EntityUtils {
     public typealias EntityType = Microtask
     public typealias EntityValueFields = MicrotaskFields
     
@@ -73,7 +73,7 @@ public class MicrotasksUtils: EntityUtilsMethods {
     }
 }
 
-extension MicrotasksUtils:  EntityUtils {
+extension MicrotasksUtils:  EntityUtilsRealization {
     func copyFields(from item: MicrotaskFields, to entity: Microtask) {
         entity.sid = Int64(item.sid)
         entity.isActive = item.isActive
