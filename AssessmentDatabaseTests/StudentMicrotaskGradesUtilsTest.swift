@@ -12,44 +12,44 @@ final class StudentMicrotaskGradesUtilsTest: XCTestCase {
     typealias This = StudentMicrotaskGradesUtilsTest
     static let container = getMockPersistentContainer()
     
-    static let instructorsUtils = InstructorsUtils(with: container)
-    static let studentsUtils: StudentsUtils = {
-        let util = StudentsUtils(with: container)
-        util.instructorsUtils = This.instructorsUtils
+    static let instructorsUtils = InstructorsUtils<MockInstructorFields>(with: container)
+    static let studentsUtils: StudentsUtils<MockStudentFields> = {
+        let util = StudentsUtils<MockStudentFields>(with: container)
+        util.instructorObjectIDsFetch = This.instructorsUtils.getObjectIds(whereSids:)
         return util
     }()
-    static let gradesUtils: GradesUtils = {
-        let t = GradesUtils(with: container)
-        t.rubricUtils = This.rubricsUtils
+    static let gradesUtils: GradesUtils<MockGradeFields> = {
+        let t = GradesUtils<MockGradeFields>(with: container)
+        t.rubricObjectIDFetch = This.rubricsUtils.getObjectId(whereSid:)
         return t
     }()
     
-    static let rubricsUtils = RubricsUtils(with: container)
-    static let skillSetsUtils: SkillSetsUtils = {
-        let util = SkillSetsUtils(with: container)
-        util.rubricUtils = This.rubricsUtils
+    static let rubricsUtils = RubricsUtils<MockRubricFields>(with: container)
+    static let skillSetsUtils: SkillSetsUtils<MockSkillSets> = {
+        let util = SkillSetsUtils<MockSkillSets>(with: container)
+        util.rubricObjectIDFetch = This.rubricsUtils.getObjectId(whereSid:)
         return util
     }()
-    static let microtasksUtils: MicrotasksUtils = {
-        let util = MicrotasksUtils(with: container)
-        util.skillSetsUtils = This.skillSetsUtils
+    static let microtasksUtils: MicrotasksUtils<MockMicrotaskFields> = {
+        let util = MicrotasksUtils<MockMicrotaskFields>(with: container)
+        util.skillSetObjectIDFetch = This.skillSetsUtils.getObjectId(whereSid:)
         return util
     }()
     
-    static let assessmentsUtils: AssessmentsUtils = {
-        let utils = AssessmentsUtils(container: container)
-        utils.studentsUtils = StudentsUtils(with: container)
-        utils.rubricsUtils = rubricsUtils
-        utils.instructorsUtils = instructorsUtils
+    static let assessmentsUtils: AssessmentsUtils<MockAssessmentFields> = {
+        let utils = AssessmentsUtils<MockAssessmentFields>(container: container)
+        utils.studentObjectIDsFetch = studentsUtils.getObjectIds(whereSids:)
+        utils.rubricObjectIDFetch = rubricsUtils.getObjectId(whereSid:)
+        utils.instructorObjectIDFetch = instructorsUtils.getObjectId(whereSid:)
         return utils
     }()
     
-    static let util: StudentMicrotaskGradesUtils = {
-        let utils = StudentMicrotaskGradesUtils(with: container)
-        utils.assessmentsUtils = This.assessmentsUtils
-        utils.gradesUtils = This.gradesUtils
-        utils.studentsUtils = This.studentsUtils
-        utils.microtasksUtils = This.microtasksUtils
+    static let util: StudentMicrotaskGradesUtils<MockStudentMicrotaskGrade> = {
+        let utils = StudentMicrotaskGradesUtils<MockStudentMicrotaskGrade>(with: container)
+        utils.assessmentObjectIDFetch = This.assessmentsUtils.getObjectId(whereSid:)
+        utils.gradeObjectIDFetch = This.gradesUtils.getObjectId(whereSid:)
+        utils.studentObjectIDFetch = This.studentsUtils.getObjectId(whereSid:)
+        utils.microtaskObjectIDFetch = This.microtasksUtils.getObjectId(whereSid:)
         return utils
     }()
     
@@ -91,7 +91,7 @@ final class StudentMicrotaskGradesUtilsTest: XCTestCase {
         compareItems([item], This.util.getAll())
     }
     
-    private func compareItems(_ items: [StudentMicrotaskGradeFields], _ entities: [StudentMicrotaskGrade]) {
+    private func compareItems(_ items: [StudentMicrotaskGradeFields], _ entities: [StudentMicrotaskGradeFields]) {
         XCTAssertEqual(items.count, entities.count)
         items.forEach { item in
             guard let entity = entities.first(where: { Int($0.sid) == item.sid })
@@ -103,25 +103,25 @@ final class StudentMicrotaskGradesUtilsTest: XCTestCase {
         }
     }
     
-    private func compareItem(_ item: StudentMicrotaskGradeFields, _ entity: StudentMicrotaskGrade) {
+    private func compareItem(_ item: StudentMicrotaskGradeFields, _ entity: StudentMicrotaskGradeFields) {
         checkRelations(of: entity, source: item)
         checkFields(of: entity, source: item)
     }
     
-    private func checkRelations(of entity: StudentMicrotaskGrade, source item: StudentMicrotaskGradeFields) {
-        XCTAssertNotNil(entity.assessment)
-        XCTAssertNotNil(entity.grade)
-        XCTAssertNotNil(entity.student)
+    private func checkRelations(of entity: StudentMicrotaskGradeFields, source item: StudentMicrotaskGradeFields) {
+        XCTAssertNotEqual(entity.assessmentSid, Int(badSid))
+        XCTAssertNotEqual(entity.gradeSid, Int(badSid))
+        XCTAssertNotEqual(entity.studentSid, Int(badSid))
         
-        XCTAssertEqual(entity.assessment?.sid, Int64(item.assessmentSid))
-        XCTAssertEqual(entity.grade?.sid, Int64(item.gradeSid))
-        XCTAssertEqual(entity.student?.sid, Int64(item.studentSid))
+        XCTAssertEqual(entity.assessmentSid, item.assessmentSid)
+        XCTAssertEqual(entity.gradeSid, item.gradeSid)
+        XCTAssertEqual(entity.studentSid, item.studentSid)
     }
     
-    private func checkFields(of entity: StudentMicrotaskGrade, source item: StudentMicrotaskGradeFields) {
-        XCTAssertEqual(entity.sid, Int64(Int(item.sid)))
+    private func checkFields(of entity: StudentMicrotaskGradeFields, source item: StudentMicrotaskGradeFields) {
+        XCTAssertEqual(entity.sid, Int(item.sid))
         XCTAssertEqual(entity.isSynced, item.isSynced)
-        XCTAssertEqual(entity.lastUpdated, Int64(item.lastUpdated))
+        XCTAssertEqual(entity.lastUpdated, item.lastUpdated)
         XCTAssertEqual(entity.passed, item.passed)
     }
     
