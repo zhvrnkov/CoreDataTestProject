@@ -61,7 +61,7 @@ public class InstructorsUtils
         return container.newBackgroundContext()
     }
     
-    init(with container: NSPersistentContainer) {
+    public init(with container: NSPersistentContainer) {
         self.container = container
     }
     

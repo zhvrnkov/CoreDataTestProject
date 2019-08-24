@@ -62,7 +62,7 @@ public class SkillSetsUtils
     
     var rubricObjectIDFetch: ObjectIDFetch?
     
-    init(with container: NSPersistentContainer) {
+    public init(with container: NSPersistentContainer) {
         self.container = container
     }
     

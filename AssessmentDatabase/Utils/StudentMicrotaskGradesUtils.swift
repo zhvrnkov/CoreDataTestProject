@@ -66,7 +66,7 @@ public class StudentMicrotaskGradesUtils
     var studentObjectIDFetch: ObjectIDFetch?
     var microtaskObjectIDFetch: ObjectIDFetch?
     
-    init(with container: NSPersistentContainer) {
+    public init(with container: NSPersistentContainer) {
         self.container = container
     }
     

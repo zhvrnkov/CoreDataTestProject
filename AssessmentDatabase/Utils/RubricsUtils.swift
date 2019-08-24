@@ -57,7 +57,7 @@ public class RubricsUtils<EntityValueFields: RubricFields>: EntityUtils {
         return container.newBackgroundContext()
     }
     
-    init(with container: NSPersistentContainer) {
+    public init(with container: NSPersistentContainer) {
         self.container = container
     }
     

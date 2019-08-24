@@ -62,7 +62,7 @@ public class MicrotasksUtils
     
     var skillSetObjectIDFetch: ObjectIDFetch?
     
-    init(with container: NSPersistentContainer) {
+    public init(with container: NSPersistentContainer) {
         self.container = container
     }
     

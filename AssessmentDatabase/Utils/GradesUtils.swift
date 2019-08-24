@@ -67,7 +67,7 @@ public class GradesUtils
     }
     var rubricObjectIDFetch: ObjectIDFetch?
     
-    init(with container: NSPersistentContainer) {
+    public init(with container: NSPersistentContainer) {
         self.container = container
     }
 }

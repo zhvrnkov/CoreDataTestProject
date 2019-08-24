@@ -61,7 +61,7 @@ public class StudentsUtils
     }
     var instructorObjectIDsFetch: ObjectIDsFetch?
     
-    init(with container: NSPersistentContainer) {
+    public init(with container: NSPersistentContainer) {
         self.container = container
     }
     
