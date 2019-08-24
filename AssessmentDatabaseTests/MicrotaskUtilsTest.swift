@@ -11,8 +11,8 @@ import XCTest
 final class MicrotaskUtilsTest: XCTestCase {
     typealias This = MicrotaskUtilsTest
     static let container = getMockPersistentContainer()
-    static let util: MicrotasksUtils = {
-        let util = MicrotasksUtils(with: container)
+    static let util: MicrotasksUtils<MockMicrotaskFields> = {
+        let util = MicrotasksUtils<MockMicrotaskFields>(with: container)
         util.skillSetsUtils = This.skillSetsUtils
         return util
     }()

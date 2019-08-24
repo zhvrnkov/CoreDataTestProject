@@ -11,10 +11,10 @@ import XCTest
 final class SkillSetsUtilsTest: XCTestCase {
     typealias This = SkillSetsUtilsTest
     static let container = getMockPersistentContainer()
-    static let rubricsUtils = RubricsUtils(with: container)
-    static let util: SkillSetsUtils = {
-        let util = SkillSetsUtils(with: container)
-        util.rubricUtils = This.rubricsUtils
+    static let rubricsUtils = RubricsUtils<MockRubricFields>(with: container)
+    static let util: SkillSetsUtils<MockSkillSets> = {
+        let util = SkillSetsUtils<MockSkillSets>(with: container)
+        util.rubricObjectIDFetch = This.rubricsUtils.getObjectId(whereSid:)
         return util
     }()
     private var mocks = SkillSetsUtilsTestMocks()
@@ -61,7 +61,7 @@ final class SkillSetsUtilsTest: XCTestCase {
         compareItems([item], This.util.getAll())
     }
     
-    private func compareItems(_ items: [SkillSetFields], _ entities: [SkillSet]) {
+    private func compareItems(_ items: [MockSkillSets], _ entities: [MockSkillSets]) {
         XCTAssertEqual(items.count, entities.count)
         items.forEach { item in
             guard let entity = entities.first(where: { Int($0.sid) == item.sid })
@@ -70,15 +70,19 @@ final class SkillSetsUtilsTest: XCTestCase {
                 return
             }
             compareItem(item, entity)
-            XCTAssertTrue((entity.rubric?.skillSets?.allObjects as? [SkillSet])?.contains(where: { $0.sid == Int(item.sid)}) ?? false)
+            guard let rubric = This.rubricsUtils.get(whereSid: entity.rubricSid) else {
+                XCTFail()
+                return
+            }
+            XCTAssertTrue(rubric.skillSets.contains(where: { $0.sid == item.sid }))
         }
     }
     
-    private func compareItem(_ item: SkillSetFields, _ entity: SkillSet) {
-        XCTAssertEqual(item.sid, Int(entity.sid))
-        XCTAssertEqual(Int64(item.rubricSid), entity.rubric?.sid)
+    private func compareItem(_ item: MockSkillSets, _ entity: MockSkillSets) {
+        XCTAssertEqual(item.sid, entity.sid)
+        XCTAssertEqual(item.rubricSid, entity.rubricSid)
         XCTAssertEqual(item.title, entity.title)
-        XCTAssertEqual(item.weight, Int(entity.weight))
+        XCTAssertEqual(item.weight, entity.weight)
         XCTAssertEqual(item.isActive, entity.isActive)
     }
 }

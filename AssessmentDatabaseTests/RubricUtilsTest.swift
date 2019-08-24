@@ -39,7 +39,7 @@ final class RubricUtilsTest: XCTestCase {
     
     private func compareItems(
         _ items: [MockRubricFields],
-        _ entities: [Rubric]
+        _ entities: [MockRubricFields]
         ) {
         XCTAssertEqual(items.count, entities.count)
         for index in items.indices {
