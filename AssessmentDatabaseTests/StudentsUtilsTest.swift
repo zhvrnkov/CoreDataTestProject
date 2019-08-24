@@ -12,13 +12,13 @@ import XCTest
 final class StudentsUtilsTest: XCTestCase {
     typealias This = StudentsUtilsTest
     static let container = getMockPersistentContainer()
-    static let util: StudentsUtils = {
-        let util = StudentsUtils(with: container)
-        util.instructorsUtils = This.instructorsUtils
+    static let util: StudentsUtils<MockStudentFields> = {
+        let util = StudentsUtils<MockStudentFields>(with: container)
+        util.instructorObjectIDsFetch = This.instructorsUtils.getObjectIds(whereSids:)
         return util
     }()
     
-    static let instructorsUtils = InstructorsUtils(with: container)
+    static let instructorsUtils = InstructorsUtils<MockInstructorFields>(with: container)
     
     private var mocks = StudentsUtilsTestMocks()
     
@@ -56,7 +56,7 @@ final class StudentsUtilsTest: XCTestCase {
         compareItems([item], This.util.getAll())
     }
     
-    private func compareItems(_ items: [MockStudentFields], _ entities: [Student]) {
+    private func compareItems(_ items: [MockStudentFields], _ entities: [MockStudentFields]) {
         XCTAssertEqual(items.count, entities.count)
         for index in items.indices {
             let item = items[index]
@@ -68,13 +68,13 @@ final class StudentsUtilsTest: XCTestCase {
         }
     }
     
-    private func compareItem(_ item: MockStudentFields, _ entity: Student) {
+    private func compareItem(_ item: MockStudentFields, _ entity: MockStudentFields) {
         XCTAssertEqual(item.sid, Int(entity.sid))
         XCTAssertEqual(item.name, entity.name)
         XCTAssertEqual(item.email, entity.email)
         XCTAssertEqual(item.logbookPass, entity.logbookPass)
-        XCTAssertEqual(item.assessmentSids.count, entity.assessments?.count)
-        XCTAssertEqual(item.instructorSids.count, entity.instructors?.count)
-        XCTAssertEqual(item.microTaskGrades.count, entity.microTaskGrades?.count)
+        XCTAssertEqual(item.assessmentSids.count, entity.assessmentSids.count)
+        XCTAssertEqual(item.instructorSids.count, entity.instructorSids.count)
+        XCTAssertEqual(item.microTaskGrades.count, entity.microTaskGrades.count)
     }
 }
