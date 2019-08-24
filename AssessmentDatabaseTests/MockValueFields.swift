@@ -17,18 +17,42 @@ fileprivate func getInstructor(_ sid: Int) -> MockInstructorFields {
 }
 
 struct MockAssessmentFields: AssessmentFields {
+    typealias StudentFieldsType = MockStudentFields
+    typealias RubricFieldsType = MockRubricFields
+    
     var sid: Int
     var date: Date
     var schoolId: Int
-    var isSynced: Bool = false
-    
+    var isSynced: Bool
     var instructorSid: Int
-    var rubricSid: Int
+    var rubric: RubricFieldsType
     var microTaskGradeSids: [Int]
-    var studentSids: [Int]
+    var students: [StudentFieldsType]
+    
+    init(sid: Int,
+         isSynced: Bool,
+         date: Date,
+         schoolId: Int,
+         instructorSid: Int,
+         rubric: RubricFieldsType,
+         microTaskGradeSids: [Int],
+         students: [StudentFieldsType])
+    {
+        self.sid = sid
+        self.isSynced = isSynced
+        self.date = date
+        self.schoolId = schoolId
+        self.instructorSid = instructorSid
+        self.rubric = rubric
+        self.microTaskGradeSids = microTaskGradeSids
+        self.students = students
+    }
 }
 
 struct MockInstructorFields: InstructorFields {
+    typealias AssessmentFieldsType = MockAssessmentFields
+    typealias StudentFieldsType = MockStudentFields
+    
     var sid: Int
     var loginUsername: String
     var firstName: String
@@ -50,11 +74,14 @@ struct MockInstructorFields: InstructorFields {
     var flags: [String]
     var schools: [Any]
     
-    var assessments: [AssessmentFields]
-    var students: [StudentFields]
+    var assessments: [AssessmentFieldsType]
+    var students: [StudentFieldsType]
 }
 
 struct MockRubricFields: RubricFields {
+    typealias SkillSetFieldsType = MockSkillSets
+    typealias GradeFieldsType = MockGradeFields
+    
     static func mock(sid: Int) -> MockRubricFields {
         return .init(sid: sid, title: "Lorem Ipsum", lastUpdate: 123, weight: 0, isActive: true, skillSets: [], grades: [])
     }
@@ -63,59 +90,49 @@ struct MockRubricFields: RubricFields {
     var lastUpdate: Int
     var weight: Int
     var isActive: Bool
-    
-    var skillSets: [SkillSetFields]
-    var grades: [GradeFields]
+
+    var skillSets: [SkillSetFieldsType]
+    var grades: [GradeFieldsType]
 }
 
-struct MockStudentMicrotaskGrade: StudentMicrotaskGradeFields {
-    var sid: Int
-    var isSynced: Bool
-    var passed: Bool
-    var lastUpdated: Int
-    
-    var assessmentSid: Int
-    var gradeSid: Int
-    var microTaskSid: Int
-    var studentSid: Int
-}
-
-struct MockStudentFields: StudentFields {
-    static func mock(sid: Int) -> MockStudentFields {
-        return .init(sid: sid, name: "Vlad Zhavoronkov", email: "lorem@ipsum.com", logbookPass: "sakha", assessmentSids: [], instructorSids: [], microTaskGrades: [])
+struct MockSkillSets: SkillSetFields {
+    init(sid: Int, rubricSid: Int, isActive: Bool, title: String, weight: Int, microTasks: [MockMicrotaskFields]) {
+        self.sid = sid
+        self.rubricSid = rubricSid
+        self.isActive = isActive
+        self.title = title
+        self.weight = weight
+        self.microTasks = microTasks
     }
-    var sid: Int
-    var name: String
-    var email: String
-    var logbookPass: String
     
-    var assessmentSids: [Int]
-    var instructorSids: [Int]
-    var microTaskGrades: [StudentMicrotaskGradeFields]
-}
-
-struct MockGradeFields: GradeFields {
-    static func mock(sid: Int) -> MockGradeFields {
-        return .init(sid: sid, title: "Lorem Ipsum", score: 0, passed: true, rubricSid: 1)
+    typealias MicrotaskFieldsType = MockMicrotaskFields
+    
+    static func mock(sid: Int, rubricSid: Int) -> MockSkillSets {
+        return .init(sid: sid, rubricSid: rubricSid, isActive: true, title: "Lorem Pupsum", weight: 0, microTasks: [])
     }
+    
     var sid: Int
     var title: String
-    var score: Int
-    var passed: Bool
+    var weight: Int
+    var isActive: Bool
     var rubricSid: Int
+    
+    var microTasks: [MicrotaskFieldsType]
 }
 
-struct MockMicrotaskFields: MicrotaskFields, Hashable {
-    static func == (lhs: MockMicrotaskFields, rhs: MockMicrotaskFields) -> Bool {
-        return lhs.hashValue == rhs.hashValue
+struct MockMicrotaskFields: MicrotaskFields {
+    init(sid: Int, critical: Int, depiction: String, isActive: Bool, title: String, weight: Int, skillSetSid: Int) {
+        self.sid = sid
+        self.critical = critical
+        self.depiction = depiction
+        self.isActive = isActive
+        self.title = title
+        self.weight = weight
+        self.skillSetSid = skillSetSid
     }
     
     static func mock(sid: Int, skillSetSid: Int) -> MockMicrotaskFields {
-        return .init(sid: sid, isActive: true, critical: 1, depiction: "Can identify key safety equipment necessary and the use thereof for a manifestly safe voyage; including fire extinguishers, flares, first aid kit, sound device, flashlight, fire blanket, tool kit, life jackets - inspection and donning. Discuss accessibility.", title: "Lorem Ipsum", weight: 0, skillSetSid: skillSetSid)
-    }
-    
-    func hash(hasher: inout Hasher) {
-        hasher.combine(sid)
+        return .init(sid: sid, critical: 1, depiction: "Lorem Dipsum", isActive: true, title: "Pip", weight: 0, skillSetSid: skillSetSid)
     }
     
     var sid: Int
@@ -128,19 +145,82 @@ struct MockMicrotaskFields: MicrotaskFields, Hashable {
     var skillSetSid: Int
 }
 
-struct MockSkillSets: SkillSetFields {
-    static func mock(sid: Int, rubricSid: Int) -> MockSkillSets {
-        return .init(sid: sid, title: "Lorem Pupsum", weight: 0, isActive: true, rubricSid: rubricSid, microTasks: [])
+struct MockStudentMicrotaskGrade: StudentMicrotaskGradeFields {
+    init(sid: Int, lastUpdated: Int, passed: Bool, isSynced: Bool, assessmentSid: Int, microTaskSid: Int, studentSid: Int, gradeSid: Int) {
+        self.sid = sid
+        self.lastUpdated = lastUpdated
+        self.passed = passed
+        self.isSynced = isSynced
+        self.assessmentSid = assessmentSid
+        self.microTaskSid = microTaskSid
+        self.studentSid = studentSid
+        self.gradeSid = gradeSid
     }
     
     var sid: Int
-    var title: String
-    var weight: Int
-    var isActive: Bool
+    var isSynced: Bool
+    var passed: Bool
+    var lastUpdated: Int
     
-    var rubricSid: Int
-    var microTasks: [MicrotaskFields]
+    var assessmentSid: Int
+    var gradeSid: Int
+    var microTaskSid: Int
+    var studentSid: Int
 }
+
+struct MockStudentFields: StudentFields {
+    typealias StudentMicrotaskGradeFieldsType = MockStudentMicrotaskGrade
+    
+    init(sid: Int,
+         email: String,
+         logbookPass: String,
+         name: String,
+         assessmentSids: [Int],
+         instructorSids: [Int],
+         microTaskGrades: [StudentMicrotaskGradeFieldsType])
+    {
+        self.sid = sid
+        self.email = email
+        self.logbookPass = logbookPass
+        self.name = name
+        self.assessmentSids = assessmentSids
+        self.instructorSids = instructorSids
+        self.microTaskGrades = microTaskGrades
+    }
+    
+    static func mock(sid: Int) -> MockStudentFields {
+        return .init(sid: sid, email: "lorem", logbookPass: "ipsum", name: "foo", assessmentSids: [], instructorSids: [], microTaskGrades: [])
+    }
+    var sid: Int
+    var name: String
+    var email: String
+    var logbookPass: String
+    
+    var assessmentSids: [Int]
+    var instructorSids: [Int]
+    var microTaskGrades: [StudentMicrotaskGradeFieldsType]
+}
+
+struct MockGradeFields: GradeFields {
+    init(sid: Int, title: String, passed: Bool, score: Int, rubricSid: Int) {
+        self.sid = sid
+        self.title = title
+        self.passed = passed
+        self.score = score
+        self.rubricSid = rubricSid
+    }
+    
+    static func mock(sid: Int) -> MockGradeFields {
+        return .init(sid: sid, title: "Lorem Ipsum", passed: true, score: 0, rubricSid: 1)
+    }
+    var sid: Int
+    var title: String
+    var score: Int
+    var passed: Bool
+    var rubricSid: Int
+}
+
+
 
 struct AssessmentUtilsTestMocks {
     let rubrics: [MockRubricFields] = count.map {
@@ -165,7 +245,7 @@ struct AssessmentUtilsTestMocks {
             return student.instructorSids.contains(where: { $0 == instructor.sid })
         })
         let rubric = rubrics.randomElement()!
-        return MockAssessmentFields(sid: instructor.sid, date: Date(), schoolId: count.randomElement()!, isSynced: false, instructorSid: instructor.sid, rubricSid: rubric.sid, microTaskGradeSids: [], studentSids: instructorStudents.map { $0.sid })
+        return MockAssessmentFields(sid: instructor.sid, isSynced: false, date: Date(), schoolId: count.randomElement()!, instructorSid: instructor.sid, rubric: rubric, microTaskGradeSids: [], students: instructorStudents)
     }
 }
 
@@ -244,10 +324,10 @@ struct StudentMicrotaskGradesUtilsTestMocks {
     lazy var assessments: [MockAssessmentFields] = rubrics.map { rubric in
         let instructorSid = instructors[Int(rubric.sid)].sid
         let assessmentStudents = students.filter { $0.instructorSids.contains(instructorSid) }
-        return MockAssessmentFields(sid: rubric.sid, date: Date(), schoolId: rubric.sid + 1, isSynced: false, instructorSid: instructors[Int(rubric.sid)].sid, rubricSid: rubric.sid, microTaskGradeSids: [], studentSids: assessmentStudents.map { $0.sid })
+        return MockAssessmentFields(sid: rubric.sid, isSynced: false, date: Date(), schoolId: rubric.sid + 1, instructorSid: instructors[Int(rubric.sid)].sid, rubric: rubric, microTaskGradeSids: [], students: assessmentStudents)
     }
     lazy var microtaskGrades: [MockStudentMicrotaskGrade] = count.map {
-        MockStudentMicrotaskGrade(sid: $0, isSynced: false, passed: true, lastUpdated: 123, assessmentSid: assessments[Int($0)].sid, gradeSid: (grades.randomElement()!).sid, microTaskSid: microTasks[Int($0)].sid, studentSid: assessments[Int($0)].studentSids.first!)
+        MockStudentMicrotaskGrade(sid: $0, lastUpdated: 123, passed: true, isSynced: true, assessmentSid: assessments[Int($0)].sid, microTaskSid: microTasks[Int($0)].sid, studentSid: assessments[Int($0)].studentSids.first!, gradeSid: (grades.randomElement()!).sid)
     }
 }
 
