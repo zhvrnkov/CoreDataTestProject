@@ -56,7 +56,7 @@ public class GradesUtils
     }
     
     public enum Errors: Error {
-        case noUtils
+        case noFetch
 
         case rubricNotFound
     }
@@ -65,7 +65,7 @@ public class GradesUtils
     var backgroundContext: NSManagedObjectContext {
         return container.newBackgroundContext()
     }
-    var rubricUtils: RubricsUtils?
+    var rubricObjectIDFetch: ObjectIDFetch?
     
     init(with container: NSPersistentContainer) {
         self.container = container
@@ -107,11 +107,11 @@ extension GradesUtils: EntityUtilsRealization {
     private func set(
         rubricSid: Int, of grade: Grade, in context: NSManagedObjectContext) throws
     {
-        guard let utils = rubricUtils else {
-            throw Errors.noUtils
+        guard let fetch = rubricObjectIDFetch else {
+            throw Errors.noFetch
         }
-        guard let rubric = utils.get(whereSid: rubricSid),
-            let contextRubric = context.object(with: rubric.objectID) as? Rubric
+        guard let id = fetch(rubricSid),
+            let contextRubric = context.object(with: id) as? Rubric
         else {
             throw Errors.rubricNotFound
         }

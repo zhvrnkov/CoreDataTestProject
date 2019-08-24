@@ -59,14 +59,14 @@ public class StudentsUtils
     var backgroundContext: NSManagedObjectContext {
         return container.newBackgroundContext()
     }
-    var instructorsUtils: InstructorsUtils?
+    var instructorObjectIDsFetch: ObjectIDsFetch?
     
     init(with container: NSPersistentContainer) {
         self.container = container
     }
     
     public enum Errors: Error {
-        case noUtils
+        case noFetch
         
         case assessmentsNotFound
         case instructorsNotFound
@@ -112,6 +112,7 @@ extension StudentsUtils: EntityUtilsRealization {
         }
     }
     
+    #warning("what about clear student's instructor here?")
     private func set(
         instructorSids: [Int],
         of student: Student,
@@ -120,13 +121,13 @@ extension StudentsUtils: EntityUtilsRealization {
         guard !instructorSids.isEmpty else {
             return
         }
-        guard let util = instructorsUtils else {
-            throw Errors.noUtils
+        guard let fetch = instructorObjectIDsFetch else {
+            throw Errors.noFetch
         }
-        let savedInstructors = util.get(whereSids: instructorSids)
-        guard !savedInstructors.isEmpty,
-            let contextInstructors = savedInstructors
-                .map({ context.object(with: $0.objectID) }) as? [Instructor]
+        let ids = fetch(instructorSids)
+        guard !ids.isEmpty,
+            let contextInstructors = ids
+                .map({ context.object(with: $0) }) as? [Instructor]
             else {
                 throw Errors.instructorsNotFound
         }

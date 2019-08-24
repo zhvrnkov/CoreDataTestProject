@@ -60,14 +60,14 @@ public class MicrotasksUtils
         return container.newBackgroundContext()
     }
     
-    var skillSetsUtils: SkillSetsUtils?
+    var skillSetObjectIDFetch: ObjectIDFetch?
     
     init(with container: NSPersistentContainer) {
         self.container = container
     }
     
     public enum Errors: Error {
-        case noUtils
+        case noFetch
         
         case skillSetNotFound
     }
@@ -114,11 +114,11 @@ extension MicrotasksUtils:  EntityUtilsRealization {
         of microtask: Microtask,
         in context: NSManagedObjectContext) throws
     {
-        guard let utils = skillSetsUtils else {
-            throw Errors.noUtils
+        guard let fetch = skillSetObjectIDFetch else {
+            throw Errors.noFetch
         }
-        guard let savedSkillSet = utils.get(whereSid: skillSetSid),
-            let contextSkillSets = context.object(with: savedSkillSet.objectID) as? SkillSet
+        guard let id = fetch(skillSetSid),
+            let contextSkillSets = context.object(with: id) as? SkillSet
             else {
                 throw Errors.skillSetNotFound
         }

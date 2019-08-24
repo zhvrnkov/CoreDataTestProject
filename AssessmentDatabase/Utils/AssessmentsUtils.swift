@@ -61,16 +61,16 @@ public class AssessmentsUtils
         return container.newBackgroundContext()
     }
     
-    var studentsUtils: StudentsUtils?
-    var rubricsUtils: RubricsUtils?
-    var instructorsUtils: InstructorsUtils?
+    var studentObjectIDsFetch: ObjectIDsFetch?
+    var rubricObjectIDFetch: ObjectIDFetch?
+    var instructorObjectIDFetch: ObjectIDFetch?
     
     init(container: NSPersistentContainer) {
         self.container = container
     }
     
     public enum Errors: Error {
-        case noUtils
+        case noFetch
         case badCasting
         
         case studentsNotFound
@@ -129,15 +129,15 @@ extension AssessmentsUtils: EntityUtilsRealization {
         of assessment: Assessment,
         in context: NSManagedObjectContext) throws
     {
-        guard let utils = studentsUtils else {
-            throw Errors.noUtils
+        guard let fetch = studentObjectIDsFetch else {
+            throw Errors.noFetch
         }
-        let savedStudents = utils.get(whereSids: studentSids)
-        if studentSids.count != savedStudents.count {
+        let ids = fetch(studentSids)
+        if studentSids.count != ids.count {
             throw Errors.studentsNotFound
         }
         guard let assessmentStudents = assessment.students?.allObjects as? [Student],
-            let contextStudents = savedStudents.map({ context.object(with: $0.objectID) }) as? [Student]
+            let contextStudents = ids.map({ context.object(with: $0) }) as? [Student]
             else {
                 throw Errors.badCasting
         }
@@ -159,10 +159,11 @@ extension AssessmentsUtils: EntityUtilsRealization {
         of assessment: Assessment,
         in context: NSManagedObjectContext) throws
     {
-        guard let utils = rubricsUtils
-            else { throw Errors.noUtils }
-        guard let rubric = utils.get(whereSid: rubricSid),
-            let contextRubric = context.object(with: rubric.objectID) as? Rubric
+        guard let fetch = rubricObjectIDFetch
+            else { throw Errors.noFetch }
+        
+        guard let id = fetch(rubricSid),
+            let contextRubric = context.object(with: id) as? Rubric
             else {
                 throw Errors.rubricNotFound
         }
@@ -175,10 +176,11 @@ extension AssessmentsUtils: EntityUtilsRealization {
         of assessment: Assessment,
         in context: NSManagedObjectContext) throws
     {
-        guard let utils = instructorsUtils
-            else { throw Errors.noUtils }
-        guard let instructor = utils.get(whereSid: instructorSid),
-            let contextInstructor = context.object(with: instructor.objectID) as? Instructor
+        guard let fetch = instructorObjectIDFetch
+            else { throw Errors.noFetch }
+        
+        guard let id = fetch(instructorSid),
+            let contextInstructor = context.object(with: id) as? Instructor
             else {
                 throw Errors.instructorNotFound
         }

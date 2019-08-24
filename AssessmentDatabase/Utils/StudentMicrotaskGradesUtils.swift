@@ -61,17 +61,17 @@ public class StudentMicrotaskGradesUtils
         return container.newBackgroundContext()
     }
     
-    var assessmentsUtils: AssessmentsUtils?
-    var gradesUtils: GradesUtils?
-    var studentsUtils: StudentsUtils?
-    var microtasksUtils: MicrotasksUtils?
+    var assessmentObjectIDFetch: ObjectIDFetch?
+    var gradeObjectIDFetch: ObjectIDFetch?
+    var studentObjectIDFetch: ObjectIDFetch?
+    var microtaskObjectIDFetch: ObjectIDFetch?
     
     init(with container: NSPersistentContainer) {
         self.container = container
     }
     
     public enum Errors: Error {
-        case noUtils
+        case noFetch
         
         case assessmentNotFound
         case gradeNotFound
@@ -123,11 +123,11 @@ extension StudentMicrotaskGradesUtils: EntityUtilsRealization {
         of entity: StudentMicrotaskGrade,
         in context: NSManagedObjectContext) throws
     {
-        guard let utils = assessmentsUtils
-            else { throw Errors.noUtils }
+        guard let fetch = assessmentObjectIDFetch
+            else { throw Errors.noFetch }
         
-        guard let assessment = utils.get(whereSid: assessmentSid),
-            let contextAssessment = context.object(with: assessment.objectID) as? Assessment
+        guard let id = fetch(assessmentSid),
+            let contextAssessment = context.object(with: id) as? Assessment
             else {
                 throw Errors.assessmentNotFound
         }
@@ -141,10 +141,11 @@ extension StudentMicrotaskGradesUtils: EntityUtilsRealization {
         of entity: StudentMicrotaskGrade,
         in context: NSManagedObjectContext) throws
     {
-        guard let utils = gradesUtils
-            else { throw Errors.noUtils }
-        guard let grade = utils.get(whereSid: gradeSid),
-            let contextGrade = context.object(with: grade.objectID) as? Grade
+        guard let fetch = gradeObjectIDFetch
+            else { throw Errors.noFetch }
+        
+        guard let id = fetch(gradeSid),
+            let contextGrade = context.object(with: id) as? Grade
             else {
                 throw Errors.gradeNotFound
         }
@@ -157,10 +158,11 @@ extension StudentMicrotaskGradesUtils: EntityUtilsRealization {
         of entity: StudentMicrotaskGrade,
         in context: NSManagedObjectContext) throws
     {
-        guard let utils = microtasksUtils
-            else { throw Errors.noUtils }
-        guard let savedMicrotask = utils.get(whereSid: microTaskSid),
-            let contextMicrotask = context.object(with: savedMicrotask.objectID) as? Microtask
+        guard let fetch = microtaskObjectIDFetch
+            else { throw Errors.noFetch }
+        
+        guard let id = fetch(microTaskSid),
+            let contextMicrotask = context.object(with: id) as? Microtask
             else {
                 throw Errors.microTaskNotFound
         }
@@ -173,10 +175,11 @@ extension StudentMicrotaskGradesUtils: EntityUtilsRealization {
         of entity: StudentMicrotaskGrade,
         in context: NSManagedObjectContext) throws
     {
-        guard let utils = studentsUtils
-            else { throw Errors.noUtils }
-        guard let student = utils.get(whereSid: studentSid),
-            let contextStudent = context.object(with: student.objectID) as? Student
+        guard let fetch = studentObjectIDFetch
+            else { throw Errors.noFetch }
+        
+        guard let id = fetch(studentSid),
+            let contextStudent = context.object(with: id) as? Student
             else {
                 throw Errors.studentNotFound
         }

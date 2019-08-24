@@ -9,6 +9,9 @@
 import Foundation
 import CoreData
 
+typealias ObjectIDFetch = ((Int) -> NSManagedObjectID?)
+typealias ObjectIDsFetch = (([Int]) -> [NSManagedObjectID])
+
 let dbError = "Something happen with your local database. Place contact the support"
 let badSid: Int64 = -1
 
@@ -48,8 +51,9 @@ protocol EntityUtilsRealization: class {
     var container: NSPersistentContainer { get set }
     var backgroundContext: NSManagedObjectContext { get }
     
-    static func copyFields(from item: Owner.EntityValueFields, to entity: EntityType)
+    func getObjectIds(whereSids: [Int]) -> [NSManagedObjectID]
     func setRelations(from item: Owner.EntityValueFields, of entity: EntityType, in context: NSManagedObjectContext) throws
+    static func copyFields(from item: Owner.EntityValueFields, to entity: EntityType)
     static func map(entity: EntityType) -> Owner.EntityValueFields
 }
 
@@ -60,6 +64,26 @@ extension EntityUtilsRealization {
 }
 
 extension EntityUtilsRealization {
+    func getObjectIds(whereSids sids: [Int]) -> [NSManagedObjectID] {
+        let request = NSFetchRequest<EntityType>(
+            entityName: "\(EntityType.self)")
+        request.predicate = NSPredicate(format: "sid IN %@", argumentArray: sids)
+        var output: [NSManagedObjectID] = []
+        let context = container.viewContext
+        context.performAndWait {
+            do {
+                output = try context.fetch(request).map { $0.objectID }
+            } catch {
+                fatalError(error.localizedDescription)
+            }
+        }
+        return output
+    }
+    
+    func getObjectId(whereSid sid: Int) -> NSManagedObjectID? {
+        return getObjectIds(whereSids: [sid]).first
+    }
+    
     func _getAll() -> [Owner.EntityValueFields] {
         let request = NSFetchRequest<EntityType>(
             entityName: "\(EntityType.self)")

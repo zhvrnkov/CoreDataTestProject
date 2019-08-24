@@ -60,14 +60,14 @@ public class SkillSetsUtils
         return container.newBackgroundContext()
     }
     
-    var rubricUtils: RubricsUtils?
+    var rubricObjectIDFetch: ObjectIDFetch?
     
     init(with container: NSPersistentContainer) {
         self.container = container
     }
     
     public enum Errors: Error {
-        case noUtils
+        case noFetch
         
         case rubricNotFound
     }
@@ -113,11 +113,11 @@ extension SkillSetsUtils: EntityUtilsRealization {
         of skillSet: SkillSet,
         in context: NSManagedObjectContext) throws
     {
-        guard let utils = rubricUtils else {
-            throw Errors.noUtils
+        guard let fetch = rubricObjectIDFetch else {
+            throw Errors.noFetch
         }
-        guard let savedRubric = utils.get(whereSid: rubricSid),
-            let contextRubric = context.object(with: savedRubric.objectID) as? Rubric
+        guard let id = fetch(rubricSid),
+            let contextRubric = context.object(with: id) as? Rubric
             else {
                 throw Errors.rubricNotFound
         }
