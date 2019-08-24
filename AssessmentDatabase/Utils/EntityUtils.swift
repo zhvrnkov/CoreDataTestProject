@@ -9,6 +9,9 @@
 import Foundation
 import CoreData
 
+let dbError = "Something happen with your local database. Place contact the support"
+let badSid: Int64 = -1
+
 public struct FilterOutput {
     let toDelete: [Int]
     let toAdd: [Int]
@@ -46,7 +49,7 @@ protocol EntityUtilsRealization: class {
     var backgroundContext: NSManagedObjectContext { get }
     
     static func copyFields(from item: Owner.EntityValueFields, to entity: EntityType)
-    static func setRelations(from item: Owner.EntityValueFields, of entity: EntityType, in context: NSManagedObjectContext) throws
+    func setRelations(from item: Owner.EntityValueFields, of entity: EntityType, in context: NSManagedObjectContext) throws
     static func map(entity: EntityType) -> Owner.EntityValueFields
 }
 
