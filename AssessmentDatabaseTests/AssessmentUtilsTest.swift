@@ -70,6 +70,14 @@ final class AssessmentUtilsTest: XCTestCase {
         compareItems([item], This.util.getAll())
     }
     
+    func testUpdateAssessmentTime() {
+        var item = mocks.assessments.randomElement()!
+        XCTAssertNoThrow(try This.util.save(item: item))
+        item.date = Date()
+        XCTAssertNoThrow(try This.util.update(whereSid: item.sid, like: item))
+        compareItems([item], This.util.getAll())
+    }
+    
     func testChangeRubricOfAssessment() {
         var item = mocks.assessments.randomElement()!
         XCTAssertNoThrow(try This.util.save(item: item))
