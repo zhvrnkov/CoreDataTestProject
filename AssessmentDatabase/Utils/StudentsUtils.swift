@@ -63,6 +63,7 @@ public class StudentsUtils
     var backgroundContext: NSManagedObjectContext {
         return container.newBackgroundContext()
     }
+    var queue: DispatchQueue = .global(qos: .userInitiated)
     var instructorObjectIDsFetch: ObjectIDsFetch?
     
     public init(with container: NSPersistentContainer) {

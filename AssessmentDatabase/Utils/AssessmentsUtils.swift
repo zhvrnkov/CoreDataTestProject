@@ -68,6 +68,7 @@ public class AssessmentsUtils
     var backgroundContext: NSManagedObjectContext {
         return container.newBackgroundContext()
     }
+    var queue: DispatchQueue = .global(qos: .userInitiated)
     
     var studentObjectIDsFetch: ObjectIDsFetch?
     var rubricObjectIDFetch: ObjectIDFetch?

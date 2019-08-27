@@ -63,6 +63,7 @@ public class SkillSetsUtils
     var backgroundContext: NSManagedObjectContext {
         return container.newBackgroundContext()
     }
+    var queue: DispatchQueue = .global(qos: .userInitiated)
     
     var rubricObjectIDFetch: ObjectIDFetch?
     

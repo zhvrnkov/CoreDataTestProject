@@ -69,6 +69,7 @@ public class GradesUtils
     var backgroundContext: NSManagedObjectContext {
         return container.newBackgroundContext()
     }
+    var queue: DispatchQueue = .global(qos: .userInitiated)
     var rubricObjectIDFetch: ObjectIDFetch?
     
     public init(with container: NSPersistentContainer) {

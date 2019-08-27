@@ -68,6 +68,7 @@ public class StudentMicrotaskGradesUtils
     var backgroundContext: NSManagedObjectContext {
         return container.newBackgroundContext()
     }
+    var queue: DispatchQueue = .global(qos: .userInitiated)
     
     var assessmentObjectIDFetch: ObjectIDFetch?
     var gradeObjectIDFetch: ObjectIDFetch?

@@ -49,6 +49,7 @@ protocol EntityUtilsRealization: class {
     associatedtype EntityType: NSManagedObject & DBSidable
     
     var container: NSPersistentContainer { get set }
+    var queue: DispatchQueue { get }
     var backgroundContext: NSManagedObjectContext { get }
     
     func getObjectIds(whereSids: [Int]) -> [NSManagedObjectID]
@@ -65,19 +66,21 @@ extension EntityUtilsRealization {
 
 extension EntityUtilsRealization {
     func getObjectIds(whereSids sids: [Int]) -> [NSManagedObjectID] {
-        let request = NSFetchRequest<EntityType>(
-            entityName: "\(EntityType.self)")
-        request.predicate = NSPredicate(format: "sid IN %@", argumentArray: [sids])
-        var output: [NSManagedObjectID] = []
-        let context = container.viewContext
-        context.performAndWait {
-            do {
-                output = try context.fetch(request).map { $0.objectID }
-            } catch {
-                fatalError(error.localizedDescription)
+        return queue.sync { () -> [NSManagedObjectID] in
+            let request = NSFetchRequest<EntityType>(
+                entityName: "\(EntityType.self)")
+            request.predicate = NSPredicate(format: "sid IN %@", argumentArray: [sids])
+            var output: [NSManagedObjectID] = []
+            let context = container.viewContext
+            context.performAndWait {
+                do {
+                    output = try context.fetch(request).map { $0.objectID }
+                } catch {
+                    fatalError(error.localizedDescription)
+                }
             }
+            return output
         }
-        return output
     }
     
     func getObjectId(whereSid sid: Int) -> NSManagedObjectID? {
@@ -85,58 +88,66 @@ extension EntityUtilsRealization {
     }
     
     func _getAll() -> [Owner.EntityValueFields] {
-        let request = NSFetchRequest<EntityType>(
-            entityName: "\(EntityType.self)")
-        var output: [Owner.EntityValueFields] = []
-        let context = container.viewContext
-        context.performAndWait {
-            do {
-                output = Self.map(entities: try context.fetch(request))
-            } catch {
-                fatalError(error.localizedDescription)
+        return queue.sync { () -> [Owner.EntityValueFields] in
+            let request = NSFetchRequest<EntityType>(
+                entityName: "\(EntityType.self)")
+            var output: [Owner.EntityValueFields] = []
+            let context = container.viewContext
+            context.performAndWait {
+                do {
+                    output = Self.map(entities: try context.fetch(request))
+                } catch {
+                    fatalError(error.localizedDescription)
+                }
             }
+            return output
         }
-        return output
     }
     
     func _asyncGetAll(_ completion: @escaping (Result<[Owner.EntityValueFields], Error>) -> Void) {
-        let request = NSFetchRequest<EntityType>(
-            entityName: "\(EntityType.self)"
-        )
-        let context = container.viewContext
-        context.perform {
-            do {
-                completion(.success(try Self.map(entities: context.fetch(request))))
-            } catch {
-                completion(.failure(error))
+        queue.async { [weak self] in
+            let request = NSFetchRequest<EntityType>(
+                entityName: "\(EntityType.self)"
+            )
+            let context = self?.container.viewContext
+            context?.perform {
+                do {
+                    completion(.success(try Self.map(entities: context?.fetch(request) ?? [])))
+                } catch {
+                    completion(.failure(error))
+                }
             }
         }
     }
     
     func _get(where predicate: Predicate) -> [Owner.EntityValueFields] {
-        let request = NSFetchRequest<EntityType>(entityName: "\(EntityType.self)")
-        request.predicate = NSPredicate(format: predicate.format, argumentArray: predicate.arguments)
-        var output: [Owner.EntityValueFields] = []
-        let context = container.viewContext
-        context.performAndWait {
-            do {
-                output = Self.map(entities: try context.fetch(request))
-            } catch {
-                fatalError(error.localizedDescription)
+        return queue.sync { () -> [Owner.EntityValueFields] in
+            let request = NSFetchRequest<EntityType>(entityName: "\(EntityType.self)")
+            request.predicate = NSPredicate(format: predicate.format, argumentArray: predicate.arguments)
+            var output: [Owner.EntityValueFields] = []
+            let context = container.viewContext
+            context.performAndWait {
+                do {
+                    output = Self.map(entities: try context.fetch(request))
+                } catch {
+                    fatalError(error.localizedDescription)
+                }
             }
+            return output
         }
-        return output
     }
     
     func _asyncGet(where predicate: Predicate, _ completeion: @escaping (Result<[Owner.EntityValueFields], Error>) -> Void) {
-        let request = NSFetchRequest<EntityType>(entityName: "\(EntityType.self)")
-        request.predicate = NSPredicate(format: predicate.format, argumentArray: predicate.arguments)
-        let context = container.viewContext
-        context.perform {
-            do {
-                completeion(.success(try Self.map(entities: context.fetch(request))))
-            } catch {
-                completeion(.failure(error))
+        queue.async { [weak self] in
+            let request = NSFetchRequest<EntityType>(entityName: "\(EntityType.self)")
+            request.predicate = NSPredicate(format: predicate.format, argumentArray: predicate.arguments)
+            let context = self?.container.viewContext
+            context?.perform {
+                do {
+                    completeion(.success(try Self.map(entities: context?.fetch(request) ?? [])))
+                } catch {
+                    completeion(.failure(error))
+                }
             }
         }
     }
@@ -172,38 +183,70 @@ extension EntityUtilsRealization {
     }
 
     func _save(item: Owner.EntityValueFields) throws {
-        var error: Error?
-        let context = backgroundContext
-        context.performAndWait {
-            let entity = EntityType(context: context)
-            Self.copyFields(from: item, to: entity)
-            do {
-                try self.setRelations(from: item, of: entity, in: context)
-                try context.save()
-                try _saveMain()
-            } catch let err {
-                error = err
-            }
-        }
-        if let error = error {
-            throw error
-        }
-    }
-    
-    func _save(items: [Owner.EntityValueFields]) throws {
-        var error: Error?
-        let context = backgroundContext
-        context.performAndWait {
-            items.forEach { item in
+        try queue.sync {
+            var error: Error?
+            let context = backgroundContext
+            context.performAndWait {
                 let entity = EntityType(context: context)
                 Self.copyFields(from: item, to: entity)
                 do {
                     try self.setRelations(from: item, of: entity, in: context)
+                    try context.save()
+                    try _saveMain()
                 } catch let err {
                     error = err
                 }
             }
-            if error == nil {
+            if let error = error {
+                throw error
+            }
+        }
+    }
+    
+    func _save(items: [Owner.EntityValueFields]) throws {
+        try queue.sync {
+            var error: Error?
+            let context = backgroundContext
+            context.performAndWait {
+                items.forEach { item in
+                    let entity = EntityType(context: context)
+                    Self.copyFields(from: item, to: entity)
+                    do {
+                        try self.setRelations(from: item, of: entity, in: context)
+                    } catch let err {
+                        error = err
+                    }
+                }
+                if error == nil {
+                    do {
+                        try context.save()
+                        try _saveMain()
+                    } catch let err {
+                        error = err
+                    }
+                }
+            }
+            if let error = error {
+                throw error
+            }
+        }
+    }
+    
+    func _delete(whereSids sids: [Int]) throws {
+        try queue.sync {
+            var error: Error?
+            let request = NSFetchRequest<EntityType>(entityName: "\(EntityType.self)")
+            request.predicate = NSPredicate(format: "sid IN %@", argumentArray: [sids])
+            let context = backgroundContext
+            context.performAndWait {
+                let entities = try! context.fetch(request)
+                if entities.count != sids.count {
+                    error = EntityUtilsError.entityNotFound
+                }
+                entities.forEach { entity in
+                    let contextEntity = context.object(with: entity.objectID)
+                    context.delete(contextEntity)
+                }
                 do {
                     try context.save()
                     try _saveMain()
@@ -211,35 +254,9 @@ extension EntityUtilsRealization {
                     error = err
                 }
             }
-        }
-        if let error = error {
-            throw error
-        }
-    }
-    
-    func _delete(whereSids sids: [Int]) throws {
-        var error: Error?
-        let request = NSFetchRequest<EntityType>(entityName: "\(EntityType.self)")
-        request.predicate = NSPredicate(format: "sid IN %@", argumentArray: [sids])
-        let context = backgroundContext
-        context.performAndWait {
-            let entities = try! context.fetch(request)
-            if entities.count != sids.count {
-                error = EntityUtilsError.entityNotFound
+            if let error = error {
+                throw error
             }
-            entities.forEach { entity in
-                let contextEntity = context.object(with: entity.objectID)
-                context.delete(contextEntity)
-            }
-            do {
-                try context.save()
-                try _saveMain()
-            } catch let err {
-                error = err
-            }
-        }
-        if let error = error {
-            throw error
         }
     }
     
@@ -248,28 +265,30 @@ extension EntityUtilsRealization {
     }
     
     func _update(whereSid sid: Int, like item: Owner.EntityValueFields) throws {
-        var error: Error?
-        let context = backgroundContext
-        let request = NSFetchRequest<EntityType>(entityName: "\(EntityType.self)")
-        request.predicate = NSPredicate(format: "sid==%d", argumentArray: [sid])
-        context.performAndWait {
-            guard let entity = try? context.fetch(request).first,
-                let contextEntity = context.object(with: entity.objectID) as? EntityType
-            else {
-                error = EntityUtilsError.entityNotFound
-                return
+        try queue.sync {
+            var error: Error?
+            let context = backgroundContext
+            let request = NSFetchRequest<EntityType>(entityName: "\(EntityType.self)")
+            request.predicate = NSPredicate(format: "sid==%d", argumentArray: [sid])
+            context.performAndWait {
+                guard let entity = try? context.fetch(request).first,
+                    let contextEntity = context.object(with: entity.objectID) as? EntityType
+                    else {
+                        error = EntityUtilsError.entityNotFound
+                        return
+                }
+                Self.copyFields(from: item, to: contextEntity)
+                do {
+                    try self.setRelations(from: item, of: contextEntity, in: context)
+                    try context.save()
+                    try _saveMain()
+                } catch let err {
+                    error = err
+                }
             }
-            Self.copyFields(from: item, to: contextEntity)
-            do {
-                try self.setRelations(from: item, of: contextEntity, in: context)
-                try context.save()
-                try _saveMain()
-            } catch let err {
-                error = err
+            if let error = error {
+                throw error
             }
-        }
-        if let error = error {
-            throw error
         }
     }
     

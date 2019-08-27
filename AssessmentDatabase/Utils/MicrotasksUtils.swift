@@ -63,6 +63,7 @@ public class MicrotasksUtils
     var backgroundContext: NSManagedObjectContext {
         return container.newBackgroundContext()
     }
+    var queue: DispatchQueue = .global(qos: .userInitiated)
     
     var skillSetObjectIDFetch: ObjectIDFetch?
     

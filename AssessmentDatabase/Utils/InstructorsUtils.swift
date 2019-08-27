@@ -60,6 +60,7 @@ public class InstructorsUtils
     var backgroundContext: NSManagedObjectContext {
         return container.newBackgroundContext()
     }
+    var queue: DispatchQueue = .global(qos: .userInitiated)
     
     public init(with container: NSPersistentContainer) {
         self.container = container

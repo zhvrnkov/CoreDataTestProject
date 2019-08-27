@@ -56,6 +56,7 @@ public class RubricsUtils<EntityValueFields: RubricFields>: EntityUtils {
     public var backgroundContext: NSManagedObjectContext {
         return container.newBackgroundContext()
     }
+    var queue: DispatchQueue = .global(qos: .userInitiated)
     
     public init(with container: NSPersistentContainer) {
         self.container = container
