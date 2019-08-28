@@ -214,16 +214,15 @@ extension EntityUtilsRealization {
                     do {
                         try self.setRelations(from: item, of: entity, in: context)
                     } catch let err {
+                        context.delete(entity)
                         error = err
                     }
                 }
-                if error == nil {
-                    do {
-                        try context.save()
-                        try _saveMain()
-                    } catch let err {
-                        error = err
-                    }
+                do {
+                    try context.save()
+                    try _saveMain()
+                } catch let err {
+                    error = err
                 }
             }
             if let error = error {

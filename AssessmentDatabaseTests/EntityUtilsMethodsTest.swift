@@ -13,7 +13,7 @@ final class EntityUtilsMethodsTest: XCTestCase {
     typealias This = EntityUtilsMethodsTest
     static var utils: RubricsUtils<MockRubricFields> = .init(with: getMockPersistentContainer())
     static var skillSetUtils: SkillSetsUtils<MockSkillSets> = {
-        let temp = SkillSetsUtils<MockSkillSets>(with: getMockPersistentContainer())
+        let temp = SkillSetsUtils<MockSkillSets>(with: utils.container)
         temp.rubricObjectIDFetch = This.utils.getObjectId(whereSid:)
         return temp
     }()
