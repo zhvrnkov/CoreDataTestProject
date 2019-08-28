@@ -273,9 +273,9 @@ extension EntityUtilsRealization {
             context.performAndWait {
                 guard let entity = try? context.fetch(request).first,
                     let contextEntity = context.object(with: entity.objectID) as? EntityType
-                    else {
-                        error = EntityUtilsError.entityNotFound
-                        return
+                else {
+                    error = EntityUtilsError.entityNotFound
+                    return
                 }
                 Self.copyFields(from: item, to: contextEntity)
                 do {
@@ -317,5 +317,20 @@ extension EntityUtilsRealization {
         let toSave = new.filter { newSid in !saved.contains(newSid)}
         
         return FilterOutput(toDelete: toDelete, toAdd: toSave)
+    }
+    
+    func isEntityExists(sid: Int) -> Bool {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "\(EntityType.self)")
+        fetchRequest.predicate = NSPredicate(format: "sid==%d", argumentArray: [sid])
+        fetchRequest.includesSubentities = false
+        
+        var entitiesCount = 0
+        do {
+            entitiesCount = try container.viewContext.count(for: fetchRequest)
+        } catch {
+            print("error executing fetch request: \(error)")
+        }
+        
+        return entitiesCount > 0
     }
 }

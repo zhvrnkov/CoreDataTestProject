@@ -74,7 +74,7 @@ final class EntityUtilsMethodsTest: XCTestCase {
         let item = rubrics[0]
         let predicate = Predicate(format: "sid==%d", arguments: [item.sid])
         let entities = This.utils.get(where: predicate)
-        compareItems([item], entities)
+        compareRubrics([item], entities)
     }
     
     func testAsyncGetWherePredicate() {
@@ -84,7 +84,7 @@ final class EntityUtilsMethodsTest: XCTestCase {
         This.utils.asyncGet(where: predicate) { result in
             switch result {
             case .success(let data):
-                self.compareItems([item], data)
+                self.compareRubrics([item], data)
             case .failure(let error):
                 XCTFail(error.localizedDescription)
             }
@@ -163,7 +163,7 @@ final class EntityUtilsMethodsTest: XCTestCase {
             XCTFail()
             return
         }
-        compareItem(toUpdate, entity)
+        compareRubric(toUpdate, entity)
     }
     
     func testUndefinedItemUpdateShouldThrow() {
@@ -184,6 +184,17 @@ final class EntityUtilsMethodsTest: XCTestCase {
         item.rubricSid = -1
         XCTAssertThrowsError(try This.skillSetUtils.save(item: item))
         XCTAssertTrue(This.skillSetUtils.getAll().isEmpty)
+    }
+    
+    func testIcompleteAndCompleteSaveAsOneTransaction() {
+        let items = mocks.skillSets
+        var incompleteItems = (0..<(items.count/2)).map { items[$0] }
+        let completeItems = ((items.count/2)..<items.count).map { items[$0] }
+        for index in incompleteItems.indices {
+            incompleteItems[index].rubricSid = -1
+        }
+        XCTAssertThrowsError(try This.skillSetUtils.save(items: completeItems + incompleteItems))
+        compareSkillSets(completeItems, This.skillSetUtils.getAll())
     }
     
     func testIncompleteSaveAndThenCompleteSave() {
@@ -237,7 +248,7 @@ final class EntityUtilsMethodsTest: XCTestCase {
         compareFilterItems(toSave, itemsToSave)
     }
     
-    func compareItems(_ items: [MockRubricFields], _ entities: [MockRubricFields]) {
+    func compareRubrics(_ items: [MockRubricFields], _ entities: [MockRubricFields]) {
         XCTAssertEqual(items.count, entities.count)
         for index in items.indices {
             let item = items[index]
@@ -245,11 +256,11 @@ final class EntityUtilsMethodsTest: XCTestCase {
                 XCTFail("can't found entity")
                 return
             }
-            compareItem(item, entity)
+            compareRubric(item, entity)
         }
     }
     
-    func compareItem(_ item: MockRubricFields, _ entity: MockRubricFields) {
+    func compareRubric(_ item: MockRubricFields, _ entity: MockRubricFields) {
         XCTAssertEqual(item.sid, Int(entity.sid))
         XCTAssertEqual(item.skillSets.count, entity.skillSets.count)
         let dbSkillSets = entity.skillSets
@@ -258,6 +269,20 @@ final class EntityUtilsMethodsTest: XCTestCase {
                 XCTFail("can't find skillsets that should be saved")
                 return
             }
+        }
+    }
+    
+    func compareSkillSets(_ items: [MockSkillSets], _ entities: [MockSkillSets]) {
+        XCTAssertEqual(items.count, entities.count)
+        items.forEach { item in
+            guard let entity = entities.first(where: { $0.sid == item.sid }) else {
+                XCTFail("can't find skillsets that should be saved")
+                return
+            }
+            XCTAssertEqual(item.isActive, entity.isActive)
+            XCTAssertEqual(item.rubricSid, entity.rubricSid)
+            XCTAssertEqual(item.title, entity.title)
+            XCTAssertEqual(item.weight, entity.weight)
         }
     }
     
