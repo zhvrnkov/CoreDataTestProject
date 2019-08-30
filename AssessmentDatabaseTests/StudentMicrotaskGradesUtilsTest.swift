@@ -12,7 +12,11 @@ final class StudentMicrotaskGradesUtilsTest: XCTestCase {
     typealias This = StudentMicrotaskGradesUtilsTest
     static let container = getMockPersistentContainer()
     
-    static let instructorsUtils = InstructorsUtils<MockInstructorFields>(with: container)
+    static let instructorsUtils: InstructorsUtils<MockInstructorFields> = {
+        let t = InstructorsUtils<MockInstructorFields>(with: container)
+        t.schoolObjectIDsFetch = SchoolUtils<MockSchoolFields>(with: container).getObjectIds(whereSids:)
+        return t
+    }()
     static let studentsUtils: StudentsUtils<MockStudentFields> = {
         let util = StudentsUtils<MockStudentFields>(with: container)
         util.instructorObjectIDsFetch = This.instructorsUtils.getObjectIds(whereSids:)

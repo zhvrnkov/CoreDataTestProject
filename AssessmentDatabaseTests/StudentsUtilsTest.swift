@@ -18,7 +18,11 @@ final class StudentsUtilsTest: XCTestCase {
         return util
     }()
     
-    static let instructorsUtils = InstructorsUtils<MockInstructorFields>(with: container)
+    static let instructorsUtils: InstructorsUtils<MockInstructorFields> = {
+        let t = InstructorsUtils<MockInstructorFields>(with: container)
+        t.schoolObjectIDsFetch = SchoolUtils<MockSchoolFields>(with: container).getObjectIds(whereSids:)
+        return t
+    }()
     
     private var mocks = StudentsUtilsTestMocks()
     
