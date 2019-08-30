@@ -60,9 +60,6 @@ public class SkillSetsUtils
     }
     
     var container: NSPersistentContainer
-    var backgroundContext: NSManagedObjectContext {
-        return container.newBackgroundContext()
-    }
     var queue: DispatchQueue = .global(qos: .userInitiated)
     
     var rubricObjectIDFetch: ObjectIDFetch?
@@ -126,7 +123,6 @@ extension SkillSetsUtils: EntityUtilsRealization {
             else {
                 throw Errors.rubricNotFound
         }
-        contextRubric.addToSkillSets(skillSet)
         skillSet.rubric = contextRubric
     }
 }

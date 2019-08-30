@@ -60,9 +60,6 @@ public class MicrotasksUtils
     }
     
     var container: NSPersistentContainer
-    var backgroundContext: NSManagedObjectContext {
-        return container.newBackgroundContext()
-    }
     var queue: DispatchQueue = .global(qos: .userInitiated)
     
     var skillSetObjectIDFetch: ObjectIDFetch?
@@ -127,7 +124,6 @@ extension MicrotasksUtils:  EntityUtilsRealization {
             else {
                 throw Errors.skillSetNotFound
         }
-        contextSkillSets.addToMicroTasks(microtask)
         microtask.skillSet = contextSkillSets
     }
 }

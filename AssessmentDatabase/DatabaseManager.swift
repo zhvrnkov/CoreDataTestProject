@@ -27,7 +27,7 @@ final public class DatabaseManager {
     
     public static var env: DatabaseEnviorment = .common
     
-    private(set) public var persistentContainer: PersistentContainer
+    public let persistentContainer: PersistentContainer
     
     private static func getInitializedPersistentContainer(named name: String = "DataModel") -> PersistentContainer {
         let container = PersistentContainer(name: name)

@@ -65,9 +65,6 @@ public class AssessmentsUtils
     
     
     var container: NSPersistentContainer
-    var backgroundContext: NSManagedObjectContext {
-        return container.newBackgroundContext()
-    }
     var queue: DispatchQueue = .global(qos: .userInitiated)
     
     var studentObjectIDsFetch: ObjectIDsFetch?
@@ -176,7 +173,6 @@ extension AssessmentsUtils: EntityUtilsRealization {
             else {
                 throw Errors.rubricNotFound
         }
-        contextRubric.addToAssessments(assessment)
         assessment.rubric = contextRubric
     }
     
@@ -193,7 +189,6 @@ extension AssessmentsUtils: EntityUtilsRealization {
             else {
                 throw Errors.instructorNotFound
         }
-        contextInstructor.addToAssessments(assessment)
         assessment.instructor = contextInstructor
     }
 }

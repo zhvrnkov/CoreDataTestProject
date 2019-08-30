@@ -65,6 +65,12 @@ extension EntityUtilsRealization {
 }
 
 extension EntityUtilsRealization {
+    var backgroundContext: NSManagedObjectContext {
+        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        context.parent = container.viewContext
+        return context
+    }
+    
     func getObjectIds(whereSids sids: [Int]) -> [NSManagedObjectID] {
         return queue.sync { () -> [NSManagedObjectID] in
             let request = NSFetchRequest<EntityType>(
@@ -298,16 +304,18 @@ extension EntityUtilsRealization {
     }
     
     func _saveMain() throws {
-        var error: Error?
-        container.viewContext.performAndWait {
-            do {
-                try container.viewContext.save()
-            } catch let err {
-                error = err
+        try queue.sync {
+            var error: Error?
+            container.viewContext.performAndWait {
+                do {
+                    try container.viewContext.save()
+                } catch let err {
+                    error = err
+                }
             }
-        }
-        if let error = error {
-            throw error
+            if let error = error {
+                throw error
+            }
         }
     }
     

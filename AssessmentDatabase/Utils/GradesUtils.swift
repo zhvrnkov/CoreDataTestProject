@@ -66,9 +66,6 @@ public class GradesUtils
     }
     
     var container: NSPersistentContainer
-    var backgroundContext: NSManagedObjectContext {
-        return container.newBackgroundContext()
-    }
     var queue: DispatchQueue = .global(qos: .userInitiated)
     var rubricObjectIDFetch: ObjectIDFetch?
     
@@ -121,6 +118,5 @@ extension GradesUtils: EntityUtilsRealization {
             throw Errors.rubricNotFound
         }
         grade.rubric = contextRubric
-        contextRubric.addToGrades(grade)
     }
 }

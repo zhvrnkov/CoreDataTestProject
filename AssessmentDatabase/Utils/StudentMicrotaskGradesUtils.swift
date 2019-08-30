@@ -65,9 +65,6 @@ public class StudentMicrotaskGradesUtils
     }
     
     var container: NSPersistentContainer
-    var backgroundContext: NSManagedObjectContext {
-        return container.newBackgroundContext()
-    }
     var queue: DispatchQueue = .global(qos: .userInitiated)
     
     var assessmentObjectIDFetch: ObjectIDFetch?
@@ -141,8 +138,6 @@ extension StudentMicrotaskGradesUtils: EntityUtilsRealization {
                 throw Errors.assessmentNotFound
         }
         entity.assessment = contextAssessment
-        contextAssessment.addToStudentMicrotaskGrades(entity)
-        
     }
     
     private func set(
@@ -159,7 +154,6 @@ extension StudentMicrotaskGradesUtils: EntityUtilsRealization {
                 throw Errors.gradeNotFound
         }
         entity.grade = contextGrade
-        contextGrade.addToStudentMicrotaskGrades(entity)
     }
     
     private func set(
@@ -176,7 +170,6 @@ extension StudentMicrotaskGradesUtils: EntityUtilsRealization {
                 throw Errors.microTaskNotFound
         }
         entity.microTask = contextMicrotask
-        contextMicrotask.addToStudentMicroTaskGrades(entity)
     }
     
     private func set(
@@ -193,6 +186,5 @@ extension StudentMicrotaskGradesUtils: EntityUtilsRealization {
                 throw Errors.studentNotFound
         }
         entity.student = contextStudent
-        contextStudent.addToMicroTaskGrades(entity)
     }
 }
