@@ -59,6 +59,8 @@ public final class InstructorsUtils
     var container: NSPersistentContainer
     var queue: DispatchQueue = .global(qos: .userInitiated)
     
+    var schoolObjectIDsFetch: ObjectIDsFetch?
+    
     public init(with container: NSPersistentContainer) {
         self.container = container
     }
@@ -66,8 +68,8 @@ public final class InstructorsUtils
     public enum Errors: Error {
         case noUtils
         
-        case assessmentsNotFound
-        case studentsNotFound
+        case noFetch
+        case schoolsNotFound
     }
 }
 
@@ -137,5 +139,28 @@ extension InstructorsUtils: EntityUtilsRealization {
         from item: EntityValueFields,
         of entity: Instructor,
         in context: NSManagedObjectContext) throws
-    {}
+    {
+        do {
+            try set(schoolSids: item.schools.sids, of: entity, in: context)
+        } catch {
+            throw error
+        }
+    }
+    
+    private func set(
+        schoolSids: [Int],
+        of instructor: Instructor,
+        in context: NSManagedObjectContext) throws
+    {
+        guard let fetch = schoolObjectIDsFetch else {
+            throw Errors.noFetch
+        }
+        let ids = fetch(schoolSids)
+        guard ids.count == schoolSids.count,
+            let contextSchools = ids.map({ context.object(with: $0) }) as? [School]
+        else {
+            throw Errors.schoolsNotFound
+        }
+        instructor.schools = NSSet(array: contextSchools)
+    }
 }

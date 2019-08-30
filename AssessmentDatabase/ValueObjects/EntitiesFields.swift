@@ -22,7 +22,7 @@ extension Array where Element: DBSidable {
     }
 }
 
-public extension Array where Element: Sidable {
+extension Array where Element: Sidable {
     var sids: [Int] {
         return map { $0.sid }
     }

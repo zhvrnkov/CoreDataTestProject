@@ -65,7 +65,7 @@
     <entity name="School" representedClassName=".School" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sid" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="instructors" toMany="YES" deletionRule="Cascade" destinationEntity="Instructor" inverseName="schools" inverseEntity="Instructor" syncable="YES"/>
+        <relationship name="instructors" toMany="YES" deletionRule="Nullify" destinationEntity="Instructor" inverseName="schools" inverseEntity="Instructor" syncable="YES"/>
     </entity>
     <entity name="SkillSet" representedClassName=".SkillSet" syncable="YES">
         <attribute name="isActive" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>

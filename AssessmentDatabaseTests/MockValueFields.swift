@@ -280,8 +280,19 @@ struct GradesUtilsTestMocks {
 }
 
 struct InstructorUtilsTestMocks {
+    let schools: [MockSchoolFields] = [
+        MockSchoolFields(sid: 1, name: "School №56"),
+        MockSchoolFields(sid: 2, name: "School of life")
+    ]
+    
     let emptyInstructors: [MockInstructorFields] = count.map {
         return getInstructor($0)
+    }
+    
+    lazy private(set) var itemsWithScools: [MockInstructorFields] = count.map {
+        var instructor = getInstructor($0)
+        instructor.schools = schools
+        return instructor
     }
 }
 

@@ -127,15 +127,11 @@ extension StudentsUtils: EntityUtilsRealization {
             throw Errors.noFetch
         }
         let ids = fetch(instructorSids)
-        guard !ids.isEmpty,
-            let contextInstructors = ids
-                .map({ context.object(with: $0) }) as? [Instructor]
-            else {
-                throw Errors.instructorsNotFound
+        guard ids.count == instructorSids.count,
+            let contextInstructors = ids.map({ context.object(with: $0) }) as? [Instructor]
+        else {
+            throw Errors.instructorsNotFound
         }
-        contextInstructors.forEach {
-            student.addToInstructors($0)
-            $0.addToStudents(student)
-        }
+        student.instructors = NSSet(array: contextInstructors)
     }
 }

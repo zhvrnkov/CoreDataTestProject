@@ -11,20 +11,28 @@ import XCTest
 final class InstructorUtilsTest: XCTestCase {
     typealias This = InstructorUtilsTest
     static let container = getMockPersistentContainer()
-    static let util = InstructorsUtils<MockInstructorFields>(with: container)
+    static let schoolUtils = SchoolUtils<MockSchoolFields>(with: container)
+    static let util: InstructorsUtils<MockInstructorFields> = {
+        let t = InstructorsUtils<MockInstructorFields>(with: container)
+        t.schoolObjectIDsFetch = This.schoolUtils.getObjectIds(whereSids:)
+        return t
+    }()
     private var mocks = InstructorUtilsTestMocks()
     
     private lazy var mockInstructors = mocks.emptyInstructors
 
     override func setUp() {
         super.setUp()
+        XCTAssertNoThrow(try This.schoolUtils.save(items: mocks.schools))
     }
     
     override func tearDown() {
         super.tearDown()
         
+        try? This.schoolUtils.delete(whereSids: mocks.schools.sids)
         try? This.util.delete(whereSids: mockInstructors.sids)
         XCTAssertTrue(This.util.getAll().isEmpty)
+        XCTAssertTrue(This.schoolUtils.getAll().isEmpty)
     }
     
     func testSaveEmptyItem() {
@@ -37,6 +45,23 @@ final class InstructorUtilsTest: XCTestCase {
         let items = mocks.emptyInstructors
         XCTAssertNoThrow(try This.util.save(items: items))
         compareItems(items, This.util.getAll())
+    }
+    
+    func testSaveItemWithScools() {
+        let item = mocks.itemsWithScools.randomElement()!
+        XCTAssertNoThrow(try This.util.save(item: item))
+        compareItems([item], This.util.getAll())
+    }
+    
+    func testUpdateItemSchools() {
+        var item = mocks.itemsWithScools.randomElement()!
+        item.schools = []
+        XCTAssertNoThrow(try This.util.save(item: item))
+        compareItems([item], This.util.getAll())
+        
+        item.schools = mocks.schools
+        XCTAssertNoThrow(try This.util.update(whereSid: item.sid, like: item))
+        compareItems([item], This.util.getAll())
     }
     
     func compareItems(_ items: [MockInstructorFields], _ entities: [MockInstructorFields]) {
