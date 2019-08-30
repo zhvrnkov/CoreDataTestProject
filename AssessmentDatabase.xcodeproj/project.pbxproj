@@ -15,38 +15,44 @@
 		CA4ED8AA22F43AC40024897E /* StudentMicrotaskGradesUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4ED8A922F43AC40024897E /* StudentMicrotaskGradesUtilsTest.swift */; };
 		CA4ED8AE22F466BB0024897E /* MicrotaskUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4ED8AD22F466BB0024897E /* MicrotaskUtilsTest.swift */; };
 		CA4FC54F22F2CED3005BE45F /* StudentsUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4FC54E22F2CED3005BE45F /* StudentsUtilsTest.swift */; };
-		CA5AF0DC230D2A2400D4F400 /* Grade+CoreDataClass copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0D4230D2A2200D4F400 /* Grade+CoreDataClass copy.swift */; };
-		CA5AF0DD230D2A2400D4F400 /* SkillSet+CoreDataClass copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0D5230D2A2300D4F400 /* SkillSet+CoreDataClass copy.swift */; };
-		CA5AF0DE230D2A2400D4F400 /* Microtask+CoreDataClass copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0D6230D2A2300D4F400 /* Microtask+CoreDataClass copy.swift */; };
-		CA5AF0DF230D2A2400D4F400 /* StudentMicrotaskGrade+CoreDataClass copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0D7230D2A2300D4F400 /* StudentMicrotaskGrade+CoreDataClass copy.swift */; };
-		CA5AF0E0230D2A2400D4F400 /* Assessment+CoreDataClass copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0D8230D2A2300D4F400 /* Assessment+CoreDataClass copy.swift */; };
-		CA5AF0E1230D2A2400D4F400 /* Student+CoreDataClass copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0D9230D2A2300D4F400 /* Student+CoreDataClass copy.swift */; };
-		CA5AF0E2230D2A2400D4F400 /* Rubric+CoreDataClass copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0DA230D2A2300D4F400 /* Rubric+CoreDataClass copy.swift */; };
-		CA5AF0E3230D2A2400D4F400 /* Instructor+CoreDataClass copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0DB230D2A2400D4F400 /* Instructor+CoreDataClass copy.swift */; };
-		CA5AF0ED230D2A3D00D4F400 /* Grade+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0E5230D2A3B00D4F400 /* Grade+CoreDataProperties copy.swift */; };
-		CA5AF0EE230D2A3D00D4F400 /* SkillSet+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0E6230D2A3C00D4F400 /* SkillSet+CoreDataProperties copy.swift */; };
-		CA5AF0EF230D2A3D00D4F400 /* Microtask+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0E7230D2A3C00D4F400 /* Microtask+CoreDataProperties copy.swift */; };
-		CA5AF0F0230D2A3D00D4F400 /* Instructor+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0E8230D2A3C00D4F400 /* Instructor+CoreDataProperties copy.swift */; };
-		CA5AF0F1230D2A3D00D4F400 /* StudentMicrotaskGrade+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0E9230D2A3C00D4F400 /* StudentMicrotaskGrade+CoreDataProperties copy.swift */; };
-		CA5AF0F2230D2A3D00D4F400 /* Rubric+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0EA230D2A3C00D4F400 /* Rubric+CoreDataProperties copy.swift */; };
-		CA5AF0F3230D2A3D00D4F400 /* Assessment+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0EB230D2A3D00D4F400 /* Assessment+CoreDataProperties copy.swift */; };
-		CA5AF0F4230D2A3D00D4F400 /* Student+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0EC230D2A3D00D4F400 /* Student+CoreDataProperties copy.swift */; };
-		CA5AF0F6230D2C2C00D4F400 /* Grade+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0E5230D2A3B00D4F400 /* Grade+CoreDataProperties copy.swift */; };
-		CA5AF0F7230D2C2C00D4F400 /* SkillSet+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0E6230D2A3C00D4F400 /* SkillSet+CoreDataProperties copy.swift */; };
-		CA5AF0F8230D2C2C00D4F400 /* Microtask+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0E7230D2A3C00D4F400 /* Microtask+CoreDataProperties copy.swift */; };
-		CA5AF0F9230D2C2C00D4F400 /* Instructor+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0E8230D2A3C00D4F400 /* Instructor+CoreDataProperties copy.swift */; };
-		CA5AF0FA230D2C2C00D4F400 /* StudentMicrotaskGrade+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0E9230D2A3C00D4F400 /* StudentMicrotaskGrade+CoreDataProperties copy.swift */; };
-		CA5AF0FB230D2C2C00D4F400 /* Rubric+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0EA230D2A3C00D4F400 /* Rubric+CoreDataProperties copy.swift */; };
-		CA5AF0FC230D2C2C00D4F400 /* Assessment+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0EB230D2A3D00D4F400 /* Assessment+CoreDataProperties copy.swift */; };
-		CA5AF0FD230D2C2C00D4F400 /* Student+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0EC230D2A3D00D4F400 /* Student+CoreDataProperties copy.swift */; };
-		CA5AF0FE230D2C2C00D4F400 /* Instructor+CoreDataClass copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0DB230D2A2400D4F400 /* Instructor+CoreDataClass copy.swift */; };
-		CA5AF0FF230D2C2C00D4F400 /* Rubric+CoreDataClass copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0DA230D2A2300D4F400 /* Rubric+CoreDataClass copy.swift */; };
-		CA5AF100230D2C2C00D4F400 /* Student+CoreDataClass copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0D9230D2A2300D4F400 /* Student+CoreDataClass copy.swift */; };
-		CA5AF101230D2C2C00D4F400 /* Assessment+CoreDataClass copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0D8230D2A2300D4F400 /* Assessment+CoreDataClass copy.swift */; };
-		CA5AF102230D2C2C00D4F400 /* StudentMicrotaskGrade+CoreDataClass copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0D7230D2A2300D4F400 /* StudentMicrotaskGrade+CoreDataClass copy.swift */; };
-		CA5AF103230D2C2C00D4F400 /* Microtask+CoreDataClass copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0D6230D2A2300D4F400 /* Microtask+CoreDataClass copy.swift */; };
-		CA5AF104230D2C2C00D4F400 /* SkillSet+CoreDataClass copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0D5230D2A2300D4F400 /* SkillSet+CoreDataClass copy.swift */; };
-		CA5AF105230D2C2C00D4F400 /* Grade+CoreDataClass copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5AF0D4230D2A2200D4F400 /* Grade+CoreDataClass copy.swift */; };
+		CA63F90F231909CC008B4429 /* Assessment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F906231909CA008B4429 /* Assessment+CoreDataClass.swift */; };
+		CA63F910231909CC008B4429 /* SkillSet+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F907231909CA008B4429 /* SkillSet+CoreDataClass.swift */; };
+		CA63F911231909CC008B4429 /* Microtask+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F908231909CA008B4429 /* Microtask+CoreDataClass.swift */; };
+		CA63F912231909CC008B4429 /* Rubric+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F909231909CA008B4429 /* Rubric+CoreDataClass.swift */; };
+		CA63F913231909CC008B4429 /* Instructor+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F90A231909CB008B4429 /* Instructor+CoreDataClass.swift */; };
+		CA63F914231909CC008B4429 /* StudentMicrotaskGrade+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F90B231909CB008B4429 /* StudentMicrotaskGrade+CoreDataClass.swift */; };
+		CA63F915231909CC008B4429 /* School+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F90C231909CB008B4429 /* School+CoreDataClass.swift */; };
+		CA63F916231909CC008B4429 /* Grade+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F90D231909CB008B4429 /* Grade+CoreDataClass.swift */; };
+		CA63F917231909CC008B4429 /* Student+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F90E231909CC008B4429 /* Student+CoreDataClass.swift */; };
+		CA63F921231909D1008B4429 /* Microtask+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F918231909D0008B4429 /* Microtask+CoreDataProperties.swift */; };
+		CA63F922231909D1008B4429 /* Grade+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F919231909D0008B4429 /* Grade+CoreDataProperties.swift */; };
+		CA63F923231909D1008B4429 /* Rubric+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F91A231909D1008B4429 /* Rubric+CoreDataProperties.swift */; };
+		CA63F924231909D1008B4429 /* Instructor+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F91B231909D1008B4429 /* Instructor+CoreDataProperties.swift */; };
+		CA63F925231909D1008B4429 /* SkillSet+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F91C231909D1008B4429 /* SkillSet+CoreDataProperties.swift */; };
+		CA63F926231909D1008B4429 /* StudentMicrotaskGrade+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F91D231909D1008B4429 /* StudentMicrotaskGrade+CoreDataProperties.swift */; };
+		CA63F927231909D1008B4429 /* School+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F91E231909D1008B4429 /* School+CoreDataProperties.swift */; };
+		CA63F928231909D1008B4429 /* Student+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F91F231909D1008B4429 /* Student+CoreDataProperties.swift */; };
+		CA63F929231909D2008B4429 /* Assessment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F920231909D1008B4429 /* Assessment+CoreDataProperties.swift */; };
+		CA63F92B23190BDC008B4429 /* SchoolUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F92A23190BDC008B4429 /* SchoolUtils.swift */; };
+		CA63F92C23190EB4008B4429 /* Assessment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F920231909D1008B4429 /* Assessment+CoreDataProperties.swift */; };
+		CA63F92D23190EB4008B4429 /* Grade+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F919231909D0008B4429 /* Grade+CoreDataProperties.swift */; };
+		CA63F92E23190EB4008B4429 /* Instructor+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F91B231909D1008B4429 /* Instructor+CoreDataProperties.swift */; };
+		CA63F92F23190EB4008B4429 /* Microtask+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F918231909D0008B4429 /* Microtask+CoreDataProperties.swift */; };
+		CA63F93023190EB4008B4429 /* Rubric+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F91A231909D1008B4429 /* Rubric+CoreDataProperties.swift */; };
+		CA63F93123190EB4008B4429 /* School+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F91E231909D1008B4429 /* School+CoreDataProperties.swift */; };
+		CA63F93223190EB4008B4429 /* SkillSet+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F91C231909D1008B4429 /* SkillSet+CoreDataProperties.swift */; };
+		CA63F93323190EB4008B4429 /* Student+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F91F231909D1008B4429 /* Student+CoreDataProperties.swift */; };
+		CA63F93423190EB4008B4429 /* StudentMicrotaskGrade+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F91D231909D1008B4429 /* StudentMicrotaskGrade+CoreDataProperties.swift */; };
+		CA63F93523190EB4008B4429 /* Assessment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F906231909CA008B4429 /* Assessment+CoreDataClass.swift */; };
+		CA63F93623190EB4008B4429 /* Grade+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F90D231909CB008B4429 /* Grade+CoreDataClass.swift */; };
+		CA63F93723190EB4008B4429 /* Instructor+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F90A231909CB008B4429 /* Instructor+CoreDataClass.swift */; };
+		CA63F93823190EB4008B4429 /* Microtask+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F908231909CA008B4429 /* Microtask+CoreDataClass.swift */; };
+		CA63F93923190EB4008B4429 /* Rubric+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F909231909CA008B4429 /* Rubric+CoreDataClass.swift */; };
+		CA63F93A23190EB4008B4429 /* School+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F90C231909CB008B4429 /* School+CoreDataClass.swift */; };
+		CA63F93B23190EB4008B4429 /* SkillSet+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F907231909CA008B4429 /* SkillSet+CoreDataClass.swift */; };
+		CA63F93C23190EB4008B4429 /* Student+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F90E231909CC008B4429 /* Student+CoreDataClass.swift */; };
+		CA63F93D23190EB4008B4429 /* StudentMicrotaskGrade+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F90B231909CB008B4429 /* StudentMicrotaskGrade+CoreDataClass.swift */; };
+		CA63F93E23190FE9008B4429 /* SchoolUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA63F92A23190BDC008B4429 /* SchoolUtils.swift */; };
 		CA749E7822E5B2370011D406 /* AssessmentDatabase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA749E6E22E5B2370011D406 /* AssessmentDatabase.framework */; };
 		CA749E7D22E5B2370011D406 /* EntityUtilsMethodsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA749E7C22E5B2370011D406 /* EntityUtilsMethodsTest.swift */; };
 		CA749E7F22E5B2370011D406 /* AssessmentDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = CA749E7122E5B2370011D406 /* AssessmentDatabase.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -103,23 +109,26 @@
 		CA4ED8A922F43AC40024897E /* StudentMicrotaskGradesUtilsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentMicrotaskGradesUtilsTest.swift; sourceTree = "<group>"; };
 		CA4ED8AD22F466BB0024897E /* MicrotaskUtilsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicrotaskUtilsTest.swift; sourceTree = "<group>"; };
 		CA4FC54E22F2CED3005BE45F /* StudentsUtilsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentsUtilsTest.swift; sourceTree = "<group>"; };
-		CA5AF0D4230D2A2200D4F400 /* Grade+CoreDataClass copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Grade+CoreDataClass copy.swift"; sourceTree = "<group>"; };
-		CA5AF0D5230D2A2300D4F400 /* SkillSet+CoreDataClass copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SkillSet+CoreDataClass copy.swift"; sourceTree = "<group>"; };
-		CA5AF0D6230D2A2300D4F400 /* Microtask+CoreDataClass copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Microtask+CoreDataClass copy.swift"; sourceTree = "<group>"; };
-		CA5AF0D7230D2A2300D4F400 /* StudentMicrotaskGrade+CoreDataClass copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StudentMicrotaskGrade+CoreDataClass copy.swift"; sourceTree = "<group>"; };
-		CA5AF0D8230D2A2300D4F400 /* Assessment+CoreDataClass copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Assessment+CoreDataClass copy.swift"; sourceTree = "<group>"; };
-		CA5AF0D9230D2A2300D4F400 /* Student+CoreDataClass copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Student+CoreDataClass copy.swift"; sourceTree = "<group>"; };
-		CA5AF0DA230D2A2300D4F400 /* Rubric+CoreDataClass copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Rubric+CoreDataClass copy.swift"; sourceTree = "<group>"; };
-		CA5AF0DB230D2A2400D4F400 /* Instructor+CoreDataClass copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Instructor+CoreDataClass copy.swift"; sourceTree = "<group>"; };
-		CA5AF0E5230D2A3B00D4F400 /* Grade+CoreDataProperties copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Grade+CoreDataProperties copy.swift"; sourceTree = "<group>"; };
-		CA5AF0E6230D2A3C00D4F400 /* SkillSet+CoreDataProperties copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SkillSet+CoreDataProperties copy.swift"; sourceTree = "<group>"; };
-		CA5AF0E7230D2A3C00D4F400 /* Microtask+CoreDataProperties copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Microtask+CoreDataProperties copy.swift"; sourceTree = "<group>"; };
-		CA5AF0E8230D2A3C00D4F400 /* Instructor+CoreDataProperties copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Instructor+CoreDataProperties copy.swift"; sourceTree = "<group>"; };
-		CA5AF0E9230D2A3C00D4F400 /* StudentMicrotaskGrade+CoreDataProperties copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StudentMicrotaskGrade+CoreDataProperties copy.swift"; sourceTree = "<group>"; };
-		CA5AF0EA230D2A3C00D4F400 /* Rubric+CoreDataProperties copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Rubric+CoreDataProperties copy.swift"; sourceTree = "<group>"; };
-		CA5AF0EB230D2A3D00D4F400 /* Assessment+CoreDataProperties copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Assessment+CoreDataProperties copy.swift"; sourceTree = "<group>"; };
-		CA5AF0EC230D2A3D00D4F400 /* Student+CoreDataProperties copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Student+CoreDataProperties copy.swift"; sourceTree = "<group>"; };
 		CA5B70D122F18C1200EE6C95 /* Predicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Predicate.swift; sourceTree = "<group>"; };
+		CA63F906231909CA008B4429 /* Assessment+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Assessment+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CA63F907231909CA008B4429 /* SkillSet+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SkillSet+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CA63F908231909CA008B4429 /* Microtask+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Microtask+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CA63F909231909CA008B4429 /* Rubric+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Rubric+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CA63F90A231909CB008B4429 /* Instructor+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Instructor+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CA63F90B231909CB008B4429 /* StudentMicrotaskGrade+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StudentMicrotaskGrade+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CA63F90C231909CB008B4429 /* School+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "School+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CA63F90D231909CB008B4429 /* Grade+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Grade+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CA63F90E231909CC008B4429 /* Student+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Student+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CA63F918231909D0008B4429 /* Microtask+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Microtask+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CA63F919231909D0008B4429 /* Grade+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Grade+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CA63F91A231909D1008B4429 /* Rubric+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Rubric+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CA63F91B231909D1008B4429 /* Instructor+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Instructor+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CA63F91C231909D1008B4429 /* SkillSet+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SkillSet+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CA63F91D231909D1008B4429 /* StudentMicrotaskGrade+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StudentMicrotaskGrade+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CA63F91E231909D1008B4429 /* School+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "School+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CA63F91F231909D1008B4429 /* Student+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Student+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CA63F920231909D1008B4429 /* Assessment+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Assessment+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CA63F92A23190BDC008B4429 /* SchoolUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolUtils.swift; sourceTree = "<group>"; };
 		CA749E6E22E5B2370011D406 /* AssessmentDatabase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AssessmentDatabase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA749E7122E5B2370011D406 /* AssessmentDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssessmentDatabase.h; sourceTree = "<group>"; };
 		CA749E7222E5B2370011D406 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -183,14 +192,15 @@
 		CA5AF0E4230D2A2900D4F400 /* Declarations */ = {
 			isa = PBXGroup;
 			children = (
-				CA5AF0DB230D2A2400D4F400 /* Instructor+CoreDataClass copy.swift */,
-				CA5AF0DA230D2A2300D4F400 /* Rubric+CoreDataClass copy.swift */,
-				CA5AF0D9230D2A2300D4F400 /* Student+CoreDataClass copy.swift */,
-				CA5AF0D8230D2A2300D4F400 /* Assessment+CoreDataClass copy.swift */,
-				CA5AF0D7230D2A2300D4F400 /* StudentMicrotaskGrade+CoreDataClass copy.swift */,
-				CA5AF0D6230D2A2300D4F400 /* Microtask+CoreDataClass copy.swift */,
-				CA5AF0D5230D2A2300D4F400 /* SkillSet+CoreDataClass copy.swift */,
-				CA5AF0D4230D2A2200D4F400 /* Grade+CoreDataClass copy.swift */,
+				CA63F906231909CA008B4429 /* Assessment+CoreDataClass.swift */,
+				CA63F90D231909CB008B4429 /* Grade+CoreDataClass.swift */,
+				CA63F90A231909CB008B4429 /* Instructor+CoreDataClass.swift */,
+				CA63F908231909CA008B4429 /* Microtask+CoreDataClass.swift */,
+				CA63F909231909CA008B4429 /* Rubric+CoreDataClass.swift */,
+				CA63F90C231909CB008B4429 /* School+CoreDataClass.swift */,
+				CA63F907231909CA008B4429 /* SkillSet+CoreDataClass.swift */,
+				CA63F90E231909CC008B4429 /* Student+CoreDataClass.swift */,
+				CA63F90B231909CB008B4429 /* StudentMicrotaskGrade+CoreDataClass.swift */,
 			);
 			path = Declarations;
 			sourceTree = "<group>";
@@ -198,14 +208,15 @@
 		CA5AF0F5230D2A4100D4F400 /* Definitions */ = {
 			isa = PBXGroup;
 			children = (
-				CA5AF0E5230D2A3B00D4F400 /* Grade+CoreDataProperties copy.swift */,
-				CA5AF0E6230D2A3C00D4F400 /* SkillSet+CoreDataProperties copy.swift */,
-				CA5AF0E7230D2A3C00D4F400 /* Microtask+CoreDataProperties copy.swift */,
-				CA5AF0E8230D2A3C00D4F400 /* Instructor+CoreDataProperties copy.swift */,
-				CA5AF0E9230D2A3C00D4F400 /* StudentMicrotaskGrade+CoreDataProperties copy.swift */,
-				CA5AF0EA230D2A3C00D4F400 /* Rubric+CoreDataProperties copy.swift */,
-				CA5AF0EB230D2A3D00D4F400 /* Assessment+CoreDataProperties copy.swift */,
-				CA5AF0EC230D2A3D00D4F400 /* Student+CoreDataProperties copy.swift */,
+				CA63F920231909D1008B4429 /* Assessment+CoreDataProperties.swift */,
+				CA63F919231909D0008B4429 /* Grade+CoreDataProperties.swift */,
+				CA63F91B231909D1008B4429 /* Instructor+CoreDataProperties.swift */,
+				CA63F918231909D0008B4429 /* Microtask+CoreDataProperties.swift */,
+				CA63F91A231909D1008B4429 /* Rubric+CoreDataProperties.swift */,
+				CA63F91E231909D1008B4429 /* School+CoreDataProperties.swift */,
+				CA63F91C231909D1008B4429 /* SkillSet+CoreDataProperties.swift */,
+				CA63F91F231909D1008B4429 /* Student+CoreDataProperties.swift */,
+				CA63F91D231909D1008B4429 /* StudentMicrotaskGrade+CoreDataProperties.swift */,
 			);
 			path = Definitions;
 			sourceTree = "<group>";
@@ -265,6 +276,7 @@
 		CA749E8D22E5C9210011D406 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				CA63F92A23190BDC008B4429 /* SchoolUtils.swift */,
 				CA749E9522E5CC430011D406 /* AssessmentsUtils.swift */,
 				CA749E9322E5CC430011D406 /* GradesUtils.swift */,
 				CA749E9022E5CC430011D406 /* InstructorsUtils.swift */,
@@ -406,36 +418,39 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA749E9622E5CC440011D406 /* RubricsUtils.swift in Sources */,
-				CA5AF0EF230D2A3D00D4F400 /* Microtask+CoreDataProperties copy.swift in Sources */,
+				CA63F917231909CC008B4429 /* Student+CoreDataClass.swift in Sources */,
 				CA749E9C22E5CC440011D406 /* StudentsUtils.swift in Sources */,
-				CA5AF0DD230D2A2400D4F400 /* SkillSet+CoreDataClass copy.swift in Sources */,
+				CA63F910231909CC008B4429 /* SkillSet+CoreDataClass.swift in Sources */,
 				CAC75C1422FBF95C00C03316 /* PersistentContainer.swift in Sources */,
-				CA5AF0E2230D2A2400D4F400 /* Rubric+CoreDataClass copy.swift in Sources */,
+				CA63F923231909D1008B4429 /* Rubric+CoreDataProperties.swift in Sources */,
+				CA63F924231909D1008B4429 /* Instructor+CoreDataProperties.swift in Sources */,
+				CA63F90F231909CC008B4429 /* Assessment+CoreDataClass.swift in Sources */,
+				CA63F912231909CC008B4429 /* Rubric+CoreDataClass.swift in Sources */,
+				CA63F913231909CC008B4429 /* Instructor+CoreDataClass.swift in Sources */,
+				CA63F925231909D1008B4429 /* SkillSet+CoreDataProperties.swift in Sources */,
 				CA749E9922E5CC440011D406 /* MicrotasksUtils.swift in Sources */,
 				CA749E9D22E5CC440011D406 /* AssessmentsUtils.swift in Sources */,
-				CA5AF0EE230D2A3D00D4F400 /* SkillSet+CoreDataProperties copy.swift in Sources */,
+				CA63F911231909CC008B4429 /* Microtask+CoreDataClass.swift in Sources */,
 				CA749E9822E5CC440011D406 /* InstructorsUtils.swift in Sources */,
-				CA5AF0F4230D2A3D00D4F400 /* Student+CoreDataProperties copy.swift in Sources */,
-				CA5AF0DF230D2A2400D4F400 /* StudentMicrotaskGrade+CoreDataClass copy.swift in Sources */,
 				CA749E9B22E5CC440011D406 /* GradesUtils.swift in Sources */,
 				CA749E9F22E5CE2D0011D406 /* EntityUtils.swift in Sources */,
 				CA99B54322F18E9800A2C7BC /* Predicate.swift in Sources */,
-				CA5AF0E0230D2A2400D4F400 /* Assessment+CoreDataClass copy.swift in Sources */,
-				CA5AF0F1230D2A3D00D4F400 /* StudentMicrotaskGrade+CoreDataProperties copy.swift in Sources */,
-				CA5AF0F2230D2A3D00D4F400 /* Rubric+CoreDataProperties copy.swift in Sources */,
-				CA5AF0F0230D2A3D00D4F400 /* Instructor+CoreDataProperties copy.swift in Sources */,
 				CA749E9A22E5CC440011D406 /* StudentMicrotaskGradesUtils.swift in Sources */,
-				CA5AF0DE230D2A2400D4F400 /* Microtask+CoreDataClass copy.swift in Sources */,
+				CA63F921231909D1008B4429 /* Microtask+CoreDataProperties.swift in Sources */,
 				CA749E8C22E5B87F0011D406 /* DatabaseManager.swift in Sources */,
-				CA5AF0DC230D2A2400D4F400 /* Grade+CoreDataClass copy.swift in Sources */,
-				CA5AF0E3230D2A2400D4F400 /* Instructor+CoreDataClass copy.swift in Sources */,
-				CA5AF0E1230D2A2400D4F400 /* Student+CoreDataClass copy.swift in Sources */,
+				CA63F929231909D2008B4429 /* Assessment+CoreDataProperties.swift in Sources */,
 				CA749E9722E5CC440011D406 /* SkillSetsUtils.swift in Sources */,
+				CA63F927231909D1008B4429 /* School+CoreDataProperties.swift in Sources */,
+				CA63F915231909CC008B4429 /* School+CoreDataClass.swift in Sources */,
+				CA63F926231909D1008B4429 /* StudentMicrotaskGrade+CoreDataProperties.swift in Sources */,
 				CAEDF67D22F2FD7F00087D60 /* EntityUtilsError.swift in Sources */,
+				CA63F928231909D1008B4429 /* Student+CoreDataProperties.swift in Sources */,
+				CA63F922231909D1008B4429 /* Grade+CoreDataProperties.swift in Sources */,
 				CAEDF67722F2DE4700087D60 /* EntitiesFields.swift in Sources */,
-				CA5AF0F3230D2A3D00D4F400 /* Assessment+CoreDataProperties copy.swift in Sources */,
+				CA63F914231909CC008B4429 /* StudentMicrotaskGrade+CoreDataClass.swift in Sources */,
+				CA63F92B23190BDC008B4429 /* SchoolUtils.swift in Sources */,
+				CA63F916231909CC008B4429 /* Grade+CoreDataClass.swift in Sources */,
 				CA749E8A22E5B24A0011D406 /* DataModel.xcdatamodeld in Sources */,
-				CA5AF0ED230D2A3D00D4F400 /* Grade+CoreDataProperties copy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,22 +458,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CA5AF0F6230D2C2C00D4F400 /* Grade+CoreDataProperties copy.swift in Sources */,
-				CA5AF0F7230D2C2C00D4F400 /* SkillSet+CoreDataProperties copy.swift in Sources */,
-				CA5AF0F8230D2C2C00D4F400 /* Microtask+CoreDataProperties copy.swift in Sources */,
-				CA5AF0F9230D2C2C00D4F400 /* Instructor+CoreDataProperties copy.swift in Sources */,
-				CA5AF0FA230D2C2C00D4F400 /* StudentMicrotaskGrade+CoreDataProperties copy.swift in Sources */,
-				CA5AF0FB230D2C2C00D4F400 /* Rubric+CoreDataProperties copy.swift in Sources */,
-				CA5AF0FC230D2C2C00D4F400 /* Assessment+CoreDataProperties copy.swift in Sources */,
-				CA5AF0FD230D2C2C00D4F400 /* Student+CoreDataProperties copy.swift in Sources */,
-				CA5AF0FE230D2C2C00D4F400 /* Instructor+CoreDataClass copy.swift in Sources */,
-				CA5AF0FF230D2C2C00D4F400 /* Rubric+CoreDataClass copy.swift in Sources */,
-				CA5AF100230D2C2C00D4F400 /* Student+CoreDataClass copy.swift in Sources */,
-				CA5AF101230D2C2C00D4F400 /* Assessment+CoreDataClass copy.swift in Sources */,
-				CA5AF102230D2C2C00D4F400 /* StudentMicrotaskGrade+CoreDataClass copy.swift in Sources */,
-				CA5AF103230D2C2C00D4F400 /* Microtask+CoreDataClass copy.swift in Sources */,
-				CA5AF104230D2C2C00D4F400 /* SkillSet+CoreDataClass copy.swift in Sources */,
-				CA5AF105230D2C2C00D4F400 /* Grade+CoreDataClass copy.swift in Sources */,
+				CA63F92C23190EB4008B4429 /* Assessment+CoreDataProperties.swift in Sources */,
+				CA63F92D23190EB4008B4429 /* Grade+CoreDataProperties.swift in Sources */,
+				CA63F92E23190EB4008B4429 /* Instructor+CoreDataProperties.swift in Sources */,
+				CA63F92F23190EB4008B4429 /* Microtask+CoreDataProperties.swift in Sources */,
+				CA63F93023190EB4008B4429 /* Rubric+CoreDataProperties.swift in Sources */,
+				CA63F93123190EB4008B4429 /* School+CoreDataProperties.swift in Sources */,
+				CA63F93223190EB4008B4429 /* SkillSet+CoreDataProperties.swift in Sources */,
+				CA63F93323190EB4008B4429 /* Student+CoreDataProperties.swift in Sources */,
+				CA63F93423190EB4008B4429 /* StudentMicrotaskGrade+CoreDataProperties.swift in Sources */,
+				CA63F93523190EB4008B4429 /* Assessment+CoreDataClass.swift in Sources */,
+				CA63F93623190EB4008B4429 /* Grade+CoreDataClass.swift in Sources */,
+				CA63F93723190EB4008B4429 /* Instructor+CoreDataClass.swift in Sources */,
+				CA63F93823190EB4008B4429 /* Microtask+CoreDataClass.swift in Sources */,
+				CA63F93923190EB4008B4429 /* Rubric+CoreDataClass.swift in Sources */,
+				CA63F93A23190EB4008B4429 /* School+CoreDataClass.swift in Sources */,
+				CA63F93B23190EB4008B4429 /* SkillSet+CoreDataClass.swift in Sources */,
+				CA63F93C23190EB4008B4429 /* Student+CoreDataClass.swift in Sources */,
+				CA63F93D23190EB4008B4429 /* StudentMicrotaskGrade+CoreDataClass.swift in Sources */,
 				CAC75C1522FBFA1400C03316 /* PersistentContainer.swift in Sources */,
 				CA99B55122F1954F00A2C7BC /* MockPersistentContainer.swift in Sources */,
 				CA0D4B8222F559610099193C /* SkillSetsUtilsTest.swift in Sources */,
@@ -483,6 +500,7 @@
 				CA4ED8AA22F43AC40024897E /* StudentMicrotaskGradesUtilsTest.swift in Sources */,
 				CA99B54822F1948C00A2C7BC /* InstructorsUtils.swift in Sources */,
 				CA99B54622F1948C00A2C7BC /* AssessmentsUtils.swift in Sources */,
+				CA63F93E23190FE9008B4429 /* SchoolUtils.swift in Sources */,
 				CA4CCD1722F1B2CF00859D7E /* MockValueFields.swift in Sources */,
 				CA99B54C22F1948C00A2C7BC /* StudentMicrotaskGradesUtils.swift in Sources */,
 			);

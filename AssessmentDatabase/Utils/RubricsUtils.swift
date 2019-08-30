@@ -1,7 +1,7 @@
 import Foundation
 import CoreData
 
-public class RubricsUtils<EntityValueFields: RubricFields>: EntityUtils {
+public final class RubricsUtils<EntityValueFields: RubricFields>: EntityUtils {
     public func getAll() -> [EntityValueFields] {
         return _getAll()
     }

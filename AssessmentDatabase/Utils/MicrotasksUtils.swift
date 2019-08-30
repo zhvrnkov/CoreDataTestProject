@@ -1,7 +1,7 @@
 import Foundation
 import CoreData
 
-public class MicrotasksUtils
+public final class MicrotasksUtils
     <EntityValueFields: MicrotaskFields>
     : EntityUtils
 {

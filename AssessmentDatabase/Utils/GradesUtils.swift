@@ -1,7 +1,7 @@
 import Foundation
 import CoreData
 
-public class GradesUtils
+public final class GradesUtils
     <EntityValueFields: GradeFields>
     : EntityUtils
 {

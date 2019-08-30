@@ -1,7 +1,7 @@
 import Foundation
 import CoreData
 
-public class StudentMicrotaskGradesUtils
+public final class StudentMicrotaskGradesUtils
     <EntityValueFields: StudentMicrotaskGradeFields>:
     EntityUtils
 {

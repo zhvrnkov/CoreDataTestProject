@@ -28,9 +28,21 @@ public extension Array where Element: Sidable {
     }
 }
 
+public protocol SchoolFields: Sidable {
+    associatedtype InstructorFieldsType: InstructorFields
+    
+    var sid: Int { get set }
+    var name: String { get set }
+    
+    var instructors: [InstructorFieldsType] { get set }
+    
+    init(sid: Int, name: String)
+}
+
 public protocol InstructorFields: Sidable {
     associatedtype AssessmentFieldsType: AssessmentFields
     associatedtype StudentFieldsType: StudentFields
+    associatedtype SchoolFieldsType: SchoolFields
     
     var loginUsername: String { get set }
     var firstName: String { get set }
@@ -50,8 +62,8 @@ public protocol InstructorFields: Sidable {
     var fbid: [String] { get set }
     var lang: String { get set }
     var flags: [String] { get set }
-    var schools: [Any] { get set }
     
+    var schools: [SchoolFieldsType] { get set }
     var assessments: [AssessmentFieldsType] { get set }
     var students: [StudentFieldsType] { get set }
     
@@ -74,9 +86,9 @@ public protocol InstructorFields: Sidable {
          fbid: [String],
          lang: String,
          flags: [String],
-         schools: [Any],
          assessments: [AssessmentFieldsType],
-         students: [StudentFieldsType])
+         students: [StudentFieldsType],
+         schools: [SchoolFieldsType])
 }
 
 public protocol StudentFields: Sidable {

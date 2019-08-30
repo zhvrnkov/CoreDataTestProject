@@ -35,11 +35,11 @@
         <attribute name="loginUsername" attributeType="String" syncable="YES"/>
         <attribute name="phone" attributeType="String" syncable="YES"/>
         <attribute name="phoneStudent" attributeType="String" syncable="YES"/>
-        <attribute name="schools" attributeType="Transformable" syncable="YES"/>
         <attribute name="sid" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="state" attributeType="String" syncable="YES"/>
         <attribute name="zip" attributeType="String" syncable="YES"/>
         <relationship name="assessments" toMany="YES" deletionRule="Cascade" destinationEntity="Assessment" inverseName="instructor" inverseEntity="Assessment" syncable="YES"/>
+        <relationship name="schools" toMany="YES" deletionRule="Nullify" destinationEntity="School" inverseName="instructors" inverseEntity="School" syncable="YES"/>
         <relationship name="students" toMany="YES" deletionRule="Cascade" destinationEntity="Student" inverseName="instructors" inverseEntity="Student" syncable="YES"/>
     </entity>
     <entity name="Microtask" representedClassName=".Microtask" syncable="YES">
@@ -61,6 +61,11 @@
         <relationship name="assessments" toMany="YES" deletionRule="Cascade" destinationEntity="Assessment" inverseName="rubric" inverseEntity="Assessment" syncable="YES"/>
         <relationship name="grades" toMany="YES" deletionRule="Cascade" destinationEntity="Grade" inverseName="rubric" inverseEntity="Grade" syncable="YES"/>
         <relationship name="skillSets" toMany="YES" deletionRule="Cascade" destinationEntity="SkillSet" inverseName="rubric" inverseEntity="SkillSet" syncable="YES"/>
+    </entity>
+    <entity name="School" representedClassName=".School" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sid" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="instructors" toMany="YES" deletionRule="Cascade" destinationEntity="Instructor" inverseName="schools" inverseEntity="Instructor" syncable="YES"/>
     </entity>
     <entity name="SkillSet" representedClassName=".SkillSet" syncable="YES">
         <attribute name="isActive" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
@@ -95,6 +100,7 @@
         <element name="Instructor" positionX="-282.92578125" positionY="-167.46484375" width="128" height="375"/>
         <element name="Microtask" positionX="88.8359375" positionY="322.8125" width="128" height="165"/>
         <element name="Rubric" positionX="-291.74609375" positionY="173.453125" width="128" height="165"/>
+        <element name="School" positionX="-324" positionY="-27" width="128" height="90"/>
         <element name="SkillSet" positionX="-293.2109375" positionY="296.1328125" width="128" height="135"/>
         <element name="Student" positionX="-52.90234375" positionY="-152.33984375" width="128" height="150"/>
         <element name="StudentMicrotaskGrade" positionX="40.56640625" positionY="-9.375" width="128" height="165"/>

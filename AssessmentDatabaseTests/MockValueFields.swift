@@ -13,7 +13,7 @@ fileprivate let mediumCount: Range<Int> = (0..<5)
 fileprivate let smallCount: Range<Int> = (0..<2)
 
 fileprivate func getInstructor(_ sid: Int) -> MockInstructorFields {
-    return MockInstructorFields(sid: sid, loginUsername: "zhvrnkv", firstName: "Vlad", lastName: "Zhavoronkov", avatar: "anime", email: "@dada.ya", phone: "8921380123", phoneStudent: "12839128", address: "hsdahfsd", address2: "fsdklfhs", city: "slkdhflksf", state: "fklhdahsl", zip: "skjdfhksj", country: "lksdhfaslk", credentials: "flsdhfaslkj", depiction: "sldfhsk", fbid: ["fdjsafglfas"], lang: "RU", flags: ["dsajdhla"], schools: [], assessments: [], students: [])
+    return MockInstructorFields(sid: sid, loginUsername: "zhvrnkv", firstName: "Vlad", lastName: "Zhavoronkov", avatar: "anime", email: "@dada.ya", phone: "8921380123", phoneStudent: "12839128", address: "hsdahfsd", address2: "fsdklfhs", city: "slkdhflksf", state: "fklhdahsl", zip: "skjdfhksj", country: "lksdhfaslk", credentials: "flsdhfaslkj", depiction: "sldfhsk", fbid: ["fdjsafglfas"], lang: "RU", flags: ["dsajdhla"], assessments: [], students: [], schools: [])
 }
 
 struct MockAssessmentFields: AssessmentFields {
@@ -49,9 +49,23 @@ struct MockAssessmentFields: AssessmentFields {
     }
 }
 
+struct MockSchoolFields: SchoolFields {
+    init(sid: Int, name: String) {
+        self.sid = sid
+        self.name = name
+    }
+    
+    typealias InstructorFieldsType = MockInstructorFields
+    
+    var sid: Int
+    var name: String
+    var instructors: [MockInstructorFields] = []
+}
+
 struct MockInstructorFields: InstructorFields {
     typealias AssessmentFieldsType = MockAssessmentFields
     typealias StudentFieldsType = MockStudentFields
+    typealias SchoolFieldsType = MockSchoolFields
     
     var sid: Int
     var loginUsername: String
@@ -72,10 +86,10 @@ struct MockInstructorFields: InstructorFields {
     var fbid: [String]
     var lang: String
     var flags: [String]
-    var schools: [Any]
     
     var assessments: [AssessmentFieldsType]
     var students: [StudentFieldsType]
+    var schools: [SchoolFieldsType]
 }
 
 struct MockRubricFields: RubricFields {

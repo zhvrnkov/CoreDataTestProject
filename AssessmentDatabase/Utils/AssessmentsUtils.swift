@@ -1,7 +1,7 @@
 import Foundation
 import CoreData
 
-public class AssessmentsUtils
+public final class AssessmentsUtils
     <EntityValueFields: AssessmentFields>
     : EntityUtils
 {

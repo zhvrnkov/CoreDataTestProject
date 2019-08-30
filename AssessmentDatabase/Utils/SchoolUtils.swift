@@ -1,14 +1,21 @@
+//
+//  SchoolUtils.swift
+//  AssessmentDatabase
+//
+//  Created by Vlad Zhavoronkov  on 8/30/19.
+//  Copyright © 2019 Bytepace. All rights reserved.
+//
+
 import Foundation
 import CoreData
 
-public final class SkillSetsUtils
-    <EntityValueFields: SkillSetFields>
+public final class SchoolUtils
+    <EntityValueFields: SchoolFields>
     : EntityUtils
 {
     public func getAll() -> [EntityValueFields] {
         return _getAll()
     }
-    
     public func asyncGetAll(_ completion: @escaping (Result<[EntityValueFields], Error>) -> Void) {
         _asyncGetAll(completion)
     }
@@ -55,74 +62,39 @@ public final class SkillSetsUtils
         try _update(whereSid: sid, like: item)
     }
     
-    public func configure<T: RubricFields>(rubricUtils: RubricsUtils<T>) {
+    public func configure<T: StudentFields, U: RubricFields, V: InstructorFields>
+        (studentUtils: StudentsUtils<T>, rubricUtils: RubricsUtils<U>, instructorUtils: InstructorsUtils<V>)
+    {
+        self.studentObjectIDsFetch = studentUtils.getObjectIds(whereSids:)
         self.rubricObjectIDFetch = rubricUtils.getObjectId(whereSid:)
+        self.instructorObjectIDFetch = instructorUtils.getObjectId(whereSid:)
     }
+    
     
     var container: NSPersistentContainer
     var queue: DispatchQueue = .global(qos: .userInitiated)
     
+    var studentObjectIDsFetch: ObjectIDsFetch?
     var rubricObjectIDFetch: ObjectIDFetch?
+    var instructorObjectIDFetch: ObjectIDFetch?
     
     public init(with container: NSPersistentContainer) {
         self.container = container
     }
-    
-    public enum Errors: Error {
-        case noFetch
-        
-        case rubricNotFound
-    }
 }
 
-extension SkillSetsUtils: EntityUtilsRealization {
-    typealias Owner = SkillSetsUtils
-    typealias EntityType = SkillSet
+extension SchoolUtils: EntityUtilsRealization {
+    typealias Owner = SchoolUtils
+    typealias EntityType = School
     
-    static func map(entity: SkillSet) -> EntityValueFields {
-        let entityMicrotasks = (entity.microTasks?.allObjects as? [Microtask]) ?? []
-        let microtasks: [EntityValueFields.MicrotaskFieldsType] = MicrotasksUtils.map(entities: entityMicrotasks)
-        return EntityValueFields.init(
-            sid: Int(entity.sid),
-            rubricSid: Int(entity.rubric?.sid ?? badSid),
-            isActive: entity.isActive,
-            title: entity.title ?? dbError,
-            weight: Int(entity.weight),
-            microTasks: microtasks)
+    static func map(entity: School) -> EntityValueFields {
+        return EntityValueFields.init(sid: Int(entity.sid), name: entity.name ?? dbError)
     }
     
-    static func copyFields(from item: EntityValueFields, to entity: SkillSet) {
+    func setRelations(from item: EntityValueFields, of entity: School, in context: NSManagedObjectContext) throws {}
+    
+    static func copyFields(from item: EntityValueFields, to entity: School) {
         entity.sid = Int64(item.sid)
-        entity.title = item.title
-        entity.weight = Int64(item.weight)
-        entity.isActive = item.isActive
-    }
-    
-    func setRelations(
-        from item: EntityValueFields,
-        of entity: SkillSet,
-        in context: NSManagedObjectContext) throws
-    {
-        do {
-            try set(rubricSid: item.rubricSid, of: entity, in: context)
-        } catch {
-            throw error
-        }
-    }
-    
-    private func set(
-        rubricSid: Int,
-        of skillSet: SkillSet,
-        in context: NSManagedObjectContext) throws
-    {
-        guard let fetch = rubricObjectIDFetch else {
-            throw Errors.noFetch
-        }
-        guard let id = fetch(rubricSid),
-            let contextRubric = context.object(with: id) as? Rubric
-            else {
-                throw Errors.rubricNotFound
-        }
-        skillSet.rubric = contextRubric
+        entity.name = item.name
     }
 }

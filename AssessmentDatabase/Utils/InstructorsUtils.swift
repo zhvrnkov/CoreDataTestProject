@@ -1,7 +1,7 @@
 import Foundation
 import CoreData
 
-public class InstructorsUtils
+public final class InstructorsUtils
     <EntityValueFields: InstructorFields>
     : EntityUtils
 {
@@ -78,10 +78,13 @@ extension InstructorsUtils: EntityUtilsRealization {
     static func map(entity: Instructor) -> EntityValueFields {
         let entityAssessments = (entity.assessments?.allObjects as? [Assessment]) ?? []
         let entityStudents = (entity.students?.allObjects as? [Student]) ?? []
+        let entitySchools = (entity.schools?.allObjects as? [School]) ?? []
         let assessments: [EntityValueFields.AssessmentFieldsType] =
             AssessmentsUtils.map(entities: entityAssessments)
         let students: [EntityValueFields.StudentFieldsType] =
             StudentsUtils.map(entities: entityStudents)
+        let schools: [EntityValueFields.SchoolFieldsType] =
+            SchoolUtils.map(entities: entitySchools)
         return EntityValueFields.init(
             sid: Int(entity.sid),
             loginUsername: entity.loginUsername ?? dbError,
@@ -102,9 +105,9 @@ extension InstructorsUtils: EntityUtilsRealization {
             fbid: (entity.fbid ?? []).map { $0 as String },
             lang: entity.lang ?? dbError,
             flags: (entity.flags ?? []).map { $0 as String },
-            schools: [],
             assessments: assessments,
-            students: students)
+            students: students,
+            schools: schools)
     }
     
     static func copyFields(from item: EntityValueFields, to entity: Instructor) {
