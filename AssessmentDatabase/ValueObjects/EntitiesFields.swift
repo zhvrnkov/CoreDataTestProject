@@ -29,12 +29,10 @@ extension Array where Element: Sidable {
 }
 
 public protocol SchoolFields: Sidable {
-    associatedtype InstructorFieldsType: InstructorFields
-    
     var sid: Int { get set }
     var name: String { get set }
     
-    var instructors: [InstructorFieldsType] { get set }
+    var instructorSids: [Int] { get set }
     
     init(sid: Int, name: String)
 }

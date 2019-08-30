@@ -56,6 +56,10 @@ public final class InstructorsUtils
         try _update(whereSid: sid, like: item)
     }
     
+    public func configure<T: SchoolFields>(schoolUtils: SchoolUtils<T>) {
+        schoolObjectIDsFetch = schoolUtils.getObjectIds(whereSids:)
+    }
+    
     var container: NSPersistentContainer
     var queue: DispatchQueue = .global(qos: .userInitiated)
     

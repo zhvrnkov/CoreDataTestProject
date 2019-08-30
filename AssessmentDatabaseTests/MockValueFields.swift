@@ -59,7 +59,7 @@ struct MockSchoolFields: SchoolFields {
     
     var sid: Int
     var name: String
-    var instructors: [MockInstructorFields] = []
+    var instructorSids: [Int] = []
 }
 
 struct MockInstructorFields: InstructorFields {
