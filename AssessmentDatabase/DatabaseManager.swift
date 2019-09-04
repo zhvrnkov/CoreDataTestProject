@@ -54,7 +54,6 @@ final public class DatabaseManager {
         container.persistentStoreDescriptions = [description]
         container.loadPersistentStores { (description, error) in
             precondition( description.type == NSInMemoryStoreType )
-            
             if let error = error {
                 fatalError("Create an in-mem coordinator failed \(error)")
             }

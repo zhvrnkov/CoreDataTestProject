@@ -82,7 +82,7 @@ extension EntityUtilsRealization {
                 do {
                     output = try context.fetch(request).map { $0.objectID }
                 } catch {
-                    fatalError(error.localizedDescription)
+                    print(#function, #file, #line, error)
                 }
             }
             return output
@@ -103,7 +103,7 @@ extension EntityUtilsRealization {
                 do {
                     output = Self.map(entities: try context.fetch(request))
                 } catch {
-                    fatalError(error.localizedDescription)
+                    print(#function, #file, #line, error)
                 }
             }
             return output
@@ -136,7 +136,7 @@ extension EntityUtilsRealization {
                 do {
                     output = Self.map(entities: try context.fetch(request))
                 } catch {
-                    fatalError(error.localizedDescription)
+                    print(#function, #file, #line, error)
                 }
             }
             return output
@@ -335,7 +335,7 @@ extension EntityUtilsRealization {
         do {
             entitiesCount = try container.viewContext.count(for: fetchRequest)
         } catch {
-            print("error executing fetch request: \(error)")
+            print(#file, #line, "error executing fetch request: \(error)")
         }
         
         return entitiesCount > 0

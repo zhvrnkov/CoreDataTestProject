@@ -72,7 +72,7 @@ extension RubricsUtils: EntityUtilsRealization {
     
     static func map(entity: Rubric) -> EntityValueFields {
         let skillSets = (entity.skillSets?.allObjects as? [SkillSet]) ?? []
-        let grades = (entity.grades?.allObjects as? [Grade]) ?? []
+        let grades = (entity.grades?.array as? [Grade]) ?? []
         return EntityValueFields.init(
             sid: Int(entity.sid),
             title: entity.title ?? dbError,

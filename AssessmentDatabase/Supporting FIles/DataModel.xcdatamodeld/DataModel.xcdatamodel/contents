@@ -59,7 +59,7 @@
         <attribute name="title" attributeType="String" syncable="YES"/>
         <attribute name="weight" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="assessments" toMany="YES" deletionRule="Cascade" destinationEntity="Assessment" inverseName="rubric" inverseEntity="Assessment" syncable="YES"/>
-        <relationship name="grades" toMany="YES" deletionRule="Cascade" destinationEntity="Grade" inverseName="rubric" inverseEntity="Grade" syncable="YES"/>
+        <relationship name="grades" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Grade" inverseName="rubric" inverseEntity="Grade" syncable="YES"/>
         <relationship name="skillSets" toMany="YES" deletionRule="Cascade" destinationEntity="SkillSet" inverseName="rubric" inverseEntity="SkillSet" syncable="YES"/>
     </entity>
     <entity name="School" representedClassName=".School" syncable="YES">
