@@ -71,7 +71,7 @@ extension RubricsUtils: EntityUtilsRealization {
     typealias EntityType = Rubric
     
     static func map(entity: Rubric) -> EntityValueFields {
-        let skillSets = (entity.skillSets?.allObjects as? [SkillSet]) ?? []
+        let skillSets = (entity.skillSets?.array as? [SkillSet]) ?? []
         let grades = (entity.grades?.array as? [Grade]) ?? []
         return EntityValueFields.init(
             sid: Int(entity.sid),

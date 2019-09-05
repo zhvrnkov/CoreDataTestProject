@@ -80,7 +80,7 @@ extension SkillSetsUtils: EntityUtilsRealization {
     typealias EntityType = SkillSet
     
     static func map(entity: SkillSet) -> EntityValueFields {
-        let entityMicrotasks = (entity.microTasks?.allObjects as? [Microtask]) ?? []
+        let entityMicrotasks = (entity.microTasks?.array as? [Microtask]) ?? []
         let microtasks: [EntityValueFields.MicrotaskFieldsType] = MicrotasksUtils.map(entities: entityMicrotasks)
         return EntityValueFields.init(
             sid: Int(entity.sid),

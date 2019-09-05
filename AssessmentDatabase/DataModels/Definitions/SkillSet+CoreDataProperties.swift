@@ -20,7 +20,7 @@ extension SkillSet: DBSidable {
     @NSManaged public var sid: Int64
     @NSManaged public var title: String?
     @NSManaged public var weight: Int64
-    @NSManaged public var microTasks: NSSet?
+    @NSManaged public var microTasks: NSOrderedSet?
     @NSManaged public var rubric: Rubric?
 
 }

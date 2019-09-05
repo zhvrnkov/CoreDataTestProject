@@ -23,7 +23,7 @@ extension Rubric: DBSidable {
     @NSManaged public var weight: Int64
     @NSManaged public var assessments: NSSet?
     @NSManaged public var grades: NSOrderedSet?
-    @NSManaged public var skillSets: NSSet?
+    @NSManaged public var skillSets: NSOrderedSet?
 
 }
 
