@@ -103,6 +103,7 @@ extension AssessmentsUtils: EntityUtilsRealization {
             isSynced: entity.isSynced,
             date: (entity.date ?? NSDate()) as Date,
             schoolId: Int(entity.schoolId),
+            isAddedToServer: entity.isAddedToServer,
             instructorSid: instructorSid,
             rubric: rubric,
             microTaskGradeSids: microtaskGrades.map { Int($0.sid) },
@@ -114,6 +115,7 @@ extension AssessmentsUtils: EntityUtilsRealization {
         entity.schoolId = Int64(item.schoolId)
         entity.date = item.date as NSDate
         entity.isSynced = item.isSynced
+        entity.isAddedToServer = item.isAddedToServer
     }
     
     func setRelations(

@@ -115,6 +115,7 @@ public protocol AssessmentFields: Sidable {
     
     var date: Date { get }
     var schoolId: Int { get }
+    var isAddedToServer: Bool { get }
     var isSynced: Bool { get }
     
     var instructorSid: Int { get }
@@ -131,6 +132,7 @@ public protocol AssessmentFields: Sidable {
          isSynced: Bool,
          date: Date,
          schoolId: Int,
+         isAddedToServer: Bool,
          instructorSid: Int,
          rubric: RubricFieldsType,
          microTaskGradeSids: [Int],

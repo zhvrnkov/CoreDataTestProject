@@ -2,6 +2,7 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.98" systemVersion="18E226" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Assessment" representedClassName=".Assessment" syncable="YES">
         <attribute name="date" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="isAddedToServer" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isSynced" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="schoolId" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="sid" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -95,7 +96,7 @@
         <relationship name="student" maxCount="1" deletionRule="Nullify" destinationEntity="Student" inverseName="microTaskGrades" inverseEntity="Student" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Assessment" positionX="-525.5" positionY="-28.609375" width="128" height="165"/>
+        <element name="Assessment" positionX="-525.5" positionY="-28.609375" width="128" height="180"/>
         <element name="Grade" positionX="206.83203125" positionY="-147.3828125" width="128" height="135"/>
         <element name="Instructor" positionX="-282.92578125" positionY="-167.46484375" width="128" height="375"/>
         <element name="Microtask" positionX="88.8359375" positionY="322.8125" width="128" height="165"/>

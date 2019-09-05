@@ -24,6 +24,7 @@ struct MockAssessmentFields: AssessmentFields {
     var date: Date
     var schoolId: Int
     var isSynced: Bool
+    var isAddedToServer: Bool
     var instructorSid: Int
     var rubric: RubricFieldsType
     var microTaskGradeSids: [Int]
@@ -33,6 +34,7 @@ struct MockAssessmentFields: AssessmentFields {
          isSynced: Bool,
          date: Date,
          schoolId: Int,
+         isAddedToServer: Bool,
          instructorSid: Int,
          rubric: RubricFieldsType,
          microTaskGradeSids: [Int],
@@ -42,6 +44,7 @@ struct MockAssessmentFields: AssessmentFields {
         self.isSynced = isSynced
         self.date = date
         self.schoolId = schoolId
+        self.isAddedToServer = isAddedToServer
         self.instructorSid = instructorSid
         self.rubric = rubric
         self.microTaskGradeSids = microTaskGradeSids
@@ -259,7 +262,7 @@ struct AssessmentUtilsTestMocks {
             return student.instructorSids.contains(where: { $0 == instructor.sid })
         })
         let rubric = rubrics.randomElement()!
-        return MockAssessmentFields(sid: instructor.sid, isSynced: false, date: Date(), schoolId: count.randomElement()!, instructorSid: instructor.sid, rubric: rubric, microTaskGradeSids: [], students: instructorStudents)
+        return MockAssessmentFields(sid: instructor.sid, isSynced: false, date: Date(), schoolId: count.randomElement()!, isAddedToServer: Bool.random(), instructorSid: instructor.sid, rubric: rubric, microTaskGradeSids: [], students: instructorStudents)
     }
 }
 
@@ -349,7 +352,7 @@ struct StudentMicrotaskGradesUtilsTestMocks {
     lazy var assessments: [MockAssessmentFields] = rubrics.map { rubric in
         let instructorSid = instructors[Int(rubric.sid)].sid
         let assessmentStudents = students.filter { $0.instructorSids.contains(instructorSid) }
-        return MockAssessmentFields(sid: rubric.sid, isSynced: false, date: Date(), schoolId: rubric.sid + 1, instructorSid: instructors[Int(rubric.sid)].sid, rubric: rubric, microTaskGradeSids: [], students: assessmentStudents)
+        return MockAssessmentFields(sid: rubric.sid, isSynced: false, date: Date(), schoolId: rubric.sid + 1, isAddedToServer: Bool.random(), instructorSid: instructors[Int(rubric.sid)].sid, rubric: rubric, microTaskGradeSids: [], students: assessmentStudents)
     }
     lazy var microtaskGrades: [MockStudentMicrotaskGrade] = count.map {
         MockStudentMicrotaskGrade(sid: $0, lastUpdated: 123, passed: true, isSynced: true, assessmentSid: assessments[Int($0)].sid, microTaskSid: microTasks[Int($0)].sid, studentSid: assessments[Int($0)].studentSids.first!, gradeSid: (grades.randomElement()!).sid)

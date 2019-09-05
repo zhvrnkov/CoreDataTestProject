@@ -17,6 +17,7 @@ extension Assessment: DBSidable {
     }
 
     @NSManaged public var date: NSDate?
+    @NSManaged public var isAddedToServer: Bool
     @NSManaged public var isSynced: Bool
     @NSManaged public var schoolId: Int64
     @NSManaged public var sid: Int64
