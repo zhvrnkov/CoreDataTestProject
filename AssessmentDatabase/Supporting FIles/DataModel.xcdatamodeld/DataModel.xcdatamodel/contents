@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.98" systemVersion="18E226" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14492.1" systemVersion="18G87" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Assessment" representedClassName=".Assessment" syncable="YES">
         <attribute name="date" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="isAddedToServer" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
@@ -78,8 +78,11 @@
     </entity>
     <entity name="Student" representedClassName=".Student" syncable="YES">
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="level" attributeType="String" syncable="YES"/>
         <attribute name="logbookPass" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="qualifiedDays" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="rank" attributeType="String" syncable="YES"/>
         <attribute name="sid" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="assessments" toMany="YES" deletionRule="Nullify" destinationEntity="Assessment" inverseName="students" inverseEntity="Assessment" syncable="YES"/>
         <relationship name="instructors" toMany="YES" deletionRule="Nullify" destinationEntity="Instructor" inverseName="students" inverseEntity="Instructor" syncable="YES"/>
@@ -103,7 +106,7 @@
         <element name="Rubric" positionX="-291.74609375" positionY="173.453125" width="128" height="165"/>
         <element name="School" positionX="-324" positionY="-27" width="128" height="90"/>
         <element name="SkillSet" positionX="-293.2109375" positionY="296.1328125" width="128" height="135"/>
-        <element name="Student" positionX="-52.90234375" positionY="-152.33984375" width="128" height="150"/>
+        <element name="Student" positionX="-52.90234375" positionY="-152.33984375" width="128" height="195"/>
         <element name="StudentMicrotaskGrade" positionX="40.56640625" positionY="-9.375" width="128" height="165"/>
     </elements>
 </model>

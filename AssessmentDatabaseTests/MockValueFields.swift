@@ -192,6 +192,9 @@ struct MockStudentFields: StudentFields {
          email: String,
          logbookPass: String,
          name: String,
+         rank: String,
+         qualifiedDays: Int,
+         level: String,
          assessmentSids: [Int],
          instructorSids: [Int],
          microTaskGrades: [StudentMicrotaskGradeFieldsType])
@@ -203,15 +206,21 @@ struct MockStudentFields: StudentFields {
         self.assessmentSids = assessmentSids
         self.instructorSids = instructorSids
         self.microTaskGrades = microTaskGrades
+        self.level = level
+        self.qualifiedDays = qualifiedDays
+        self.rank = rank
     }
     
     static func mock(sid: Int) -> MockStudentFields {
-        return .init(sid: sid, email: "lorem", logbookPass: "ipsum", name: "foo", assessmentSids: [], instructorSids: [], microTaskGrades: [])
+        return .init(sid: sid, email: "lorem", logbookPass: "ipsum", name: "foo", rank: "Chester", qualifiedDays: 4, level: "Master", assessmentSids: [], instructorSids: [], microTaskGrades: [])
     }
     var sid: Int
     var name: String
     var email: String
     var logbookPass: String
+    var level: String
+    var qualifiedDays: Int
+    var rank: String
     
     var assessmentSids: [Int]
     var instructorSids: [Int]

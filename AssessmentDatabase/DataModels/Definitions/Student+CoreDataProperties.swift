@@ -20,6 +20,9 @@ extension Student: DBSidable {
     @NSManaged public var logbookPass: String?
     @NSManaged public var name: String?
     @NSManaged public var sid: Int64
+    @NSManaged public var rank: String?
+    @NSManaged public var level: String?
+    @NSManaged public var qualifiedDays: Int64
     @NSManaged public var assessments: NSSet?
     @NSManaged public var instructors: NSSet?
     @NSManaged public var microTaskGrades: NSSet?

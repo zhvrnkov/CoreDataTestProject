@@ -95,6 +95,9 @@ public protocol StudentFields: Sidable {
     var name: String { get set }
     var email: String { get set }
     var logbookPass: String { get set }
+    var rank: String { get set }
+    var qualifiedDays: Int { get set }
+    var level: String { get set }
     
     var assessmentSids: [Int] { get set }
     var instructorSids: [Int] { get set }
@@ -104,6 +107,9 @@ public protocol StudentFields: Sidable {
          email: String,
          logbookPass: String,
          name: String,
+         rank: String,
+         qualifiedDays: Int,
+         level: String,
          assessmentSids: [Int],
          instructorSids: [Int],
          microTaskGrades: [StudentMicrotaskGradeFieldsType])

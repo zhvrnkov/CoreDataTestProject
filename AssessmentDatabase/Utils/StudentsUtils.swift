@@ -90,6 +90,9 @@ extension StudentsUtils: EntityUtilsRealization {
             email: entity.email ?? dbError,
             logbookPass: entity.logbookPass ?? dbError,
             name: entity.name ?? dbError,
+            rank: entity.rank ?? dbError,
+            qualifiedDays: Int(entity.qualifiedDays),
+            level: entity.level ?? dbError,
             assessmentSids: assessments.map { Int($0.sid) },
             instructorSids: instructors.map { Int($0.sid) },
             microTaskGrades: microtaskGrades)
@@ -99,6 +102,9 @@ extension StudentsUtils: EntityUtilsRealization {
         entity.sid = Int64(item.sid)
         entity.name = item.name
         entity.email = item.email
+        entity.level = item.level
+        entity.qualifiedDays = Int64(item.qualifiedDays)
+        entity.rank = item.rank
         entity.logbookPass = item.logbookPass
     }
     
