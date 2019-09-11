@@ -161,7 +161,6 @@ extension EntityUtilsRealization {
     func _get(whereSid sid: Int) -> Owner.EntityValueFields? {
         let predicate = Predicate(format: "sid==%d", arguments: [sid])
         let output = _get(where: predicate)
-        assert(output.count <= 1)
         return output.first
     }
     
@@ -170,7 +169,6 @@ extension EntityUtilsRealization {
         _asyncGet(where: predicate) { result in
             switch result {
             case .success(let output):
-                assert(output.count <= 1)
                 completeion(.success(output.first))
             case .failure(let error):
                 completeion(.failure(error))
