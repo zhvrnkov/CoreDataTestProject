@@ -274,12 +274,24 @@ extension EntityUtilsRealization {
             let request = NSFetchRequest<EntityType>(entityName: "\(EntityType.self)")
             request.predicate = NSPredicate(format: "sid==%d", argumentArray: [sid])
             context.performAndWait {
-                guard let entity = try? context.fetch(request).first,
-                    let contextEntity = context.object(with: entity.objectID) as? EntityType
-                else {
+                guard let entity = try? context.fetch(request).first else {
+                    print("Object doesn't exists. Trying to save...")
+                    
+                    do {
+                        try _save(item: item)
+                        try _saveMain()
+                        return
+                    } catch let err {
+                        error = err
+                        return
+                    }
+                }
+                
+                guard let contextEntity = context.object(with: entity.objectID) as? EntityType else {
                     error = EntityUtilsError.entityNotFound
                     return
                 }
+                
                 Self.copyFields(from: item, to: contextEntity)
                 do {
                     try self.setRelations(from: item, of: contextEntity, in: context)
@@ -289,6 +301,7 @@ extension EntityUtilsRealization {
                     error = err
                 }
             }
+            
             if let error = error {
                 throw error
             }
