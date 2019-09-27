@@ -126,12 +126,10 @@ extension StudentsUtils: EntityUtilsRealization {
         of student: Student,
         in context: NSManagedObjectContext) throws
     {
-        guard !instructorSids.isEmpty else {
-            return
-        }
-        guard let fetch = instructorObjectIDsFetch else {
-            throw Errors.noFetch
-        }
+        guard !instructorSids.isEmpty
+            else { return }
+        guard let fetch = instructorObjectIDsFetch
+            else { throw Errors.noFetch }
         let ids = fetch(instructorSids)
         guard ids.count == instructorSids.count,
             let contextInstructors = ids.map({ context.object(with: $0) }) as? [Instructor]

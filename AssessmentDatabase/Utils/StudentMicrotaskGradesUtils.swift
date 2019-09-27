@@ -115,7 +115,7 @@ extension StudentMicrotaskGradesUtils: EntityUtilsRealization {
         of entity: StudentMicrotaskGrade,
         in context: NSManagedObjectContext) throws {
         do {
-            try set(assessmentSid: item.assessmentSid, of: entity, in: context)
+            try? set(assessmentSid: item.assessmentSid, of: entity, in: context)
             try set(gradeSid: item.gradeSid, of: entity, in: context)
             try set(microTaskSid: item.microTaskSid, of: entity, in: context)
             try set(studentSid: item.studentSid, of: entity, in: context)

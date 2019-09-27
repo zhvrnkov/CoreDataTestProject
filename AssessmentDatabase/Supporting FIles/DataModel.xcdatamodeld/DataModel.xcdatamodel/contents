@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14492.1" systemVersion="18G87" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.98" systemVersion="18G95" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Assessment" representedClassName=".Assessment" syncable="YES">
         <attribute name="date" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="isAddedToServer" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
@@ -93,7 +93,7 @@
         <attribute name="lastUpdated" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="passed" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="sid" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="assessment" maxCount="1" deletionRule="Nullify" destinationEntity="Assessment" inverseName="studentMicrotaskGrades" inverseEntity="Assessment" syncable="YES"/>
+        <relationship name="assessment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Assessment" inverseName="studentMicrotaskGrades" inverseEntity="Assessment" syncable="YES"/>
         <relationship name="grade" maxCount="1" deletionRule="Nullify" destinationEntity="Grade" inverseName="studentMicrotaskGrades" inverseEntity="Grade" syncable="YES"/>
         <relationship name="microTask" maxCount="1" deletionRule="Nullify" destinationEntity="Microtask" inverseName="studentMicroTaskGrades" inverseEntity="Microtask" syncable="YES"/>
         <relationship name="student" maxCount="1" deletionRule="Nullify" destinationEntity="Student" inverseName="microTaskGrades" inverseEntity="Student" syncable="YES"/>
