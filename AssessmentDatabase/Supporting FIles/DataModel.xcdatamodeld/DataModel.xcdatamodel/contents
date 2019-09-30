@@ -34,6 +34,7 @@
         <attribute name="lang" attributeType="String" syncable="YES"/>
         <attribute name="lastName" attributeType="String" syncable="YES"/>
         <attribute name="loginUsername" attributeType="String" syncable="YES"/>
+        <attribute name="nauticedStatus" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="phone" attributeType="String" syncable="YES"/>
         <attribute name="phoneStudent" attributeType="String" syncable="YES"/>
         <attribute name="sid" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -101,7 +102,7 @@
     <elements>
         <element name="Assessment" positionX="-525.5" positionY="-28.609375" width="128" height="180"/>
         <element name="Grade" positionX="206.83203125" positionY="-147.3828125" width="128" height="135"/>
-        <element name="Instructor" positionX="-282.92578125" positionY="-167.46484375" width="128" height="375"/>
+        <element name="Instructor" positionX="-282.92578125" positionY="-167.46484375" width="128" height="390"/>
         <element name="Microtask" positionX="88.8359375" positionY="322.8125" width="128" height="165"/>
         <element name="Rubric" positionX="-291.74609375" positionY="173.453125" width="128" height="165"/>
         <element name="School" positionX="-324" positionY="-27" width="128" height="90"/>

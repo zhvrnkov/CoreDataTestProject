@@ -96,6 +96,7 @@ final class InstructorUtilsTest: XCTestCase {
         XCTAssertTrue(item.lang == entity.lang)
         XCTAssertTrue(item.flags == entity.flags)
         XCTAssertTrue(item.schools.count == entity.schools.count)
+        XCTAssertTrue(item.nauticedStatus == entity.nauticedStatus)
         
         XCTAssertEqual(item.assessments.count, entity.assessments.count)
         XCTAssertEqual(item.students.count, entity.students.count)

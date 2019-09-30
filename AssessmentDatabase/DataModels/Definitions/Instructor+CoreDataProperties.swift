@@ -38,6 +38,7 @@ extension Instructor: DBSidable {
     @NSManaged public var assessments: NSSet?
     @NSManaged public var schools: NSSet?
     @NSManaged public var students: NSSet?
+    @NSManaged public var nauticedStatus: String?
 
 }
 

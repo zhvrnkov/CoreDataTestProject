@@ -111,6 +111,7 @@ extension InstructorsUtils: EntityUtilsRealization {
             fbid: (entity.fbid ?? []).map { $0 as String },
             lang: entity.lang ?? dbError,
             flags: (entity.flags ?? []).map { $0 as String },
+            nauticedStatus: entity.nauticedStatus ?? dbError,
             assessments: assessments,
             students: students,
             schools: schools)
@@ -136,6 +137,7 @@ extension InstructorsUtils: EntityUtilsRealization {
         entity.fbid = item.fbid as [NSString]
         entity.lang = item.lang
         entity.flags = item.flags as [NSString]
+        entity.nauticedStatus = item.nauticedStatus
         entity.schools = []
     }
     
