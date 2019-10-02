@@ -61,6 +61,7 @@ public protocol InstructorFields: Sidable {
     var lang: String { get set }
     var flags: [String] { get set }
     var nauticedStatus: String { get set }
+    var gradeColors: [Int: Int] { get set }
     
     var schools: [SchoolFieldsType] { get set }
     var assessments: [AssessmentFieldsType] { get set }
@@ -86,6 +87,7 @@ public protocol InstructorFields: Sidable {
          lang: String,
          flags: [String],
          nauticedStatus: String,
+         gradeColors: [Int: Int],
          assessments: [AssessmentFieldsType],
          students: [StudentFieldsType],
          schools: [SchoolFieldsType])

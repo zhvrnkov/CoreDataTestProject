@@ -91,6 +91,13 @@ extension InstructorsUtils: EntityUtilsRealization {
             StudentsUtils.map(entities: entityStudents)
         let schools: [EntityValueFields.SchoolFieldsType] =
             SchoolUtils.map(entities: entitySchools)
+        let toIntInt: (_ key: Any, _ value: Any) -> (key: Int, value: Int)? = { key, value in
+            if let keyInt = key as? Int, let valueInt = value as? Int {
+                return (keyInt, valueInt)
+            } else {
+                return nil
+            }
+        }
         return EntityValueFields.init(
             sid: Int(entity.sid),
             loginUsername: entity.loginUsername ?? dbError,
@@ -112,6 +119,7 @@ extension InstructorsUtils: EntityUtilsRealization {
             lang: entity.lang ?? dbError,
             flags: (entity.flags ?? []).map { $0 as String },
             nauticedStatus: entity.nauticedStatus ?? dbError,
+            gradeColors: Dictionary(uniqueKeysWithValues: entity.gradeColors?.compactMap(toIntInt) ?? []),
             assessments: assessments,
             students: students,
             schools: schools)
@@ -138,7 +146,7 @@ extension InstructorsUtils: EntityUtilsRealization {
         entity.lang = item.lang
         entity.flags = item.flags as [NSString]
         entity.nauticedStatus = item.nauticedStatus
-        entity.schools = []
+        entity.gradeColors = item.gradeColors as NSDictionary
     }
     
     func setRelations(

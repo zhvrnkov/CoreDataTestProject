@@ -71,7 +71,7 @@ public final class StudentsUtils
         case noFetch
         
         case assessmentsNotFound
-        case instructorsNotFound
+        case instructorsNotFound(sids: [Int])
         case microtaskGradesNotFound
     }
 }
@@ -134,7 +134,7 @@ extension StudentsUtils: EntityUtilsRealization {
         guard ids.count == instructorSids.count,
             let contextInstructors = ids.map({ context.object(with: $0) }) as? [Instructor]
         else {
-            throw Errors.instructorsNotFound
+            throw Errors.instructorsNotFound(sids: instructorSids)
         }
         student.instructors = NSSet(array: contextInstructors)
     }

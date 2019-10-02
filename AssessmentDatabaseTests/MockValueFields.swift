@@ -13,7 +13,7 @@ fileprivate let mediumCount: Range<Int> = (0..<5)
 fileprivate let smallCount: Range<Int> = (0..<2)
 
 fileprivate func getInstructor(_ sid: Int) -> MockInstructorFields {
-    return MockInstructorFields(sid: sid, loginUsername: "zhvrnkv", firstName: "Vlad", lastName: "Zhavoronkov", avatar: "anime", email: "@dada.ya", phone: "8921380123", phoneStudent: "12839128", address: "hsdahfsd", address2: "fsdklfhs", city: "slkdhflksf", state: "fklhdahsl", zip: "skjdfhksj", country: "lksdhfaslk", credentials: "flsdhfaslkj", depiction: "sldfhsk", fbid: ["fdjsafglfas"], lang: "RU", flags: ["dsajdhla"], nauticedStatus: "chieftan", assessments: [], students: [], schools: [])
+    return MockInstructorFields(sid: sid, loginUsername: "zhvrnkv", firstName: "Vlad", lastName: "Zhavoronkov", avatar: "anime", email: "@dada.ya", phone: "8921380123", phoneStudent: "12839128", address: "hsdahfsd", address2: "fsdklfhs", city: "slkdhflksf", state: "fklhdahsl", zip: "skjdfhksj", country: "lksdhfaslk", credentials: "flsdhfaslkj", depiction: "sldfhsk", fbid: ["fdjsafglfas"], lang: "RU", flags: ["dsajdhla"], nauticedStatus: "chieftan", gradeColors: [0: 0xffffff], assessments: [], students: [], schools: [])
 }
 
 struct MockAssessmentFields: AssessmentFields {
@@ -90,6 +90,7 @@ struct MockInstructorFields: InstructorFields {
     var lang: String
     var flags: [String]
     var nauticedStatus: String
+    var gradeColors: [Int : Int]
     
     var assessments: [AssessmentFieldsType]
     var students: [StudentFieldsType]

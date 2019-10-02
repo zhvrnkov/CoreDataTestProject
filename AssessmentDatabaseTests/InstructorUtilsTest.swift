@@ -95,10 +95,11 @@ final class InstructorUtilsTest: XCTestCase {
         XCTAssertTrue(item.fbid == entity.fbid)
         XCTAssertTrue(item.lang == entity.lang)
         XCTAssertTrue(item.flags == entity.flags)
-        XCTAssertTrue(item.schools.count == entity.schools.count)
         XCTAssertTrue(item.nauticedStatus == entity.nauticedStatus)
+        XCTAssertTrue(item.gradeColors == entity.gradeColors)
         
-        XCTAssertEqual(item.assessments.count, entity.assessments.count)
-        XCTAssertEqual(item.students.count, entity.students.count)
+        XCTAssertTrue(item.schools.count == entity.schools.count)
+        XCTAssertTrue(item.assessments.count == entity.assessments.count)
+        XCTAssertTrue(item.students.count == entity.students.count)
     }
 }
